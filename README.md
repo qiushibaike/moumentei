@@ -1,7 +1,9 @@
 冇问题
 =====
 
-这个Rails App原由ShiningRay为糗事百科（旧版）和秘密所搭建的
+这个Rails App由**ShiningRay**为糗事百科（2011年前版本）和秘密所搭建的
+
+> 版权所有糗事百科 [http://www.qiushibaike.com]
 
 Dependancy
 ==========
