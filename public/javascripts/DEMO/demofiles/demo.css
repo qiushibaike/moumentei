@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+body {
+	background: #FFF;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+td {
+	text-align: center;
+}
+
+div.example {
+	margin-bottom: 20px;
+	position: relative;
+}
+
+div.ie-fix {
+  overflow: visible;
+  height: 0;
+}
+
+.target {
+	width: 80px;
+	text-align: center;
+	border: 2px solid #666666;
+	padding: 5px;
+	background-color: #00FFFF;
+	height: 45px;
+	display: block;
+	float: left;
+}
+
+input.alt-target {
+	width: 80px;
+}
+
+#page {
+	width: 600px;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #EEE;
+	padding: 2em;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	position: relative;
+}
+
+h3 {
+	color: #666666;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #666666;
+	font-size: 1.2em;
+	margin: 0 0 .4em 0;
+}
+p {
+	margin-top: 0px;
+	margin-bottom: 1em;
+}
+
+.desc {
+  margin-left: 100px;
+}
+
+.source {
+ 	/*clear: both;*/
+}
+
+.html-source, .js, .css-source {
+	font-family: "Courier New", Courier, monospace;
+	background-color: #FFF;
+	/*clear: both;*/
+}
+
+.html-source textarea, .js textarea, .css-source textarea {
+  font-family: "Courier New", Courier, monospace;
+	font-size: 11px;
+}
+
+.html-link a:focus, .js-link a:focus, .css-link a:focus {
+  outline: none;
+	-moz-outline: none;
+}
+
+/** Google maps demo **/
+
+#example17 {
+  cursor: pointer;
+}
+
+.gmap {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  position: relative;
+}
+
+.gmap-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.gmap-addr {
+  padding-bottom: 15px;
+  padding-top: 5px;
+}
+
+.gmap-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+}

@@ -1,0 +1,8 @@
+<% content_for :title, "#{@user.login} 发表的文章" if @user %>
+<% if params[:action] == 'tag' %>
+<div id="sub-nav" class="ad">
+您正在浏览：关于<strong style="color:#5BBA56"><%= @current_tag %></strong>的帖子
+</div>
+<% end %>
+<%= render(:partial => @articles) %>
+<%= render :partial => 'common/pagination' %>

@@ -1,0 +1,5 @@
+
+<% for i in 1..12 %>
+<%#= link_to i, :action => 'month', :year => @year, :month => i %>
+<%= calendar(:year => @year, :month => i) %>
+<% end %>

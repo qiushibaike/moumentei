@@ -1,0 +1,24 @@
+<h1>Editing balance</h1>
+
+<% form_for(@balance) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :charm %><br />
+    <%= f.text_field :charm %>
+  </p>
+  <p>
+    <%= f.label :credit %><br />
+    <%= f.text_field :credit %>
+  </p>
+  <p>
+    <%= f.label :level %><br />
+    <%= f.text_field :level %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @balance %> |
+<%= link_to 'Back', balances_path %>

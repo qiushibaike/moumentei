@@ -1,0 +1,10 @@
+<% remote_form_for(@ticket) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :article_id %>
+  <% @ticket_types.each do |t| %>
+<label><input type="radio" value="<%= t.id %>" title="<%=t.description%>" name="ticket[ticket_type_id]" onclick="this.form.submit.click()" />
+  <%= t.name %>
+</label><br/>
+  <% end %>
+    <input type="submit" name="submit" value="submit" style="display: none" />
+<% end %>

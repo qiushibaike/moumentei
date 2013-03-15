@@ -1,0 +1,28 @@
+<h1>Editing ticket</h1>
+
+<% form_for(@ticket) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :article_id %><br />
+    <%= f.text_field :article_id %>
+  </p>
+  <p>
+    <%= f.label :ticket_type_id %><br />
+    <%= f.text_field :ticket_type_id %>
+  </p>
+  <p>
+    <%= f.label :correct %><br />
+    <%= f.check_box :correct %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @ticket %> |
+<%= link_to 'Back', tickets_path %>

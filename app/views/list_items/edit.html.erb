@@ -1,0 +1,31 @@
+<h1>Editing list_item</h1>
+
+<% form_for(@list_item) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :article_id %><br />
+    <%= f.text_field :article_id %>
+  </p>
+  <p>
+     <% if @lists %>
+    <select name="list_item[list_id]">
+    <% @lists.each do |list| %>
+      <option value="<%= list.id %>" selected="selected" >
+        <%= list.name %>
+      </option>
+    <% end %>
+    </select>
+    <% end %>
+  </p>
+  <p>
+    <%= f.label :notes %><br />
+    <%= f.text_field :notes %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @list_item %> |
+<%= link_to 'Back', list_items_path %>

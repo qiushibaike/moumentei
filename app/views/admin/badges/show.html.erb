@@ -1,0 +1,17 @@
+<%= image_tag @badge.icon(:medium) %>
+<%=h @badge.name %>
+<%= h @badge.title %>
+<p>
+  <b>Description:</b>
+  <%=h @badge.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_badge_path(@badge) %> |
+<%= link_to 'Back', admin_badges_path %>
+<%= @users.size %>
+<ul>
+<% for u in @users %>
+<li><%= link_to u.login, u %></li>
+<% end %>
+</ul>

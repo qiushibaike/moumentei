@@ -1,0 +1,19 @@
+<h1>Editing post</h1>
+
+<%=@post.user.login %>
+
+<% form_for([@user,@post]) do |f| %>
+  <%= f.error_messages %>
+
+ <p>
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+  </p>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', [@user,@post] %> |
+<%= link_to 'Back', user_posts_path %>

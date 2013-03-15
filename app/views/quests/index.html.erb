@@ -1,0 +1,9 @@
+<h1>Listing quests</h1>
+<p>
+    <% Quest.each do |name, quest|%>
+      <th><%= quest.title %></th>
+      <th><%= quest.description%></th>
+      <td><%= link_to 'complete', complete_quest_path(quest) %></td>
+    <%end%>
+</p>
+<br />

@@ -1,0 +1,4 @@
+# TODO Operate on the page object
+page.replace_html("notes-#{@notification.id}",:partial => 'space' )
+
+page.replace_html("unread_notifications_count",:partial => 'unread_notification_count',:object => @unread_notification_count)

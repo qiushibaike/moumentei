@@ -1,0 +1,5 @@
+/*
+ * jStore DOM Storage Engine
+ * Copyright (c) 2009 Eric Garside (http://eric.garside.name)
+ */
+(function(c){var b=c.jStore.Availability.session=function(){return !!window.sessionStorage},a=c.jStore.Availability.local=function(){return !!(window.localStorage||window.globalStorage)};this.jStoreDom=StorageEngine.extend({init:function(e,d){this._super(e,d);this.type="DOM";this.limit=5*1024*1024},connect:function(){this.delegate.trigger("engine-ready")},get:function(e){this.interruptAccess();var d=this.db.getItem(e);return c.jStore.safeResurrect((d&&d.value?d.value:d))},set:function(d,e){this.interruptAccess();this.db.setItem(d,c.jStore.safeStore(e));return e},rem:function(e){this.interruptAccess();var d=this.get(e);this.db.removeItem(e);return d}});this.jStoreLocal=jStoreDom.extend({connect:function(){this.db=!window.globalStorage?window.localStorage:window.globalStorage[location.hostname];this._super()},isAvailable:a});this.jStoreSession=jStoreDom.extend({connect:function(){this.db=sessionStorage;this._super()},isAvailable:b});c.jStore.Engines.local=jStoreLocal;c.jStore.Engines.session=jStoreSession;c.jStore.EngineOrder[1]="local"})(jQuery);

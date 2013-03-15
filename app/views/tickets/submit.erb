@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--      
+      ::       :::::::     ::::::::    ::
+     ::                                 ::
+     ::     ::                          ::
+     ::      ::                         ::
+      ::        ::::::::::::::::       ::
+                                               -->
+  <title>审核新帖 :: </title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="description" content="<%= @title_description || "凡人的世界" -%>" />
+  <link rel="Shortcut Icon" type="image/x-icon" href="http://moumentei.com/favicon.ico" />
+  <%= stylesheet_link_tag "moumentei_style.css", :media =>"screen" %>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />
+  <%= stylesheet_link_tag 'compiled/ucard.css', :media => 'screen, projection' %>
+  <%= stylesheet_link_tag 'tip-yellowsimple/tip-yellowsimple.css', :media => 'screen, projection' %>
+
+  <% if RAILS_ENV == 'development' %>
+  <%= javascript_include_tag 'jquery'  %>
+  <% else %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+  <% end %>
+  <%= javascript_include_tag(
+#                             'jquery.hotkeys-0.7.9.min',
+                             'jquery.scrollTo-min',
+                             '/fancybox/jquery.fancybox-1.3.1.pack.js',
+#                             '/fancybox/jquery.fancybox-1.3.1.js',
+                             'jquery.ba-throttle-debounce.min',
+                             'jquery.livequery.min',
+                             :cache => 'lib')
+  %>
+  <%= javascript_include_tag 'ejs_production', 'base64', 'application', 'floorlink', 'ucard', 'report', 'ajaxlogin',
+                             'jquery.poshytip.min', 'jquery.newsticker.js' %>
+  <style type="text/css">
+    body {background:url("/images/background.jpg") no-repeat scroll center top #252525; color:#BDE3EC}
+	#center-container  {width:auto;padding-left:25px}
+      #topbar {background-color:#252525;color:#ccc;border-bottom:1px solid #000}
+      a {
+      color: #ccc; text-decoration: underline;
+      }
+      a:hover {
+              background: #D7D7D7; color: #000
+      }
+      #toplogo a {
+      text-decoration:none; color:#ccc;
+      }
+      .qiushi_body2 {
+        width: 500px;background:#E8E7E3;border-color:#393636;
+border-style:solid;
+border-width:0 5px 5px 0;color:#000;padding:25px;font-size:14px
+      }
+      .tags a {text-decoration:none; color:#009900;font-weight:bold}
+      h4 {color:#fff;padding-top:40px;padding-bottom:40px;font-size:14px;line-height:120%;text-align:left;padding-left:8px;}
+      #container-foot {width: 100%;}
+      #footerline {
+      padding-right: 0; padding-left: 0; background: #000; padding-bottom: 0px; padding-top: 1px; text-align: left; margin-bottom: 8px;
+      }
+      #tickets {
+      height:auto;
+      line-height:100%;
+      padding:12px;
+      position:fixed!important;
+      position:absolute;
+      left:600px;
+      top:60px;
+      width:auto;
+      z-index:8765;}
+
+      .approve {background:none repeat scroll 0 0 #00CC00;text-align:left;
+      border:medium none;
+      color:#FFFFFF;
+      font:bold 14px verdana;
+      width:200px;
+      height:28px;
+      padding:0 8px;}
+      .kill {background:none repeat scroll 0 0 #663366;text-align:left;
+      border:medium none;
+      color:#FFFFFF;
+      font:bold 14px verdana;
+      width:200px;
+      height:28px;
+      padding:0 8px;}
+      .skip {background:none repeat scroll 0 0 #585858;text-align:left;
+      border:medium none;
+      color:#FFFFFF;
+      font:bold 14px verdana;
+      width:200px;
+      height:28px;
+      padding:0 8px;
+      }
+        .newsticker {
+	      list-style-type: none;
+	      padding: 3px;
+	      margin: 0;
+	      width: 550px;
+      }
+   .newsticker li{display:none}   
+  </style>
+    <script type="text/javascript">
+    $(function(){
+    $('#hints').newsticker(10000);
+    });
+    </script>  
+</head>
+
+<body>
+<div id="divFlashNumber" class="ad"></div>
+<div id="container">
+  <div id="topbar">
+    <div id="toplogo">&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://secret.moumentei.com/">秘密</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://zuikeai.net/"></a></div>
+    <%= render :partial => 'users/user_bar'%>
+  </div>
+  <div id="center-container">
+  <p style="color:white">致歉：由于广大热心网友的积极审贴，现在审贴记录已经超过八千万条，使得我们不得不对审核记录的数据库进行维护，所以网友们的帖子数量目前暂时不能准确显示。谢谢大家一直以来的支持！</p>
+    <p><%=flash[:notice]%></p>
+<% if @article %>
+<% article = @article %>
+    <%= link_to_unless article.status != 'publish', "##{article.id}", article_path(article)%> <%= link_to article.user.login, article.user unless article.anonymous? %>
+<% if article.status == 'publish' %>
++<%= article.pos_score %> <%= article.neg_score %> <%= article.public_comments_count %>条评论
+<% end %>
+<div class="qiushi_body2" id="article<%=article.id%>" title="<%= article.created_at.strftime("%Y.%m.%d %H:%M") %>/<%= article.updated_at.strftime("%Y.%m.%d %H:%M")%>">
+  <%= format_content article, article.group %>
+  <%= image_tag article.picture.url(:medium) if article.picture.file? %>
+  <%= show_tags article %>
+</div>
+
+<p>还有<%= @rest_queue.size %>个待审
+  <a href="http://blog.moumentei.com/qiushibaike/audit-standards" target="_blank">审核标准</a>
+</p>
+<% else %>
+暂时没有新帖需要审核,感谢您的辛勤劳动。<br />
+<b></b>
+<% end %>
+  <ul id="hints" class='newsticker'>
+    <li></li>    
+    </ul>
+
+</div>
+  
+</div><!-- container --> 
+
+<div id="tickets">
+<% if @ticket %>
+  <% form_for @ticket do |f| %>
+  <%= f.hidden_field :article_id %>
+  <%= f.hidden_field :ticket_type_id, :value => 0 %>
+  <%= f.hidden_field :viewed_at %>
+  <% TicketType.all.each do |t| %>
+    <input type="button" class="<%= t.weight > 0 ? 'approve': 'kill' %>" value="<%= t.name %>" title="<%=t.description%>" onclick="this.form['ticket[ticket_type_id]'].value=<%=t.id%>;this.form.submit()" />
+    <!-- <strong>X <%#@tickets[t.id].to_i%></strong>-->
+    <br/>
+    <br/>
+  <% end %>
+  <label><%= f.submit '跳过', :class => 'skip' %></label>
+  <% end %>
+<% end %>
+  <br/>
+<h4>
+您已审核<%= current_user.tickets.count %>条帖子<br/>
+<!--同步率<%=current_user.correct_rate%>-->
+</h4>
+  </div>
+</div><!-- container -->
+
+<div id='container-foot'>
+  <div id='footerline'></div>
+  <div id='copyright'>&copy;2007-2010 <a href='http://moumentei.com/'></a> &nbsp; 粤ICP备<a href='http://www.miibeian.gov.cn'>06064371</a>号 </div>
+</div><!-- container-foot -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8780108-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<%
+notification = new_follower
+user_id = notification.key[1].to_i
+user = User.find user_id
+%>
+
+<div id="notes-<%= notification.id %>">
+  <%= link_to "“#{user.login}”关注了您，快去看看TA吧", notification_path(notification) %>
+  <% if logged_in? %>
+    <% if current_user.following?(user) %>
+      <%= link_to '取消关注', unfollow_user_path(user), :method => :post %>
+    <% else %>
+      <%= link_to '我也关注TA', follow_user_path(user), :method => :post %>
+    <% end %>
+  <% end %>
+  <%= link_to_remote '忽略', :url=>{:action => :ignore, :id => notification.id}%><br />
+</div>

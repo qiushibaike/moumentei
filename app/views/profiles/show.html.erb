@@ -1,0 +1,33 @@
+<p>
+  <b>User:</b>
+  <%=h @profile.user_id %>
+</p>
+
+<p>
+  <b>Realname:</b>
+  <%=h @profile.realname %>
+</p>
+
+<p>
+  <b>Phonenumber:</b>
+  <%=h @profile.phonenumber %>
+</p>
+
+<p>
+  <b>Sex:</b>
+  <%=h @profile.sex %>
+</p>
+
+<p>
+  <b>Job:</b>
+  <%=h @profile.job %>
+</p>
+
+<p>
+  <b>Birthday:</b>
+  <%=h @profile.birthday %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_profile_path(current_user,@profile) %> |
+<%= link_to 'Back', user_profiles_path %>

@@ -1,0 +1,18 @@
+<p>
+  <b>Article:</b>
+  <%=h @list_item.article_id %>
+</p>
+
+<p>
+  <b>List:</b>
+  <%=h @list_item.list_id %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%=h @list_item.notes %>
+</p>
+
+
+<%= link_to 'Edit', edit_list_item_path(@list_item) %> |
+<%= link_to 'Back', list_items_path %>

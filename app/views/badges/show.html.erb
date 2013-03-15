@@ -1,0 +1,15 @@
+<% content_for :title, @badge.title%>
+<div style="float:left;" >
+<%= image_tag @badge.icon(:medium) %>
+</div>
+<h2><%= h @badge.title %></h2>
+<p>
+  <%=h @badge.description %>
+</p>
+<hr/>
+<h3>共有<%= @users.size %>人获得此称号</h3>
+<ul>
+<% for u in @users %>
+<%=render :partial => 'users/person', :object => u%>
+<% end %>
+</ul>

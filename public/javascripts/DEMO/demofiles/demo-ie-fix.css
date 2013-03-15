@@ -1,0 +1,9 @@
+/** 
+ * IE is completely stupid about relative elements and stacking elements 
+ * http://therealcrisp.xs4all.nl/meuk/IE-zindexbug.html
+ * This fix is specific to this demo page and won't be needed for most
+ * uses of BeautyTips
+ */
+div.example {
+	position: static;
+}

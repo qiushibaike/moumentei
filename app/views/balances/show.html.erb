@@ -1,0 +1,18 @@
+<p>
+  <b>Charm:</b>
+  <%=h @balance.charm %>
+</p>
+
+<p>
+  <b>Credit:</b>
+  <%=h @balance.credit %>
+</p>
+
+<p>
+  <b>Level:</b>
+  <%=h @balance.level %>
+</p>
+
+
+<%= link_to 'Edit', edit_balance_path(@balance) %> |
+<%= link_to 'Back', balances_path %>

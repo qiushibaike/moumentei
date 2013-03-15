@@ -1,0 +1,18 @@
+<% content_for :title, @list.name %>
+<h2><%=h @list.name %></h2>
+
+<p>
+  <b>列表创建人:</b>
+  <%= link_to @list.user.login, @list.user %>
+</p>
+<p>
+  <b>列表说明：</b>
+  <%=h @list.notes %>
+</p>
+<%= render :partial => 'common/share' %>
+
+<%= render :partial => @articles %>
+<%= will_paginate @articles %>
+
+<%= link_to '编辑/添加', edit_list_path(@list) if logged_in? and current_user == @list.user%> |
+<%= link_to '返回', lists_path %>

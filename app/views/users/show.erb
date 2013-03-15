@@ -1,0 +1,10 @@
+<h2>最新动态</h2>
+<ul>
+<% if @comments; for c in @comments;next unless article = c.article; %>
+<li style="background:url(<%= c.anonymous ? '/images/anonymous.png' : @user.avatar.url("thumb") %>) no-repeat">
+  <span class="user"><%= @user.login %></span> <span class="time"><%= c.created_at.strftime("%Y-%m-%d %H:%M:%S") %></span><br />
+  @<%= link_to "#{article.group.name}#{article.id}", article_path(article) %> <%= format_content c, article.group %>
+</li>
+<% end; end %>
+</ul>
+<%= will_paginate @comments if @comments%>

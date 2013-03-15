@@ -1,0 +1,27 @@
+<%
+if @first < @start_day
+  last_month = @start_day - 1
+  concat link_to '上个月', group_archive_path(@group, last_month.year, last_month.month)
+end
+%>
+
+<% for date in @start_day..@end_day %>
+  <%= link_to_unless date < @first || date > @last, date.day, archive_path(date) %>
+<% end %>
+<%
+if @last > @end_day
+  next_month = @end_day + 1
+  concat link_to '下个月', group_archive_path(@group, next_month.year, next_month.month)
+end
+%>
+<div id="sub-nav" class="ad">
+  您正在浏览：<strong style="color:#5BBA56"><%= @year %>年<%= @month%>月</strong>中发表的帖子
+</div>
+
+<% if @articles.size == 0 %>
+  本月没有文章
+<% else %>
+  <%= render_pagination %>
+  <%= render(:partial => 'groups/articles') %>
+  <%= render_pagination %>
+<% end %>

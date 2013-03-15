@@ -1,0 +1,23 @@
+.sidebar input[type=text] {
+    width: 100px;
+}
+
+    dd {
+        line-height: 28px;
+    }
+    .tagbtn {
+        background-color: #EEFFEE;
+        border-bottom: 1px solid #AAFFAA;
+        border-right: 1px solid #AAFFAA;
+        color: #006600;
+        cursor: pointer;
+        font-size: 12px;
+        margin-top: 2px;
+        padding: 3px 3px 2px;
+        text-align: center;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .unable {
+        background-color: #BBBBBB;
+    }

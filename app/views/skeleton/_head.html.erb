@@ -1,0 +1,17 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title><%= yield :title -%></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="<%= yield :description %>">
+  <meta name="author" content="<%= yield :author %>">
+  <meta name="keywords" content="<%= yield :keywords %>">
+  <!-- Le fav and touch icons -->
+  <link rel="shortcut icon" href="<%= yield :shortcut_icon -%>"/>
+  <link rel="apple-touch-icon" href="<%= yield :apple_touch_icon or '/images/apple-touch-icon.png' %>">
+  <link rel="apple-touch-icon" sizes="72x72" href="<%= yield :apple_touch_icon_72 or '/images/apple-touch-icon-72x72.png' %>">
+  <link rel="apple-touch-icon" sizes="114x114" href="<%= yield :apple_touch_icon_114 or '/images/apple-touch-icon-114x114.png' %>">
+  <%= render :partial => 'common/csrf' %>
+  <%= render :partial => 'skeleton/stylesheets' %>
+  <%= yield :head %>
+</head>

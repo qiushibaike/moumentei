@@ -1,0 +1,19 @@
+<% title t("activerecord.models.group")%>
+<table>
+<% for c in @groups %>
+  <% category_traverse(c) do |i, l| %>
+    <tr><td><%= '&nbsp;'*l%><%=link_to i.name, edit_admin_group_path(i) %></td>
+    <td>
+      <%= link_to 'Up', moveup_admin_group_path(i) if i.left_sibling %>
+      <%= link_to 'Down', movedown_admin_group_path(i) if i.right_sibling %>
+    </td>
+    <td>
+      <%= link_to t('activerecord.models.article'), admin_articles_path(:group_id => i.id) %>
+      <%= link_to t('activerecord.models.comment'), admin_comments_path(:group_id => i.id) %>
+    </td>
+  </tr>
+  <% end %>
+<% end %>
+</table>
+
+<%= link_to 'New', new_admin_group_path %>

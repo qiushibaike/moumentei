@@ -1,0 +1,11 @@
+<div title="<%= message.created_at.strftime("%Y-%m-%d %H:%M:%S") %>" style="margin:10px 0;padding:10px 8px 10px 16px; -webkit-border-radius: 10px; -moz-border-radius:10px; background-color:<%unless message.read %>#FFFFCC<% else %>#EBEBEB<% end%>;"  >
+  <div style="float:left;width:350px;">
+    <%=h(message.content).gsub(/\r/, "<br/>") %><br />
+    <%= link_to '回复', new_message_path(:id => message.sender_id), :style => 'color:#8B8B8B; text-decoration:none;background:url(/images/mail_back.gif) no-repeat 0px 2px;padding-left:13px' %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "删除", message, :method => :delete, :style => 'color:#8B8B8B; text-decoration:none;background:url(/images/trash.gif) no-repeat 0px 2px;padding-left:13px' %>
+  </div>
+  <div style="float:right;padding-left:40px;width:80px;background:url(<%= message.sender.avatar.url("thumb") if message.sender%>) no-repeat 0px 5px">
+    <%=link_to h(message.sender.login), message.sender, :class => message.sender.roles.collect(&:name).join(' '), :target => '_blank', :style => 'text-decoration:none;'  if message.sender%><br />
+    <span style="color:#8B8B8B"><%= message.created_at.strftime("%Y-%m-%d") %></span><br/>
+  </div>
+  <div style="clear:both"></div>
+</div>

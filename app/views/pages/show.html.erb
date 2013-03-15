@@ -1,0 +1,4 @@
+<h2><%=h @page.title %></h2>
+<div><%= link_to @page.user.login, @page.user if @page.user %></div>
+<%=sanitize @page.content %>
+

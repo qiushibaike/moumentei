@@ -1,0 +1,12 @@
+<% content_for :title do %>我的奖励<% end %>
+
+<h2>您的帐号余额是</h2>
+<%#=h @balance.credit%>
+<h2>我领取过的奖励</h2>
+<% if @transactions %>
+<% for transaction in @transactions %>
+<%=h transaction.created_at.strftime("%Y.%m.%d %H:%M")%>
+<%=h transaction.reason%> :
+<%=h transaction.amount%>
+<%end%>
+<%end%>

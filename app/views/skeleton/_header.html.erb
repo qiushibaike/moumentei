@@ -1,0 +1,22 @@
+<%= yield :before_header %>
+
+<div id="header">
+  <div class="wrap">
+    <div id="branding">
+      <h1 id="site-title">
+        <% if @group %>
+          <% link_to home_path(:domain => @group.domain), :title => @group.description, :rel => 'home' do %>
+            <% if @group.options[:logo].blank? %>
+              <span><%= @group.try(:name) %></span>
+            <% else %>
+              <span><%= image_tag @group.options[:logo], :alt=>@group.name if @group%></span>
+            <% end %>        
+          <% end %>
+        <% end %>
+      </h1>
+      <h2 id="site-description"><span><%=@group.try(:description)%></span></h2>
+    </div><!-- #branding -->
+  </div><!-- .wrap -->
+</div><!-- #header -->
+
+<%= yield :after_header %>

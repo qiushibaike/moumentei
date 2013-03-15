@@ -1,0 +1,68 @@
+<div class="notice"><%= flash[:notice]%></div>
+<%= javascript_include_tag 'colorpicker' %>
+<%= stylesheet_link_tag 'colorpicker' %>
+<% if @article.is_original? %>
+<%= image_tag @article.picture(:medium), :id => 'picture' %>
+<% else %>
+<%= image_tag @article.original_picture.attachment.url(:medium), :id => 'picture' %>
+<% end %>
+<% form_tag draw_article_path(@article) do  %>
+<p><label><%= radio_button_tag :pos, 'north' %>顶部</label>
+<label><%= radio_button_tag :pos, 'center', true %>中部</label>
+<label><%= radio_button_tag :pos, 'south' %>底部</label></p>
+<label>文字内容<%= text_field_tag :text %></label>
+<div id="customWidget">
+<div id="colorSelector"><div style="background-color: #ffffff"></div></div>
+<div id="colorpickerHolder">
+</div>
+</div>
+<input type="hidden" name="color" class="color" id="colorinput" value="ffffff" />
+<%= submit_tag '提交' %>
+<input type="submit" value="预览" name="preview" id="preview"/>
+<% end %>
+<script type="text/javascript">
+  $(function(){
+       $('#colorSelector').ColorPicker({
+	color: '#ffffff',
+	onShow: function (colpkr) {
+		$(colpkr).fadeIn(500);
+		return false;
+	},
+	onHide: function (colpkr) {
+		$(colpkr).fadeOut(500);
+		return false;
+	},
+	onChange: function (hsb, hex, rgb) {
+		$('#colorSelector div').css('backgroundColor', '#' + hex);
+                $('#colorinput').val(hex);
+	}
+});
+$('#preview').click(function(){
+  var data = $(this.form).serializeArray(); 
+  data.push({name:'preview', value:'1'});
+  $('#picture').attr('src', window.location.href + '?' + $.param(data));
+  return false;
+})
+      })
+</script>
+
+<style type="text/css">
+#colorSelector {
+	position: relative;
+	width: 36px;
+	height: 36px;
+	background: url(/stylesheets/images/select.png);
+}
+#colorSelector div {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: 30px;
+	height: 30px;
+	background: url(/stylesheets/images/select.png) center;
+}
+#customWidget {
+	position: relative;
+	height: 36px;
+}
+</style>

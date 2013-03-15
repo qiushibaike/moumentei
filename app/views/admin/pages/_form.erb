@@ -1,0 +1,40 @@
+
+<% form_for([:admin, @page]) do |f| %>
+  <%= f.error_messages %>
+
+  
+    <%= f.label :group_id %>
+    <%= f.select :group_id, Group.all.collect {|p| [ p.name, p.id ] }  %>
+  
+  
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  
+  
+    <%= f.label :content %>
+    <%= f.text_area :content, :class => 'span6' %>
+  
+  
+    <%= f.label :user_id %>
+    <%= f.text_field :user_id %>
+  
+  
+    <%= f.label :parent_id %>
+    <%= f.text_field :parent_id %>
+  
+  
+    <%= f.label :slug %>
+    <%= f.text_field :slug %>
+
+  
+    <div class='form-actions'>
+    <%= f.submit 'Create', :class => 'btn btn-primary' %>
+    </div>
+<% end %>
+
+<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+<script type="text/javascript">
+bkLib.onDomLoaded(function() {
+          new nicEditor({buttonList : ['bold','italic','underline','left','center','right','ol','ul','fontSize','fontFamily','fontFormat','superscript','subscript','indent','outdent','link','unlink','striketrhough','forecolor','bgcolor','image','upload','xhtml']}).panelInstance('page_content');    }); 
+  
+</script>

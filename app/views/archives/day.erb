@@ -1,0 +1,25 @@
+<div id="sub-nav" class="ad">
+  <%= @date.strftime('%Y月%m月%d日') %> 
+  <% this_year = @date.year; this_month=@date.month; this_day = @date.day %>
+  <% for i in @first.year..@last.year %>
+    <%= link_to_unless i==this_year, i,  archive_path(i, this_month, this_day) %>
+  <% end %>
+  | <%= link_to("时间地图", [@group, :archives]) %> | <%= link_to '回到今天', '/' %>
+</div>
+
+<%
+if @date > @first
+  yesterday = @date - 1
+  concat link_to("&laquo; #{yesterday.strftime("%Y-%m-%d")}", archive_path(:date => yesterday))
+end 
+%>
+
+<%
+if @date < @last
+  tomorrow = @date + 1
+  concat link_to("#{tomorrow.strftime("%Y-%m-%d")} &raquo;", archive_path(:date => tomorrow))
+end
+%>
+<%# render(:partial => @articles, :spacer_template => 'spacer') %>
+<%= render(:partial => 'groups/articles') %>
+<%= render :partial => 'common/pagination' %>

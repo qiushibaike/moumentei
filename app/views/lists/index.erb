@@ -1,0 +1,21 @@
+<h1>显示列表</h1>
+
+<table>
+  <tr>
+    <th>列表名</th>
+    <th>创建者</th>
+    <th>文章数量</th>
+  </tr>
+
+<% @lists.each do |list| %>
+  <tr>
+    <td><%=link_to h( list.name), list %></td>
+    <td><%=link_to list.user.login, list.user %></td>
+    <td><%= list.items.count %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to '创建新列表', new_list_path %>

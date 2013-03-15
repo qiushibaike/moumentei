@@ -1,0 +1,7 @@
+<%= render :partial => 'common/item', :object => rss_item %>
+<p>
+  <%= link_to @group.name, home_url %> <%=@group.description%> ::
+  <%= link_to '立即发表我的帖子', new_group_article_url(@group) %>
+|
+<%= link_to '查看本月最热门的帖子', :controller => 'groups', :action => 'hottest', :limit => 'month', :only_path => false %>
+</p>

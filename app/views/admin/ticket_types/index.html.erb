@@ -1,0 +1,24 @@
+<h1>Listing ticket_types</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Weight</th>
+  </tr>
+
+<% @ticket_types.each do |ticket_type| %>
+  <tr>
+    <td><%=h ticket_type.name %></td>
+    <td><%=h ticket_type.description %></td>
+    <td><%=h ticket_type.weight %></td>
+    <td><%= link_to 'Show', [:admin, ticket_type] %></td>
+    <td><%= link_to 'Edit', edit_admin_ticket_type_path(ticket_type) %></td>
+    <td><%= link_to 'Destroy', [:admin, ticket_type], :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New ticket_type', new_admin_ticket_type_path %>

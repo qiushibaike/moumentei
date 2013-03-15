@@ -1,0 +1,8 @@
+<% content_for :title do %>我围观的文章<% end %>
+<h2>我围观的文章</h2>
+<% if @favorites %>
+  <%= render :partial => @favorites %>
+  <%= will_paginate @favorites %>
+<% else %>
+  您尚未围观任何文章
+<% end %>

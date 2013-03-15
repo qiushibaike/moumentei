@@ -1,0 +1,20 @@
+<% form_for(@post, :html => {:class => 'bp'}) do |f| %>
+<%= f.error_messages %>
+<%= f.hidden_field :parent_id %>
+<p>
+    <%= f.label :content, '说说你在做什么，想什么' %><br />
+    <%= f.text_area :content %>
+</p>
+<p>
+  <label>
+    <input type="radio" name="anonymous" value="0" checked/>实名
+   </label>
+  <label>
+    <input type="radio" name="anonymous" value="1" />匿名
+   </label> 投递到：
+  <label><input type="checkbox" name="post_to[]" value="2"/></label>
+  <label><input type="checkbox" name="post_to[]" value="1"/>秘密</label>
+  <%= f.submit 'Create' %>
+</p>
+
+<% end %>

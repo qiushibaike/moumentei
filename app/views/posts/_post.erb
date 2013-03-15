@@ -1,0 +1,60 @@
+<% user = post.user %>
+
+<li id="post_<%=post.id%>" class="hentry u-<%=user.id%> <%='mine' if current_user.id==user.id %> post">
+  <%
+    shared = nil
+    if post.content.blank? and post.reshare
+      shared = post
+      post = post.parent
+      user = post.user
+    end
+  %>
+  <span class="thumb vcard author" data-user_id="<%=user.id%>">
+    <% link_to( user, :class => 'post-url profile-pic url' ) do %>
+      <img width="48" height="48" src="<%= user.avatar.url(:thumb)%>" class="photo fn" alt="<%=user.login%>"/>
+    <% end %> </span>
+  <span class="post-body">
+    <span class="post-content">
+      <strong class="author"><%= link_to user.login, user, :class => 'post-url screen-name' %></strong>
+      <!--span title="Cao li&amp;rsquo;s tweets are protected." class="lock-icon"></span-->
+      <span class="entry-content"><%=h post.content%></span>
+    </span>
+    <span data="{}" class="meta entry-meta">
+      <% link_to( post, :rel => 'bookmark', :class => "entry-date" ) do %>
+        <span data="{time:'Tue Sep 07 21:32:58 +0000 2010'}" class="published timestamp"><%= time_ago_in_words post.created_at if post.created_at%></span>
+      <% end %>
+      <span>via web</span>
+      <% if post.parent %>
+        <%= link_to "回复#{post.parent.user.login}", post.parent %>
+      <% end %>
+      <% if shared %>
+      由<%= link_to shared.user.login, shared.user %>转发
+      <% end %>
+    </span>
+    <ul class="actions-hover">
+      <li>
+        <span class="reply">
+          <span class="reply-icon icon"></span>
+          <% c = post.children.count %>
+          <% if c > 0 %>
+          <%= link_to "#{c}个回应", new_post_path(:parent_id => post.id), 'data-parent_id' => post.id %>
+          <% else %>
+          <%= link_to '回复', new_post_path(:parent_id => post.id), 'data-parent_id' => post.id %>
+          <% end %>
+        </span>
+      </li>
+
+      <% unless post.user_id == current_user.id %>
+        <li>
+          <span class="reshare-link">
+            <span class="reshare-icon icon"></span>
+            <a href="<%= reshare_post_path(post)%>" title="转发">转发</a>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+    <ul class="meta-data clearfix"></ul>
+  </span>
+</li>
+
+<div style="clear:both"></div>

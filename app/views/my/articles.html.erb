@@ -1,0 +1,37 @@
+<% content_for :title do %>我发表过的文章<% end %>
+<h2>我发表过的文章</h2>
+<% if @articles %>
+<% for article in @articles %>
+
+<div title="<%= article.created_at.strftime("%Y-%m-%d %H:%M:%S") %>" class="<%=article.status%>"
+   
+ <div style="float:left;width:380px;">
+    <%= format_content article, article.group %>
+    <% if !article.tag_list.empty? %>
+   <span style="color:#7D7D7D;padding-top:8px">
+     标签：<span id='entity_rtags<%= id -%>' style="color:#8A8A8A"><%= article.tag_list -%>
+     </span>
+   </span>
+<% end %>
+  </div>
+     <div class="post_stats">
+	<%= link_to_if article.status == 'publish', "\##{article.id}", article_path(article) %><br />
+	[ <%= '待审核' if article.status == 'pending' %><%= '已通过' if article.status == 'publish' %><%= '未通过' if article.status == 'private' || article.status=='spam'%> ]
+  </div>
+  <%= link_to_remote "#{article.public_comments_count}条评论", :url => article_comments_path(article), :update => "comments-#{article.id}", :method => :get %>
+      <%# link_to_remote "#{article.tickets.count}个投票", :url => tickets_stats_article_path(article), :update => "tickets-#{article.id}", :method => :get %>
+      <%= link_to '删除', article, :confirm => "你确定要删除#{article.id}号帖子?", :method => :delete %>
+      <%if !article.anonymous%>
+        <%=link_to '改成匿名',:controller=>'articles',:action=>'anonymous',:id=>article%>
+      <%else%>
+        <%=link_to '改成实名',:controller=>'articles',:action=>'anonymous',:id=>article%>
+      <%end%>
+      <div class="comments" id="comments-<%= article.id%>">
+      </div>
+      <div class="comments" id="tickets-<%= article.id%>">
+      </div>
+      <div style="clear:both"></div>
+    </div>
+  <% end %>
+  <%= will_paginate @articles %>
+<% end %>

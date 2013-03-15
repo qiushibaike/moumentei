@@ -1,0 +1,19 @@
+<% content_for :title do%>
+修改密码
+<% end %>
+<h2>修改密码</h2> 
+<%= flash[:error] %>
+<form class="new_user" id="new_user" action="" method="post">
+<label for="old_password">当前密码：</label><br/>
+<input id="old_password" name="old_password" size="30" type="password" /><br/>
+<span style="color: red"></span>
+<br />
+<label for="new_password">新密码(6~40个字符)：</label><br />
+<input id="new_password" name="password" size="30" type="password" /><br/>
+<span style="color: red"></span>
+<br />
+<label for="password_confirmation">重复新密码：</label><br />
+<input id="password_confirmation" name="password_confirmation" size="30" type="password" /><br/>
+<br />
+<input name="commit" onclick="if (window.hiddenCommit) { window.hiddenCommit.setAttribute('value', this.value); }else { hiddenCommit = this.cloneNode(false);hiddenCommit.setAttribute('type', 'hidden');this.form.appendChild(hiddenCommit); }this.setAttribute('originalValue', this.value);this.disabled = true;this.value='正在提交...';result = (this.form.onsubmit ? (this.form.onsubmit() ? this.form.submit() : false) : this.form.submit());if (result == false) { this.value = this.getAttribute('originalValue');this.disabled = false; }return result;" type="submit" value="确认" />
+</form>

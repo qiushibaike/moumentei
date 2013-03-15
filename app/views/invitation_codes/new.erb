@@ -1,0 +1,41 @@
+<% content_for :title do %>手气不错<% end %>
+<%= production_partial 'common/ad2'%>
+<%= production_partial 'common/ad1'%>
+<br/>
+<br/>
+<br/>
+<br/>
+<div style="text-align:center"><%= link_to '返回', invitation_codes_path %></div>
+<div style="text-align:center"><a href="#" id="roll" style="font-size:20px">手气不错</a>
+<img id="loading" src="/images/loading.gif" alt="" style="display: none" />
+</div>
+<script type="text/javascript">
+$(function(){
+  $('#roll').mouseenter(function(){
+    $(this).css('font-size', '32px');
+  }).mouseout(function(){
+    $(this).css('font-size', '20px');
+  }).click(function(){
+    $(this).hide();
+    $('#loading').show();
+    $.ajax({
+      url: '/invitation_codes.js',
+      dataType: 'json',
+      type: 'POST',
+      success: function(data){
+        $('#loading').hide();
+        if(data.length > 0){
+          $.each(data, function(i,v){
+            var d = $('<div/>').css({'display':'none'}).text(v).appendTo('#result');
+            setTimeout(function(a){a.fadeIn('slow')},2000*i,d);
+          });
+        }else{
+          $('#result').text('很抱歉没有中');
+        }
+      }
+    });
+  })
+})
+</script>
+<div id="result" style="text-align:center;font-size:20px;font-family: monospace"></div>
+

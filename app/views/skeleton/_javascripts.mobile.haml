@@ -1,0 +1,29 @@
+-# Fix any <img> or .png_bg bg-images. Also, please read goo.gl/mZiyb
+-  info = {:logged => logged_in?}
+-  if logged_in?
+  -  info[:current_user] = current_user.as_json(:except => [:crypted_password, :salt, :persistence_token])
+  -  info[:current_user][:groups] = current_user.joined_groups.collect{|g|{:id => g.id, :name => g.name}}
+  .my-groups-list-wrapper(style="display:none")
+    %ul.my-groups-list
+      - current_user.publications(Group).each do |sub|
+        - g = sub.publication
+        %li
+          = link_to g.name, articles_path(g)
+          = sub.unread_count > 0 ? "(#{sub.unread_count})" : ''
+
+:javascript
+  var current_user = #{info[:current_user].to_json};
+  window.current_user = current_user;
+
+= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js'
+= javascript_include_tag 'application'
+= javascript_include_tag 'sort'
+
+-#  Append your own using content_for :javascripts
+= yield :javascripts
+
+= production_partial 'google_analytics'
+= production_partial 'baidu_tongji'
+
+
+= NewRelic::Agent.browser_timing_footer rescue ""

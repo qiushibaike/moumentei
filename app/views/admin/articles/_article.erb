@@ -1,0 +1,70 @@
+<% id = article.id %>
+<div id='entity<%= id -%>' class="entry article" data-article_id="<%= id %>">
+<div class="entry_bar">
+  <div class="entry_bar_left" style="float:left;height:28px;line-height:28px">
+    <%= check_box_tag('id[]', article.id.to_s, false, :id => 'id' + article.id.to_s, :class => 'entry-id') if defined?(checkbox)%>
+    <%= article.group.name %>
+    #<%= link_to article.id, article %>
+    <% link_to edit_admin_article_path(article) do %>
+      <i class="icon-edit"></i>编辑
+    <% end %>
+    <% if article.status == 'publish' %>
+      <%= article.pos_score %>   /  <%= article.neg_score %>
+    <% end %>  
+    
+    <%= link_to '+', article.source, :target => '_blank' if article.source and not article.source.blank? %>
+    <% if article.user_id and article.user_id > 0 %>
+      <%= '<u>' unless article.anonymous %>
+      (<%= article.user_id%> <%= article.user.try(:login) %>)
+      <%= '</u>' unless article.anonymous %>
+    <% end %>    
+<!--
+<%=link_to "发到微薄",{:controller => 'admin/articles', :action =>"track", :id=> article.id},:class=>"track"%>
+ <span id="trackinfo" ></span>-->
+    <!--
+    <form action="<%= move_admin_article_path(article) %>">
+<%# select_tag :group_id, options_for_select(categories_options, article.group_id), {:include_blank => true, :onchange => 'this.form.submit()'} %>
+    </form>-->
+    <!--
+    <button class="ui-button ui-state-default ui-corner-all reply-button" onclick="$('#reply_dialog').dialog('open');$('#comment_article_id').val(<%=article.id%>);return false;">回复</button>-->
+  </div>
+  <div class="entry_bar_right" style="float:right">
+    <div class="status-edit">
+      <% if article.status == 'publish' %>
+        <a href="#" class="btn disabled">通过</a>
+      <% else %>
+        <%= link_to "通过", set_status_admin_article_path(article, :status => 'publish'), :class => 'btn btn-primary' %>
+      <% end %>
+      <% if article.status == 'private' %>
+        <a href="#" class="btn disabled">不通过</a>
+      <% else %>
+        <%= link_to "不通过", set_status_admin_article_path(article,  :status => 'private'), :class => 'btn btn-warning' %>
+      <% end %>
+      <% if article.status == 'deleted' %>
+        <a href="#" class="btn disabled">删除</a>
+      <% else %>
+        <%= link_to "删除", set_status_admin_article_path(article,  :status => 'deleted'), :class => 'btn btn-danger' %>
+      <% end %> 
+    </div>
+  </div>
+  <div style="clear:both"></div>
+</div>
+<div class="entity_text" style="clear:both;margin-top:10px">
+  <%= link_to h(article.title), edit_admin_article_path(article) if article.title %>
+  <div><%= image_tag article.picture.url if article.picture.file?%></div>
+  <div><%= format_content article, article.group %></div>  
+  <div class="other">
+  <div style="float: right; color:#666; font-size:12px"><%= article.created_at.strftime("%Y-%m-%d %H:%M:%S") %></div>
+
+  <div style="color:#006600;padding-top:8px"><i class="icon-tags"></i><b>标签：<span id='entity_rtags<%= article.id -%>' style="color:#009966"><%= article.tag_line -%></span></b></div>
+  
+  <% if article.comments.count > 0 and article.status != 'pending' %>
+    <% link_to [:admin, article, :comments], :class => 'btn comments-toggle' do %>
+      <%= article.comments.public.count %>/<%= article.comments.count %>条评论
+    <% end %>
+  <% end %>
+  </div>
+</div>
+<table id="tickets-<%=article.id%>"></table>
+</div>
+<hr/>

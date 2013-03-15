@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%=h @ticket_type.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @ticket_type.description %>
+</p>
+
+<p>
+  <b>Weight:</b>
+  <%=h @ticket_type.weight %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_ticket_type_path(@ticket_type) %> |
+<%= link_to 'Back', admin_ticket_types_path %>

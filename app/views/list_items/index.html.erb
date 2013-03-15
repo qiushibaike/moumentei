@@ -1,0 +1,26 @@
+<h1>Listing list_items</h1>
+
+<table>
+  <tr>
+    <th>Article</th>
+    <th>List</th>
+    <th>Position</th>
+    <th>Notes</th>
+  </tr>
+
+<% @list_items.each do |list_item| %>
+  <tr>
+    <td><%=link_to list_item.article_id, :controller => :articles, :action => :show, :id => list_item.article_id %></td>
+    <td><%=link_to list_item.list.name, :controller => :lists, :action => :show, :id => list_item.list_id %></td>
+    <td><%=h list_item.position %></td>
+    <td><%=h list_item.notes %></td>
+    <td><%= link_to 'Show', list_item %></td>
+    <td><%= link_to 'Edit', edit_list_item_path(list_item) %></td>
+    <td><%= link_to 'Destroy', list_item, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New list_item', new_list_item_path %>

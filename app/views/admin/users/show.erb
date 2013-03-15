@@ -1,0 +1,57 @@
+<dl class="dl-horizontal">
+  <% %w(login email state created_at activated_at).each do |field| %>
+    <dt><strong><%= t field, :scope => 'activerecord.attributes.user' %></strong></dt>
+    <dd><%= @user.send field %></dd>
+  <% end %>
+</dl>
+
+<% w = @user.ensure_weight %>
+<dl class="dl-horizontal">
+  <dt>Pos count</dt>
+  <dd><%= w.pos %></dd>
+  <dt>Neg count</dt>
+  <dd><%= w.neg %></dd>
+  <dt>Total</dt>
+  <dd><%= w.total %></dd>
+  <dt>Pos Weight</dt>
+  <dd><%= w.pos_weight %></dd>
+  <dt>Pos Correct Rate</dt>
+  <dd><%= w.pos_correct_rate %></dd>
+  <dt>Neg Correct Rate</dt>
+  <dd><%= w.neg_correct_rate %></dd>
+  <dt>Neg Weight</dt>
+  <dd><%= w.neg_weight %></dd>
+  <dt>correct_rate</dt>
+  <dd><%= w.correct_rate %></dd>
+  <dt>Adjust</dt>
+  <dd><%= w.adjust %></dd>
+</dl>
+<ul  class="dl-horizontal">
+  <li>Articles: <%= @user.articles.count  %></li>
+  <li>Public: <%= @user.articles.public.count %></li>
+  <li>Comments: <%= @user.comments.count %></li>
+  <li>Total Articles Score <%= @user.total_articles_score %></li>
+  <li>Total Comments Score <%= @user.total_comments_score %></li>
+  <li>Total articles comments <%= @user.total_articles_comments_count %></li>
+  <li>average Articles Score <%= @user.average_articles_score %></li>
+  <li>average Comments Score <%= @user.average_comments_score %></li>
+  <li>average articles comments <%= @user.average_articles_comments_count %></li>
+  <li>Followers<%= @user.followers.count %></li>
+</ul>
+<%@user.roles.each do |role|%>
+<%= h role.name   %>
+<%end%>
+
+<% @user.badges.each do |b| %>
+<%= show_badge(b) %>
+<% end %>
+
+<div class="form-actions">
+  <%= link_to 'edit', edit_admin_user_path(@user), :class => 'btn' %>
+<%= link_to 'Articles', admin_user_articles_path(@user) %>
+<%=link_to "tickets",tickets_admin_user_path(@user)%>
+
+<%= link_to 'back', admin_users_path%>
+<%=link_to 'delete_avatar',:method=>:post%>
+<%=link_to 'delete_comments',:method=>:post%>
+</div>

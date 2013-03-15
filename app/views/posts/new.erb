@@ -1,0 +1,7 @@
+<% if @parent %>
+<h2>回复</h2>
+<ol id="posts">
+<%= render :partial => @parent %>
+</ol>
+<% end %>
+<%= render :partial => 'form' %>

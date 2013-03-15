@@ -1,0 +1,22 @@
+<h1>Listing badges</h1>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+
+<% @badges.each do |badge| %>
+  <tr>
+    <td><%=link_to image_tag( badge.icon(:small)), admin_badge_path(badge) %></td>
+    <td><%=link_to badge.name, admin_badge_path(badge) %></td>
+    <td><%=h badge.title %> </td>
+    <td><%=h badge.description %></td>
+    <td><%= link_to 'Edit', edit_admin_badge_path(badge) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New badge', new_admin_badge_path, :class => 'btn btn-primary' %>

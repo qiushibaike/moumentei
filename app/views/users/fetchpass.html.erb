@@ -1,0 +1,27 @@
+
+<div style="width:250px; margin-left:380px">
+<h1>找回密码</h1>
+
+<% unless @ret %>
+
+<p>如果您丢失了登录密码，请提供您的登录名及注册邮箱，将向您的注册邮件发送密码重置确认邮件。</p>
+<% if ( @msg || flash[:notice] ) %><div id="notice"> <%= ( @msg || flash[:notice] ) %> </div><% end %>
+<%= form_tag '/fetchpass' %>
+<input type="hidden" name="id" value="1" />
+<p><label for="login">您注册过的用户名：</label><br/>
+<%= text_field_tag 'login' %></p>
+
+<p><label for="email">您注册过的电子邮箱：</label><br/>
+<%= text_field_tag 'email' %></p>
+
+<p><%= submit_tag '发送密码重置邮件', :disable_with => "正在发送密码重置邮件..." %></p>
+</form>
+
+<% else %>
+
+<% if ( @msg || flash[:notice] ) %><div id="notice"> <%= ( @msg || flash[:notice] ) %> </div><% end %>
+
+<p>您在收到新密码邮件后，可以 <%= link_to('登录', login_path) %> 本网站了，谢谢。 </p>
+
+<% end %>
+</div>

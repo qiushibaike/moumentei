@@ -1,0 +1,6 @@
+<p>我创建的文章列表</p>
+<% @lists.each do |list| %>
+  <p><%= link_to list.name,:controller => 'lists',:action => 'show',:id => list.id %></p>
+<% end %>
+
+<%=link_to '创建新列表', :controller => 'lists',:action => 'new'%>

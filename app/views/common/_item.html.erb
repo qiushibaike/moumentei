@@ -1,0 +1,36 @@
+<% domain = @group.domain || request.host %>
+<% cache ['rss', item] do %>
+<%= format_content item, @group %>
+<% item = item %>
+<% unless item.tag_line.blank? %>
+<p class="tags" style="zoom:1"><%= item.tag_line %></p>
+<% end %>
+<% if item.picture.file? %>
+  <%= image_tag url_for(:controller => item.picture.url(:medium), :only_path => false) %>
+<% end %>
+<p>
+<%= link_to image_tag(url_for(:controller => "/images/qiushi/good.gif", :only_path => false), :alt => '顶', :border=>0), up_article_url(item) %>
+<%= item.pos_score %>
+::::
+<%= link_to item.user.login, user_url(item.user) unless item.anonymous || item.user.blank?%>
+<% c = item.public_comments_count %>
+<% if c == 0 %>
+<a href="<%= article_url(item) %>#comments" style="color:red">沙发还在，还不快抢</a>
+<% else %>
+已有<strong><%= c %></strong>条评论<a href="<%= article_url(item) %>#comments" style="color:red">立即参与评论</a>
+<% end %>
+</p>
+<!--
+<% for c in item.comments.public.find(:all, {:conditions => 'score > 0', :order => 'score desc', :limit => 10}) %>
+<p>
+  <% unless c.anonymous %>
+  <%= link_to c.user.login, user_url(c.user)  %>
+  <% else %>
+  匿名人士
+  <% end %>
+
+  <strong><%= c.score %></strong>
+  <%=h c.content %>
+</p>
+<% end %>--><hr style="border:1 dashed #987cb9" size="1" />
+<% end %>

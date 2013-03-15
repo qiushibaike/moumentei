@@ -1,0 +1,21 @@
+<h1><%= @list.new_record? ? '新建' : '编辑' %>清单</h1>
+
+<% form_for(@list) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name, '名称' %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :name, '说明' %><br />
+    <%= f.text_area :notes %>
+  </p>  
+  <p>
+    <%= f.label :private, '隐藏' %><br />
+    <%= f.check_box :private %>
+  </p>
+  <p>
+    <%= f.submit @list.new_record? ? '创建' : '更新' %>
+  </p>
+<% end %>

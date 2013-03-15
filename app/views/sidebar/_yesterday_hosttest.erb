@@ -1,0 +1,39 @@
+﻿<div class="yesterday_hottest">  
+  <%="昨日热帖"%><br/>
+  <%sc=Score.find_by_sql("SELECT * FROM `scores`
+where created_at>=(current_date - interval 1 day)
+and created_at <=(current_date - interval 0 day)
+ORDER BY score DESC LIMIT 3 ")%>
+  <%sc.each do |s|%>
+    <%art=Article.find_by_sql("select * from `articles` where articles.id='#{s.article_id}' and articles.group_id='#{@group.id}'")%>
+    <%art.each do |a|%>
+  <div>
+    <%if a.anonymous?%>
+      匿名用户
+    <%else%>
+      <%=link_to a.user.login, user_path(a.user.id)%>
+    <%end%>@
+    <%if a.title.nil?%>
+    <%=link_to a.id,article_path(a)%>
+    <%else%>
+    <%=link_to a.title ,article_path(a)%>
+    <%end%>
+  </div>
+  <div>
+    <%if a.content.nil?%>
+    <%else%>
+    <%=a.content.mb_chars[0,50]%>
+    <%end%>
+    <%if a.picture.url.nil?%>
+    <%=image_tag a.picture.url(:small)%>
+    <%end%>
+      <%#*文章：<%=link_to a.title ,article_path(a)%>
+      <%#*作者：<%=link_to a.user.login, user_path(a.user.login)%>
+      <%#*内容：<%=a.content.mb_chars[0,50]%>
+      <%#=image_tag a.picture.url(:small)%>
+  </div>
+    <%end%>
+  <%end%>
+</div>
+<h2></h2>
+<%#*end of昨日热帖%>

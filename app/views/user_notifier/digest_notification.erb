@@ -1,0 +1,19 @@
+尊敬的 <%= @user.login %>：
+您好
+<% if @user.unread_messages_count > 0 %>
+您有<%= @user.unread_messages_count %>条未读的纸条，立即查看：
+<%= Setting.site_url %>/messages/inbox
+----------------------------
+<% end %>
+您的所关注的帖子中，今天有<%= @articles.size %>个有更新:
+
+
+<% for article in @articles %>
+<%= article.group.name %>#<%= article.id %> (+<%=article.pos_score%>:<%=article.neg_score%>) - 新增<%= @comments[article.id].size %>条评论
+<%= article.content.mb_chars.length > 60 ? article.content.mb_chars[0,60] + '...' : article.content %>
+http://<%= article.group.domain %>/articles/<%= article.id %>
+
+<% end %>
+
+
+团队祝您生活愉快，每天好心情。

@@ -1,0 +1,11 @@
+<% form_tag (session_path,:style=>"padding:0 16px;")  do -%>
+  <label for="login">用户名或邮箱：(<%= link_to "还没注册？", signup_path %>)</label><br />
+  <%= text_field_tag 'login', @login, :tabindex => 1 %><br />
+  <br />
+  <label for="password">密码：(<%= link_to "忘记密码？", '/fetchpass' %>)</label><br />
+  <%= password_field_tag 'password', nil, :tabindex => 2 %><br />
+  <% if ( @msg || flash[:notice] ) %><span style="color: red"><%= ( @msg || flash[:notice] ) %></span><br /><% end %>
+  <input type="hidden" value="1" name="remember_me" id="remember_me"/>
+  <br />
+  <input name="commit" onclick="this.disabled=true;this.value='正在登录...';this.form.submit();" type="submit" value="登录" tabindex="3" />
+<% end -%>

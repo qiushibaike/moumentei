@@ -1,0 +1,39 @@
+<div class='accordion' id="search-section">
+  <div class='accordion-heading'>
+    <a href="#search-form" data-toggle="collapse" data-parent="#search-section" class='accordion-toggle'>Search</a>
+  </div>
+  <div id="search-form" class="accordion-body collapse">
+  <form class="accordion-inner">
+    <label>小组</label>
+    <%= select_tag :group_id, options_from_collection_for_select(Group.all, 'id', 'name', params[:group_id].to_i)  %>
+    <label>用户</label>
+    <%= text_field_tag :user_id, params[:user_id] %>
+    <label>开始时间</label>
+    <%= datetimepicker_for :start, params[:start]%>
+    <label>结束时间</label>
+    <%= datetimepicker_for :end, params[:end]%>
+    <label>状态</label>
+    <%= select_tag :status, options_for_select(@statuses, params[:status])  %>
+    <div class='form-actions'>
+      <%= submit_tag 'search', :class => 'btn btn-primary' %>
+    </div>
+  </form>
+  </div>
+</div>
+<% content_for :javascripts do %>
+<%= javascript_include_tag '/js/bootstrap-datepicker.js', '/js/bootstrap-datepicker.zh-CN.js', '/js/jquery.timePicker.js' %>
+<script type="text/javascript">
+$(function(){
+  $(".collapse").collapse();
+  $(".datetimepicker .datepicker,.datetimepicker .timepicker").change(function(){
+    var self = this,ts = $(self).parent(".datetimepicker");
+    var date = $(".datepicker",ts).val();
+    var time = $(".timepicker",ts).val();
+    $("input[type=hidden]",ts).val(date + " " + time)
+  });
+});
+</script>
+<% end %>
+<% content_for :stylesheets do %>
+<%= stylesheet_link_tag '/css/bootstrap-datepicker', "/css/jquery.timePicker.css" %>
+<% end %>

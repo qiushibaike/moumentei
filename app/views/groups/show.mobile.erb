@@ -1,0 +1,24 @@
+<% @content_for_title = '这个星球上最暴笑的帖子分享网站' %>
+<div id="home_entry">
+    <div id="entry_left">
+        <h2>欢迎访问！</h2>
+	<br /><br />
+    </div> <!-- entry -left -->
+    <div id="entry_right">
+        <h2>最新帖子：</h2>
+        <%= render( :partial => @art_last) unless @art_last.nil? %>
+        <a href="latest">查看更多...</a>
+        <br /><br />
+        <h2>近期热点：</h2>
+        <%= render( :partial => @articles) %>
+        <a href="hottest">查看更多...</a>
+        <br /><br />
+        <h2>热门标签：</h2>
+        <div id="homecloud">
+  <% tag_cloud(@group.public_articles.cached_tag_clouds[0, 30], %w(4 3 3 2 2 2 1)) do |tag, css_class| %>
+      <span class="tag_level<%= css_class %>"><%= link_to tag.name, { :action => :tag, :tag => tag.name }, :rel => 'tag' %></span>
+  <% end %>
+        </div>
+        <a href="/tags">查看更多...</a>
+        </div> <!-- entry_right -->
+</div> <!-- home_entry -->

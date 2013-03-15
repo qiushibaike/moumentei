@@ -1,0 +1,25 @@
+development:
+  charset_type: zh_cn.utf-8
+  charset_dictpath: /opt/csft/var/data
+  bin_path: /opt/csft/bin
+  bin_path: /opt/csft/bin
+  searchd_binary_name: searchd
+  indexer_binary_name: indexer
+  #sql_query_pre: "SET NAMES utf8"
+test:
+  listen: 9313
+production:
+  bin_path: /opt/csft/bin
+  searchd_binary_name: searchd
+  indexer_binary_name: indexer
+  charset_type: zh_cn.utf-8
+  charset_dictpath: /opt/csft/var/data
+  mem_limit: 128M
+
+local_production:
+  bin_path: /opt/csft/bin
+  searchd_binary_name: searchd
+  indexer_binary_name: indexer
+  charset_type: zh_cn.utf-8
+  charset_dictpath: /opt/csft/var/data
+  mem_limit: 128M

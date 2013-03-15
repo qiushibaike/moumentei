@@ -1,0 +1,15 @@
+beer:
+  id: 1
+  title: Beer
+
+wine:
+  id: 2
+  title: Wine
+
+cola:
+  id: 3
+  title: Cola
+
+coffee:
+  id: 4
+  title: Coffee

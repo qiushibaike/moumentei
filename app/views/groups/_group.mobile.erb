@@ -1,0 +1,15 @@
+<% content_tag_for :li, group do %>
+  <% link_to articles_path(group) do %>
+    <%# image_tag(group.icon(:small), :alt => group.name) %>
+    <h3><%= h group.name %></h3>
+    <p><%= h group.description %></p>
+  <% end %>
+  <% if logged_in? %>
+    <div class="ui-li-aside" data-role='fieldcontain'>
+      <select name='join' data-role='slider' data-group='<%= group.alias %>'>
+        <option value="no" selected="<%= !current_user.is_member_of?(group) %>">未加入</option>
+        <option value="yes" selected="<%= current_user.is_member_of?(group) %>">已加入</option>
+    </div>
+  <% end %>
+<% end %>
+

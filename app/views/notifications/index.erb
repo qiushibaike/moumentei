@@ -1,0 +1,14 @@
+<% content_for :title, '消息提醒' %>
+<div id="clear_all_notifications">
+<% unless @unread_notification_count == 0 %>
+  <%= link_to_remote '全部忽略',:url=>{:action => :clear_all} %>
+<% end %>
+</div>
+  
+  <ul id="notifications_list">
+
+      <% @notifications.each do |n| %>
+      <li><%= render :partial =>  n.key[0], :object => n %></li>
+      <% end %>
+  </ul>
+  <%=will_paginate @notifications%>

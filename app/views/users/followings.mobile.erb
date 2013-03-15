@@ -1,0 +1,12 @@
+<%=render :partial => @user%>
+<div id="right">
+<% if @friends.size == 0 %>
+<h2><%= @user.login %>尚未关注任何网友</h2>
+<% else %>
+<h2><%= "#{@user.login}在关注#{@user.friends.count}位网友" %></h2>
+<% for f in @friends %>
+<%= avatar f %>
+<% end %>
+<% end %>
+</div>
+<%= render :partial => 'common/ad3' %>

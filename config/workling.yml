@@ -1,0 +1,42 @@
+# By default, NotRemoteRunner is used when RAILS_ENV == 'test'.
+#
+# You can pass options to memcached client by nesting the key value pairs
+# under 'memcache_options'.
+#
+# You can also use a cluster of Starlings. Simply give a comma separated
+# list of server:port, server:port, server:port values to listens_on. 
+#
+production:
+  listens_on: localhost:5672
+  amqp_options:
+  # as per example  
+  sync_amqp_options:
+    client:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false
+    returnstore:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false  
+local_production:
+  listens_on: localhost:5672
+  amqp_options:
+  # as per example  
+  sync_amqp_options:
+    client:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false
+    returnstore:
+      queue_options:
+        durable: false
+      message_options:
+        persistent: false  
+development:
+  listens_on: localhost:12345
+test:
+  listens_on: localhost:12345

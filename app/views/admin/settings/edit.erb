@@ -1,0 +1,32 @@
+<% attr = 'activerecord.attributes.setting' %>
+<% form_for Setting, :url => admin_setting_path, :html => {:class => 'form-horizontal'} do |f| %>
+  <fieldset>
+  <div class="control-group">
+    <label class="control-label"><%= t 'site_name', :scope => attr %></label>
+    <div class="controls"><%= f.text_field :site_name %></div>
+  </div>
+  <div class="control-group">
+    <label class="control-label"><%= t 'activerecord.attributes.setting.site_url' %></label>
+    <div class="controls"><%= f.text_field :site_url %></div>
+  </div>
+  <div class="control-group">
+    <label class="control-label"><%= t 'activerecord.attributes.setting.site_email' %></label>
+    <div class="controls"><%= f.text_field :site_email %></div>
+  </div>
+  <div class="control-group">
+    <label class="control-label"><%= t 'activerecord.attributes.setting.default_group' %></label>
+    <div class="controls"><%= f.select :default_group, Group.all.collect{|g|[g.name, g.id]}, {:include_blank => true, :selected => Setting.default_group.to_i}  %></div>
+  </div>
+  <div class="control-group">
+    <label class="control-label"><%= t 'activerecord.attributes.setting.replacelist' %></label>
+    <div class="controls"><textarea class="span6" rows="10" name="setting[replacelist]"><%= Setting['replacelist'] && Setting['replacelist'].to_a.collect{|i| i.join(' ')}.join("\r\n") %></textarea></div>
+  </div>
+  <div class="control-group">
+    <label class="control-label"><%= t 'activerecord.attributes.setting.blacklist' %></label>
+    <div class="controls"><textarea class="span6" rows="10" name="setting[blacklist]"><%= Setting['blacklist'] && Setting['blacklist'].join("\r\n") %></textarea></div>
+  </div>
+  </fieldset>
+  <div class="form-actions">
+  <%= f.submit '更新', :class => 'btn btn-primary' %>
+  </div>
+<% end %>

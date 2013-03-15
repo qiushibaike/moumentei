@@ -1,0 +1,33 @@
+<div id="notice"><%= ( @msg || flash[:notice] ) if ( @msg || flash[:notice] ) %></div>
+<div>
+  <ul class="nav nav-tabs">
+    <% for status in @statuses %>
+      <li <%= 'class="active"' if @status == status -%>><a href="<%= url_for(:status => status) %>" <%= 'class="current"' if @status == status -%> ><span><%= status %> [<%= Comment.by_status( status).count -%>]</span></a></li>
+    <% end %>
+  </ul>
+</div>
+
+<% if @articles.size == 0 %>
+  <p> 无评论 </p>
+<% else %>
+  <% form_tag({:action => :batch_set_status }, {:onsubmit => "return deleteelse(this);"}) do  %>
+    <%= render :partial => 'admin/articles/selection' %>
+    <div id="entities">
+      <% for article in @articles %>
+        <div id="article-<%=article.id%>" class="entry">     
+          <div class='secret_entity'>
+            <%= render :partial => 'admin/articles/article', :object => article %>
+          </div> <!-- end entity -->
+          <hr />
+          <ul class="list">
+            <%= render :partial => 'comment', :collection => @comments[article.id]%>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+    <hr/>
+    <%= submit_tag "通过选中的内容" %>
+    <label class="checkbox inline"><input type="checkbox" checked="checked" name="delete_else" value="" />删除其他未标记的</label>
+    <% end %>
+  <% end # end if %>
+  <%= render :partial => 'admin/articles/pagination' %>

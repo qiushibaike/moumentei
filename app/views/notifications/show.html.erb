@@ -1,0 +1,13 @@
+<p>
+  <b>User:</b>
+  <%=h @notification.user_id %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%=h @notification.content %>
+</p>
+
+
+<%= link_to 'Edit', edit_notification_path(@notification) %> |
+<%= link_to 'Back', notifications_path %>

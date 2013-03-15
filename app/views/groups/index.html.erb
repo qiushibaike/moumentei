@@ -1,0 +1,8 @@
+<h1>Groups#index</h1>
+<p>Find me in app/views/groups/index.html.erb</p>
+
+<ul>
+  <% for group in @groups %>
+    <li><%= link_to group.name, :action => :show, :id => group.id %> </li>
+  <% end  %>
+</ul>

@@ -1,0 +1,32 @@
+<h1>Listing invitation_codes</h1>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Code</th>
+    <th>Applicant</th>
+    <th>Consumer</th>
+    <th>Created at</th>
+    <th>Consumed at</th>
+  </tr>
+
+<% @invitation_codes.each do |code|invitation_code = code %>
+  <tr>
+    <th><%= code.id %></th>
+    <td><tt><%= code.code[0,4] %> <%= code.code[4,4] %> <%= code.code[8,4] %> <%= code.code[12,4] %></tt></td>
+    <td><%=link_to code.applicant.login, admin_user_path(code.applicant) %></td>
+    <td><%=link_to code.consumer.login, admin_user_path(code.consumer) if code.consumer %></td>
+    <td><%=h invitation_code.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+    <td><%=h invitation_code.consumed_at.strftime("%Y-%m-%d %H:%M:%S") if invitation_code.consumed_at %></td>
+    <td><%= link_to 'Destroy', admin_invitation_code_path(invitation_code), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= will_paginate @invitation_code %>
+<br />
+
+<form action="<%= generate_admin_invitation_codes_path%>" method="post">
+<lable>Amount:
+<input type="text" name="amount" value="1" /></label>
+<input type="submit" value="Generate" />
+</form>

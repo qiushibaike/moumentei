@@ -1,0 +1,16 @@
+<h1>Editing quest_log</h1>
+
+<% form_for(@quest_log) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :quest %><br />
+    <%= f.text_field :quest %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @quest_log %> |
+<%= link_to 'Back', quest_logs_path %>

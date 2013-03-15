@@ -1,0 +1,40 @@
+<h1>Editing #<%= @user.id %></h1>
+<% form_for [:admin, @user], :html => {:multipart => true} do |f| %>
+  <%= f.label :login %>
+  <%= f.text_field :login %>
+  <%= f.label :email %>
+  <%= f.text_field :email%>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
+  <%= f.label :avatar %>
+  <%= image_tag @user.avatar.url if @user.avatar.file? %>
+  <%= f.file_field :avatar %>
+  
+  <fieldset style="width:50%">
+    <legend>权限</legend><% Role.all.each do |role| %>
+  <label>
+<%= check_box_tag "user[role_ids][]", role.id, @user.role_ids.include?(role.id)  %>
+<%= role.name %>
+</label>
+<% end %>
+</fieldset>
+<fieldset style="width:50%">
+  <legend>勋章</legend>
+<% Badge.all.each do |b| %>
+<label>
+<%= check_box_tag "user[badge_ids][]", b.id, @user.badge_ids.include?(b.id)  %>
+<%= image_tag b.icon(:small) %>
+<%= b.title %>
+</label>
+<% end %>
+  <label>adjust<%=text_field_tag "user[adjust]",@user.ensure_weight.adjust%></label>
+</fieldset>
+<div class="form-actions">
+<%= f.submit 'Update', :class => 'btn btn-primary'%>
+<%= link_to 'Back', [:admin, @user], :class => 'btn' %>
+</div>
+<% end %>
+
+

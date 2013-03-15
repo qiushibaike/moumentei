@@ -1,0 +1,24 @@
+<h1> invitation_code</h1>
+
+<% form_for([:admin, @invitation_code]) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :applicant_id %><br />
+    <%= f.text_field :applicant_id %>
+  </p>
+  <p>
+    <%= f.label :consumer_id %><br />
+    <%= f.text_field :consumer_id %>
+  </p>
+  <p>
+    <%= f.label :created_at %><br />
+    <%= f.datetime_select :created_at %>
+  </p>
+  <p>
+    <%= f.label :consumed_at %><br />
+    <%= f.datetime_select :consumed_at %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

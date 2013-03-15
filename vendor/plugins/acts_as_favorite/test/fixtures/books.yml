@@ -1,0 +1,11 @@
+ruby:
+  id: 1
+  title: Programming Ruby
+
+agile:
+  id: 2
+  title: Agile Web Development with Rails
+
+rails:
+  id: 3
+  title: Ruby for Rails

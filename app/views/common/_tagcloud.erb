@@ -1,0 +1,6 @@
+              <% cache 'tag_cloud_homepage', :expires_in => 24.hour do %>
+              <% @group||=Group.find(2) %>
+                <% tag_cloud(@group.public_articles.cached_tag_clouds[0, 30], %w(4 3 3 2 2 2 1)) do |tag, css_class| %>
+                <span class="tag_level<%= css_class %>"><%= link_to tag.name, {:controller => :groups, :action => :tag, :tag => tag.name, :id => @group.id, :page => nil }, :rel => 'tag' %></span>
+                <% end %>
+              <% end %>

@@ -1,0 +1,23 @@
+<p>
+  <b>Applicant:</b>
+  <%=h @invitation_code.applicant_id %>
+</p>
+
+<p>
+  <b>Consumer:</b>
+  <%=h @invitation_code.consumer_id %>
+</p>
+
+<p>
+  <b>Created at:</b>
+  <%=h @invitation_code.created_at %>
+</p>
+
+<p>
+  <b>Consumed at:</b>
+  <%=h @invitation_code.consumed_at %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_invitation_code_path(@invitation_code) %> |
+<%= link_to 'Back', admin_invitation_codes_path %>

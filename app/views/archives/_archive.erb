@@ -1,0 +1,24 @@
+<% article=archive %>
+<div class="qiushi_body" title="<%= article.created_at.strftime("%Y.%m.%d %H:%M") %>">
+    <%= format_content article, article.group %>
+    <% unless article.tag_list.nil? or article.tag_list.empty? %>
+      <p class="tags" style="zoom:1"><%= render( :partial => "articles/tags", :locals => {:tag_list => article.tag_list}) %></p>
+    <% end %>
+</div>
+<div class="qiushi_counts <%="qiushi_counts_afterclick" if current_page?(article_path(article))%>" id="qiushi_counts_<%= article.id %>">
+  <div class="counts">
+    <span class="space" style="zoom:1">|</span>
+      <span class="space"></span>
+
+      <% if article.comment_status == 'closed' %>
+        <span class="comment_head">禁止评论</span>
+      <% else %>
+        <span>
+        <a href="<%=article_path(article)%>" class="comments" id="c-<%=article.id%>">
+          <%=article.public_comments_count > 0 ? "<strong>#{article.public_comments_count}</strong>条评论" : "暂无评论" %>
+        </a>
+        </span>
+      <% end %>
+    </div>
+    <div class="datetime"><a href="<%= article_url(article)%>" title="单独打开帖子#<%=article.id%>">#<%=article.id%></a></div>
+  </div>

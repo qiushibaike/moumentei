@@ -1,0 +1,20 @@
+<% content_for :title do %>写新纸条<% end %>
+<%=render :partial => 'nav'%>
+<% form_for(@message) do |f| %>
+  <%= f.error_messages %>
+<%= f.label :recipient, '写给：' %>
+  <% if @message.recipient  %>
+  <p style="background:url(<%= @message.recipient.avatar.url("thumb") %>) no-repeat top 320px;height:40px;">
+    <%= @message.recipient.login %><%= f.hidden_field :recipient_id %>
+  <% else %>
+    <%= f.select :recipient_id, current_user.friends.collect {|p| [ p.login, p.id ] } %>
+  <% end %>
+  </p>
+  <p>
+    <%= f.label :content, '正文：' %><br />
+    <textarea id="message_content" name="message[content]" onpropertychange="if(this.scrollHeight>50){this.style.height=this.scrollHeight+'px';}"  oninput="if(this.scrollHeight>50){this.style.height=this.scrollHeight+'px';}" style="height:50px;width:300px"></textarea>
+  </p>
+  <p>
+    <%= f.submit '发送', :disable_with => '发送中...' %>
+  </p>
+<% end %>

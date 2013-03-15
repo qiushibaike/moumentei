@@ -1,0 +1,19 @@
+<% content_for :title do %> 时间地图<% end %>
+<table>
+  <tr>
+    <th>年</th>
+    <th>月</th></tr>
+  <% for i in @start_year..@end_year %>
+    <tr>
+      <th>
+        <%= i %>
+        <%# @group.public_articles.created_at_gte("#{i}-1-1 0:0:0").created_at_lt("#{i}-12-31 23:59:59").count %>
+      </th>
+      <% for j in 1..12 %>
+        <td>
+          <%= link_to j, group_archive_path(@group, i, j) %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

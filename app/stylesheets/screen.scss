@@ -1,0 +1,152 @@
+// This import applies a global reset to any page that imports this stylesheet.
+@import "blueprint/reset";
+
+// To configure blueprint, edit the partials/base.sass file.
+@import "partials/base";
+
+// Import all the default blueprint modules so that we can access their mixins.
+@import "blueprint";
+
+// Import the non-default scaffolding module.
+@import "blueprint/scaffolding";
+
+// To generate css equivalent to the blueprint css but with your
+// configuration applied, uncomment:
+// @include blueprint
+
+// But Compass recommends that you scope your blueprint styles
+// So that you can better control what pages use blueprint
+// when stylesheets are concatenated together.
+@include blueprint-scaffolding("body.bp");
+@import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
+
+body.bp {
+  @include blueprint-typography(true);
+  @include blueprint-utilities;
+  @include blueprint-debug;
+  @include blueprint-interaction;
+  // Remove the scaffolding when you're ready to start doing visual design.
+  // Or leave it in if you're happy with how blueprint looks out-of-the-box
+}
+
+form.bp {
+  @include blueprint-form; }
+
+// Page layout can be done using mixins applied to your semantic classes and IDs:
+body.two-col {
+  #container {
+    @include container; }
+  #header, #footer {
+    @include column($blueprint-grid-columns); }
+  #sidebar {
+    // One third of the grid columns, rounding down. With 24 cols, this is 8.
+    $sidebar-columns: floor($blueprint-grid-columns / 3);
+    @include column($sidebar-columns, true); }
+  #content {
+    // Two thirds of the grid columns, rounding up.
+    // With 24 cols, this is 16.
+    $content-columns: ceil(2 * $blueprint-grid-columns / 3);
+    // true means it's the last column in the row
+    @include column($content-columns); } }
+
+
+form#new_post {
+  @include column(14);
+  @include prepend(1)
+}
+
+#post_content {
+  width: 100%;
+  height: 100px;
+  @include border-radius(3px,3px);
+}
+#post_content:focus {
+  @include box-shadow(rgba(82, 168, 236, 0.5), 0, 0, 8px);
+  border-color: rgba(82, 168, 236, 0.75) !important;
+  outline: medium none;
+}
+
+#post_submit {
+  float:right;
+}
+
+ol#posts {
+  list-style: none outside none;
+  font-size: 14px;
+  .post {
+    background:none repeat scroll 0 0 #FFFFFF;
+    border-bottom:1px dashed #D8D8D8;
+    float:left;
+    padding:12px 0 10px;
+    width:100%;
+  }
+  
+  .thumb {
+    float: left;
+    height:50px;
+    padding:0 0 4px 12px;
+    width:auto;    
+  }
+  .post-body {
+    float:right;
+    overflow:hidden;
+    padding-right:12px;
+    width:470px;
+    word-wrap:break-word;  
+/*    
+    .author {
+      color:#999999;
+      display:inline;
+      float:left;
+      font-size:14px;
+      height:23px;
+      line-height:23px;    
+    }*/
+  }
+  .meta {
+    color:#999999;
+    display:block;
+    font-size:11px;
+  }
+  .entry-meta {
+    margin-top:2px;
+  }
+  .actions-hover {
+    height:auto;
+    bottom:8px;
+    color:#999999;
+    float:right;
+    font-size:11px;
+    overflow:visible;
+    padding-right:10px;
+    /*position:absolute;
+    right:0;
+    visibility:hidden;*/
+    li {
+      display: block;
+      float:left;
+    }    
+    span.icon {
+      background-image:url("http://s.twimg.com/a/1283564528/images/sprite-icons.png");
+      background-repeat:no-repeat;
+      display:block;
+      float:left;
+      margin-left:8px;
+    }
+    .reply-icon {
+      height:15px;
+      margin-right:1px;
+      width:15px;
+    }
+    .reshare-icon {
+      background-position:-176px 0;
+      height:16px;
+      margin-right:2px;
+      width:16px;
+    }    
+  }
+}
+ul {
+list-style:none outside none;
+}

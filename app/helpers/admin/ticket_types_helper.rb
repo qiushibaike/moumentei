@@ -1,0 +1,2 @@
+module Admin::TicketTypesHelper
+end

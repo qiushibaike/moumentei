@@ -1,0 +1,29 @@
+<% div_for article do %>
+<% cache ["phone", article] do %>
+<% unless article.title.blank? %>
+<h4><%= link_to article.title, article, :rel => 'permalink' %></h4>
+<% end %>
+<%= format_content article, article.group %>
+<p><%= link_to image_tag(article.picture(:small)), article.picture(:medium) if article.picture.file? %></p>
+<% unless article.tag_line.blank? %>
+<p>标签：<%= show_tags(article, @current_tag) %></p>
+<% end %>
+<% if not article.anonymous? and article.user %>
+<p>BY: <%= link_to article.user.login, article.user %> </p>
+<% end %>
+<% end %>
+<div>
+<% if rated?(article)%>
+<%= article.pos_score %>人喜欢 
+<% else %>
+<% link_to up_article_path(article) do %>
+<%= image_tag('flower-2.png', :class => 'voteicon')%><%=  article.pos_score %>
+<% end %>
+<% end %>
+&nbsp;| &nbsp;
+<% if article.comment_status == 'closed' %>
+  <span class="comments-link">禁止评论</span>
+<% else %>
+  <%= link_to article.public_comments_count > 0 ? "#{article.public_comments_count}条评论" : "暂无评论", article_path(article, :anchor => "comments-list") %>
+<% end %>
+<% end %>

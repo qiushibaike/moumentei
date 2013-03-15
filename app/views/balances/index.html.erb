@@ -1,0 +1,24 @@
+<h1>Listing balances</h1>
+
+<table>
+  <tr>
+    <th>Charm</th>
+    <th>Credit</th>
+    <th>Level</th>
+  </tr>
+
+<% @balances.each do |balance| %>
+  <tr>
+    <td><%=h balance.charm %></td>
+    <td><%=h balance.credit %></td>
+    <td><%=h balance.level %></td>
+    <td><%= link_to 'Show', balance %></td>
+    <td><%= link_to 'Edit', edit_balance_path(balance) %></td>
+    <td><%= link_to 'Destroy', balance, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New balance', new_balance_path %>

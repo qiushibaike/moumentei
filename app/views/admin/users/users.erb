@@ -1,0 +1,83 @@
+<% if ( @msg || flash[:notice] ) %> <div id="notice"> <%= ( @msg || flash[:notice] ) %> </div> <% end %>
+
+<% form_for :usercond, :html=>{:name=>"usercond"} do |f| %>
+ <p>名字(模糊) <%= f.text_field(:name, :size =>10) %> &nbsp;
+    用户角色 <%= f.select(:roll,[["普通用户","user"],["管理员","admin"]],{:include_blank=>true}) %> &nbsp;
+    用户状态 <%= f.select(:activated,[["激活","not null"],["未激活","null"]],{:include_blank=>true}) %> &nbsp;
+    最近<%= f.text_field(:days,:size =>3) -%>天未登录 </p>
+
+ <p> <input onclick="query_user();" type="button" value="查询用户" /> </p>
+
+<%= debug( params ) %>
+<% unless @users.empty? %>
+  <div id="keywordmessage"></div>
+  <table cellpadding="1" id="userentities">
+    <tr><td width="60" align="center">ID</td>
+      <td width="120" align="center">登录名</td>
+      <td width="80" align="center">用户角色</td>
+      <td width="80" align="center">用户状态</td>
+      <td width="80" align="center">未登录天数</td>
+      <td width="80" align="center">操作</td>
+    </tr>
+    <tr><td>
+    <% i=1; @users.each do |user| ; id=user.id %>
+      <%= "<tr id='tr#{id}' bgcolor='#{["#FFCCFF","#FFFF99"][i%2]}'>" +
+        "<td align='right'>" + check_box(:usersel, "#{id}" )+ "#{id}</td>" +
+        "<td id='tdlogin#{id}' align='center'>#{user.login}</td>" +
+        "<td id='tdroll#{id}' align='center'>#{user.roll}</td>" +
+        "<td id='tdstat#{id}' align='center'>#{user.activated_at ? 'up':''}</td>" +
+        "<td align='center'>last</td><td align='center'>" +
+        link_to_function("修改","edit_user(#{id})") + " " +
+        link_to_function("禁用","disa_user(#{id})") + "</td></tr>" %>
+    <% i+=1; end %>
+  </table>
+  <p> <%= button_to_function("全选", "select_item(1)")+ " "+
+            button_to_function("清空", "select_item(0)")+ " "+
+            button_to_function("反选", "select_item(2)") %>
+  </p>
+<% end %>
+
+  <%= link_to_function("给客户发邮件广播","Element.toggle('mail_form')") %>
+  <div id="mail_form">
+    <%= radio_button_tag(:man,"bycond",params[:man]!="bysel") %>根据设置条件
+    <%= radio_button_tag(:man,"bysel", params[:man]=="bysel") %>根据选定客户 <br />
+    <%= text_area_tag(:text, params[:text], :size =>"60x5" ) %>
+    <input onclick="mail_user();" type="button" value="发送邮件" %>
+  </div>
+<% end %>
+
+<%= @msgblock if  @msgblock %>
+
+<script type="text/javascript">
+Element.hide("mail_form") ;
+function select_item(sel) {
+    var val=new Array("", "checked" ) ;
+    var all=document.getElementById("userentities");
+    var checks=all.getElementsByTagName("input");
+
+    for(var i=0;i<checks.length;i++)
+        if (checks[i].type=="checkbox") checks[i].checked = (sel<2 ? val[sel] :
+                (checks[i].checked==""? "checked":"") ) ;
+}
+function query_user() {
+    document.usercond.action= "/admin/users" ;
+    document.usercond.submit();
+    return false;
+}
+function mail_user() {
+    document.usercond.action= "/admin/mail_user" ;
+    document.usercond.submit();
+    return false;
+}
+function edit_user( uid ) {
+    $('user_id').value = uid ;
+    $('user_roll').value = $('tdroll'+kid).innerHTML ;
+    $('edit_user').disabled = false ;
+}
+function disa_user( uid ) {
+    new Ajax.Request( '/admin/disa_keyword/'+uid, {asynchronous:true, evalScripts:true} );
+    return false;
+}
+</script>
+
+<center id="pagenation"> <%= page_leaf( @page_cur, @page_max ) if @page_max>1 %> </center>

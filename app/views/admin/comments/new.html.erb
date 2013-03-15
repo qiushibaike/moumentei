@@ -1,0 +1,11 @@
+<%=h current_user.login %>
+<p>reply to #<%=@article.id%> <%=h @article.title %></p>
+<% form_for( ['admin', @article, @comment] )do |f|%>
+
+  <p><%= f.label :content %><br/>
+  <%= f.text_area :content %>
+  </p>
+  <p>
+    <%= f.submit 'Reply', :disable_with => 'Please Wait...', :onclick => 'j.ajax({complete:function(){j("#dialog").dialog("close")}});j.post(this.form.action, j(this.form).serialize());return false;' %>
+  </p>
+<% end %>

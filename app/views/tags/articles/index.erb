@@ -1,0 +1,4 @@
+<%= link_to 'latest', group_tag_articles_path(:order => 'latest')%>
+<%= link_to 'earliest', group_tag_articles_path(:order => 'earliest')%>
+<%= link_to 'hottest', group_tag_articles_path(:order => 'earliest')%>
+<%= render :partial => @articles %>

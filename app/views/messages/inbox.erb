@@ -1,0 +1,28 @@
+<h2>
+<%= link_to_unless_current '我收到的纸条', inbox_messages_path%>
+<%= link_to_unless_current '发出去的纸条', outbox_messages_path%>
+<%= link_to_unless_current '写新纸条', new_message_path %>
+</h2>
+<% content_for :title do %>我收到的纸条<% end %>
+    <% cache 'announcement', :expires_in => 7200 do %>
+  <%  if Announcement.count > 0; ann = Announcement.first %>
+  <div title="<%= ann.created_at.strftime("%Y-%m-%d %H:%M:%S") %>" style="margin:10px 0;padding:10px 8px 10px 16px; -webkit-border-radius: 10px; -moz-border-radius:10px;">
+    公告
+  <div style="float:left;width:350px;">
+    <%=h(ann.content).gsub(/\r/, "<br/>") %><br />
+  </div>
+  <div style="float:right;padding-left:40px;width:80px;">
+    <span style="color:#8B8B8B"><%= ann.created_at.strftime("%Y-%m-%d") %></span><br/>
+  </div>
+  <div style="clear:both"></div>
+</div>
+    
+  <% end %>
+    <% end %>
+
+<% if @messages.size > 0 %>
+  <%= render :partial => @messages %>
+<% else %>
+没有发出去的纸条
+<% end %>
+<%= will_paginate @messages %>

@@ -1,0 +1,16 @@
+<h1>Editing announcement</h1>
+
+<% form_for([:admin, @announcement]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_area :content %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', admin_announcement_path(@announcement) %> |
+<%= link_to 'Back', admin_announcements_path %>

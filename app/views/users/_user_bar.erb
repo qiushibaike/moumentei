@@ -1,0 +1,21 @@
+<div id="topmessage"><span class="login">
+    您好，<%# link_to_current_user :content_method => :login %> <a href="/my" class="username"></a> |
+  <%= link_to '小纸条', inbox_messages_path %><span style="color:#009900;font-size:9px;font-weight:bold;font-family:tahoma" id="unread_messages_count"></span>
+  <%= link_to '提醒', notifications_path %><span style="color:#009900;font-size:9px;font-weight:bold;font-family:tahoma" id="unread_notifications_count"></span>
+  |
+  <%# link_to('超管平台', admin_dashboard_path) if current_user.has_role?('admin') or current_user.has_role?('doctor') %>
+  <%= link_to '审核新帖', '/tickets/submit' %> 
+  |
+  <%= link_to '邀请码', invitation_codes_path %>
+  <%# link_to '领取奖励', :controller=>'my',:action=>'get_salary',:id=>current_user %>
+  |
+  <%# link_to '领取今日奖励', :controller=>'salaries',:action=>'index' %>
+  
+  <%= link_to("退出", logout_path, { :title => "Log out" }) %>
+  </span>
+  <span class="logout">
+  您好，您可以 <%= link_to "登录", login_path, :style => 'border: none;', :class => 'need-login' %>
+  或 <%= link_to("注册", signup_path) %>
+  </span>
+ <%#*| <a href="http://item.taobao.com/auction/item_detail-0db2-8f004b9e80ad080164b459bfb612b6c3.jhtml" target="_blank">赞助</a>%>
+</div>

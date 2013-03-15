@@ -1,0 +1,16 @@
+<h1><%= @badge.new_record? ? 'New' : 'Edit' %> badge</h1>
+
+<% form_for([:admin,@badge], :html => {:multipart => true }) do |f| %>
+  <%= f.error_messages %>
+    <%= f.label :name %> 
+    <%= f.text_field :name %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+    <%= f.label :icon %>
+    <%= f.file_field :icon %>
+<div class="form-actions">
+    <%= f.submit(@badge.new_record? ? 'Create' : 'Update', :class => 'btn btn-primary') %>
+</div>  
+<% end %>

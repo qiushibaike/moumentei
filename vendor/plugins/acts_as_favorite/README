@@ -1,0 +1,53 @@
+= ActsAsFavorite
+
+http://svn.webwideconsulting.com/svn/acts_as_favorite
+
+This plugin provides a simple way to track users favorites within the system using
+ActiveRecord models. 
+
+
+== Requirements
+  As we are not generating anything and there is no config, it is assumed in this version
+  that your user class is named "User", and you dont have an existing "Favorite" class.
+
+== Installation and Configuration
+
+1) Install as a plugin using script/plugin.
+2) Generate the Favorite model, migrations, and tests with
+    ./script/generate favorite_model Favorite
+3) rake migrate to create the required tables
+4) add <tt>acts_as_favorite_user</tt> to your User model
+5) add <tt>acts_as_favorite</tt> to any models which you want to provide to users for favorites.
+
+== The Specifics
+
+  Below are some specifics of using the plugin...
+
+=== Setting and Using favorites
+
+To Set:
+current_user.has_favorite(Blog.find(43))
+
+To Test(returns true/false):
+current_user.has_favorite?(Blog.find(99))
+current_user.has_favorite_venues?
+
+To Find:
+current_user.all_favorites  (all favorite referenced objects, blogs, etc)
+current_user.favorite_blogs  (metaprogramming references Blog entries only)
+Blog.find(43).favorite_users (returns users which have the specified blog set as a favorite)
+
+=== Dynamic methods through the Identity mixin
+
+The Identity mixin provides some dynamic methods for accessing favorite based information. You
+can replace 'blahs' with any model class that acts_as_favorite.
+
+user.has_favorite_blahs?  --> returns true/false if the user has any favorites within the Blah class.
+user.favorite_blahs       --> returns an array of Blah's that are set as the users favorites.
+
+== License
+MIT License applies.
+
+== Authors
+Josh Martin
+

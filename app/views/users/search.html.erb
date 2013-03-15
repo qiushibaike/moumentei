@@ -1,0 +1,11 @@
+
+<% if not @users or @users.size == 0 %>
+<h2>没有符合条件的用户</h2>
+<% else %>
+<h2>查找到的用户有：</h2>
+<% for user in @users%>
+  <%=render :partial => 'person', :object => user%>
+<% end %>
+<% end %>
+
+<%= will_paginate @users %>

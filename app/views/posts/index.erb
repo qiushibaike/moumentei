@@ -1,0 +1,29 @@
+<h1><%= @user.login %> posts</h1>
+
+<%if @user==current_user%>
+  <%= render :partial => 'form' %>
+<%end%>
+
+<ol id="posts">
+  <%=render :partial => @posts%>
+</ol>
+<div id="replyBox" class="talkWrap" style="display:hidden">
+</div>
+<script type="text/javascript">
+  $(function(){
+    $('span.reply a').click(function(e){
+      e.preventDefault();
+      var post = $(this).parents('.post'), replies = post.children('.replies');
+      if(replies.size()>0){
+        replies.show();
+      }else{
+        var id = $(this).attr('data-parent_id');
+        $.get('/posts/'+id+'/children', function(data){
+          post.append(data);
+        });
+      }
+    });
+  })
+</script>
+<div id="test">
+</div>

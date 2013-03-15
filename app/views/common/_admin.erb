@@ -1,0 +1,9 @@
+<% article = admin %>
+<% if logged_in? && (current_user.is_admin? || current_user.has_role?('moderator')) %>
+<%= link_to '删除', article_path(article), :method => :delete %>
+<%= link_to '编辑', edit_article_path(article) %>
+<form action="<%=move_article_path(article)%>" method="post">
+<%= select_tag :group_id, options_for_select(categories_options, @group.id) if @group%>
+<input type="submit" value="移动" />
+</form>
+<% end %>

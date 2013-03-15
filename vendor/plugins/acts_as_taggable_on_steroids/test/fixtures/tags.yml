@@ -1,0 +1,14 @@
+good:
+  name: Very good
+  
+bad:
+  name: Bad
+  
+nature:
+  name: Nature
+  
+question:
+  name: Question
+  
+animal:
+  name: Crazy animal

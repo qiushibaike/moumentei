@@ -1,0 +1,13 @@
+<% content_for :title, '好友的评论' %>
+<h2>好友的最新动态</h2>
+<ul>
+<% if @comments; for c in @comments;next unless article = c.article; %>
+<li>
+  <span class="user"><%=h c.user.login %></span> <span class="time">
+  <%= c.created_at.strftime("%Y-%m-%d %H:%M:%S") %></span><br />
+  @<%= link_to "#{article.group.name}#{article.id}", article_path(article) %>
+   <%=h c.content%>
+</li>
+<% end; end %>
+</ul>
+<%= will_paginate @comments if @comments%>

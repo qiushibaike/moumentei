@@ -1,0 +1,5 @@
+<form method="get" action="/groups/<%=@group.id if @group%>/search" 
+      style="margin:5px auto 14px auto; text-align:center">
+  <input name="term" size="55" id="snumber" value="<%= params[:term] %>" type="text" />
+  <input class="submit" type="submit" value="搜&nbsp;&nbsp;索" />
+</form>

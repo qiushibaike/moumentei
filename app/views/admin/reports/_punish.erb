@@ -1,0 +1,9 @@
+<% prefix= "punishment[#{user.id}]" %>
+<div>
+    <fieldset>
+      <caption>对作者<%= link_to user.login, [:admin,  user] %>的处罚</caption>
+      <label><%= radio_button_tag "#{prefix}[type]", 'noop', true %>无操作</label>
+      <label><%= radio_button_tag "#{prefix}[type]", 'silence' %>禁言<%=text_field_tag "#{prefix}[duration]", 24, :size => 3 %>小时</label>
+      <label><%= radio_button_tag "#{prefix}[type]", 'suspend' %>封号</label>
+    </fieldset>
+  </div>

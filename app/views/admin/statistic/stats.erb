@@ -1,0 +1,17 @@
+<% ['User', 'Ticket', 'Rating', 'Comment'].each do |i|%>
+<%= link_to_unless i==params[:object], i, :object => i %>
+<% end %>
+<form action="">
+  <%= hidden_field_tag :object, params[:object] %>
+<%= text_field_tag :start, @start %> -
+<%= text_field_tag :end, @end %>
+<%= submit_tag 'query' %>
+</form>
+<table>
+<% if @stats; @stats.each_pair do |date, count|%>
+  <tr>
+    <td><%=date%></td>
+    <td><%=count%></td>
+  </tr>
+<% end; end %>
+</table>

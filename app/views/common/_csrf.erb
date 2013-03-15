@@ -1,0 +1,3 @@
+<%- if protect_against_forgery? -%>
+  <meta content="<%= form_authenticity_token%>" name="csrf-token"/>
+<%- end -%>

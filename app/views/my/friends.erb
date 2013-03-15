@@ -1,0 +1,5 @@
+<% content_for :title, '好友动态' %>
+<div id="followings_update">
+    <%= render :partial => @articles %>
+ <%= will_paginate @articles %>
+</div>

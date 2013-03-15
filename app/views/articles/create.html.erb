@@ -1,0 +1,5 @@
+<% content_for :title, '发表帖子成功' %>
+<% if flash[:notice] %> <div id="notice"> <%= flash[:notice] %> </div> <% end %>
+<% if flash[:error] %> <div id="notice"> <%= flash[:error] %> </div> <% end %>
+
+<p>非常感谢您的分享！您刚刚提交的帖子#<%= @article.id %>将在管理员审核通过之后发表,接下来的日子，您将生活的更加幸福快乐。</p>

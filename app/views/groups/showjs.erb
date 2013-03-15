@@ -1,0 +1,13 @@
+document.write("<%= @article.content.gsub(/['"\\\n\r<>&]/) do
+  { '"' => '\"',
+    "'" => "\\'",
+    "\\" => "\\\\",
+    "\n" => '\n',
+    "\r" => '\r',
+    '<' => '&lt;',
+    '>' => '&gt;',
+    '&' => '&amp;'}[$&]
+end
+%><%=@extra%>");
+document.write(" <a href='http://zuikeai.net<%=article_path(@article)%>' target='_blank'>帖子#<%= @article.id %></a> ");
+document.write(" <a href='http://zuikeai.net/articles/voteup/<%=@article.id%>' target='_blank'><img border='0' src='http://zuikeai.net/images/qiushi/good.gif' alt='頂' border='0'></a>(+ <%= @article.pos_score %>, - <%= -  @article.neg_score %>) <a href='http://zuikeai.net/articles/votedown/<%=@article.id%>' target='_blank'><img src='http://zuikeai.net/images/qiushi/bad.gif' alt='拍' border='0'></a>");

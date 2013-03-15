@@ -1,0 +1,12 @@
+<% content_for :title, '帖子的标签云' %>
+<% cache 'tag_cloud', :expires_in => 12.hour do %>
+<% @tags = @group.public_articles.cached_tag_clouds %>
+<div id="tagcloud">
+  <% if ( @msg || flash[:notice] ) %>
+      <div id="notice"> <%= ( @msg || flash[:notice] ) %> </div>
+  <% end %>
+  <% tag_cloud @tags, %w(4 3 2 2 2 1 1 1 1 1) do |tag, css_class| %>
+      <span class="tag_level<%= css_class %>"><%= link_to tag.name, { :action => :tag, :tag => tag.name }, :rel => 'tag' %></span>
+  <% end %>
+</div>
+<% end %>

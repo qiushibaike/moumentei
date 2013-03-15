@@ -1,0 +1,8 @@
+author: Josh Martin
+summary: Adds a flexible mechanism for tracking users favorites.
+description: Adds a flexible mechanism for tracking user favorites.
+homepage: http://localhost/
+plugin: http://svn.webwideconsulting.com/svn/acts_as_favorite/
+license: MIT
+version: 1.0
+rails_version: 1.0+

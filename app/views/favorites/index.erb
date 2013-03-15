@@ -1,0 +1,48 @@
+<% content_for :title do %>我围观的帖子<% end %>
+
+<h2>我围观的帖子</h2>
+<% if @articles %>
+<% @open = true %>
+<% for art in @articles %>
+<%= render :partial => art %>
+<% @article = art %>
+<% @comments = @all_comments[art.id] %>
+<% @offset = @article.public_comments_count - @comments.size %>
+<% if @offset > 0 %>
+<div style="background: none repeat scroll 0% 0% transparent; padding-top: 15px; padding-bottom: 5px;" class="qiushi_counts_afterclick">
+  <%= 
+  link_to "点此展开<strong>#{@offset}</strong>条评论",
+    article_comments_path(@article),
+    :class => 'expand',
+    :id => @article.to_param,
+    :style => "text-decoration: none;"
+  %>
+</div>
+<% end %>
+<%# @offset += 1 %>
+<%= render :partial => 'comments/index'%>
+<% end %>
+<% @articles = @favorites %>
+<%= render :partial => 'common/pagination' %>
+<% else %>
+<p>您还没有围观过任何帖子</p>
+<% end %>
+<% unless cookies[:wap] %>
+<script type="text/javascript">
+$(function(){
+  $('a.expand').click(function(e){
+    var l=$(this);
+    var id = parseInt(l.attr('id'));
+    if(isNaN(id)) return;
+    var comments_el = $('#qiushi_comments_'+id);
+    l.text('...');
+    $.get(article_comments_path(id), null, function(data){
+      comments_el.replaceWith(data);
+      l.remove();
+      comments_el.ready(floorLink);
+    });
+    e.preventDefault();
+  })
+})
+</script>
+<% end %>

@@ -1,0 +1,47 @@
+<% u = ticket.user %>
+<% w = u.weight %>
+<tr id="ticket-<%=ticket.id%>">
+  <td><%= u.id %></td>
+  <td><%= link_to u.login, ['admin', u] %></td>
+  <td><%= w.ratio%></td>
+  <% if ticket.ticket_type %>
+    <td><%= ticket.ticket_type.weight > 0 ? w.pos_weight : w.neg_weight %></td>
+    <td style="<%= 'text-decoration:line-through' if ticket.ticket_type.weight < 0 %>"><%= ticket.ticket_type.name %> </td>
+    <td style="<%= 'text-decoration:line-through' if ticket.ticket_type.weight < 0 %>"><%= ticket.ticket_type_id %> </td>
+    <td><%=ticket.ticket_type.weight%></td>
+    <td><%=ticket.created_at - ticket.viewed_at if ticket.viewed_at%></td>
+  <% else %>
+    <td colspan="4"></td>
+  <% end %>
+</tr>
+
+
+    <%= link_to_remote '投票数' + article.tickets.count.to_s,
+      :url => {
+      :controller => 'admin/articles',
+      :action => 'tickets', :id => article.id
+    },
+      :update => "tickets-#{article.id}"
+  %>
+    <%='顶拍详情'+ article.ratings.count.to_s
+    #:url=>{
+    #:controller=>'admin/articles',  :id=>article.id
+    #},
+    #:update=>"ratings-#{article.id}"
+    %>
+<%#Rating.count(:conditions => {:article_id => article.id})%>
+    <p>UID Name Score<br/>
+<%#=Article.find(article.id).ratings%>
+      <%ar=article.ratings.each%>
+      <%ar.each do |a|%>
+        <%=a.user_id%>
+        <%=a.user.login%>
+  <%#if a.score="1"%>
+  <%#='顶'%>
+  <%#else%>
+  <%#='拍'%>
+  <%#end%>
+        <%=a.score%>
+  <%#=a.created_at%>
+      <%end%>
+    </p>

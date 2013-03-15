@@ -1,0 +1,7 @@
+<% cache ['wap-comments', @article] do %>
+  <div id="comments_<%=@article.id%>" class="comments">
+  <%= render :partial => @comments, :separator => '<br/>' %>
+  </div>
+<% end %>
+<%= render :partial => 'comments/form' %>
+

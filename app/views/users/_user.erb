@@ -1,0 +1,75 @@
+<% is_current = current_user == user   %>
+<div id="left">
+
+<div class="userinfo clearfix">
+    <%= link_to image_tag(user.avatar.url(:medium), :class => "userphoto photo_m"), user_path(user) if user.avatar %>
+    <p class="userxxx" title="发表了<%# user.stat.signed_comments if user.user_stat %>个评论<% if @is_current  %>，<%# user.user_stat.anonymous_comments %>个匿名评论<% end %>"><%=user.login%></p>
+    <ul class="stats">
+      <li id="followers"><% link_to followers_user_path(user) do -%>
+      <span class="follow">粉丝</span><span class="stats_count numeric"><%=user.followers.count%></span>
+      <%- end -%></li>
+      <li id="following"><% link_to followings_user_path(user) do %>
+      <span class="follow">关注</span><span class="stats_count numeric"><%= user.friends.count %></span>
+      <% end %></li>					
+      <li id="updates"><div class="list"><% link_to user_articles_path(user) do %>
+          <span class="function">文章</span><span class="stats_count numeric"><%= user.articles.public.signed.count %></span>
+        <%end%></div>
+      </li>
+      <li id="user-comments"><div class="list"><% link_to user_comments_path(user) do %>
+          <span class="function">评论</span><span class="stats_count numeric"><%= user.comments.public.signed.count %></span>
+        <%end%></div>
+      </li>
+    </ul>
+</div>
+
+<br />
+<%= link_to '修改头像/邮箱', edit_user_path(user) if user == current_user%>
+<% if logged_in? %>
+<% unless is_current %>
+  <li id="pay_attention">
+  <% if current_user.following?(user) %>
+    <%= link_to '<span>取消关注</span>', unfollow_user_path(user), :method => :post %>
+  <% else %>
+    <%= link_to '<span>关注</span>', follow_user_path(user), :method => :post %>
+  <% end %>
+  </li>
+  <li id="send_message"><%= link_to '传纸条', new_message_path(:id=>user.id) %></li>
+<% end %>
+<% else %>
+  <li id="pay_attention"><%= link_to '<span>关注</span>', login_path %></li>
+  <li id="send_message"><%= link_to '<span>传纸条</span>', login_path %></li>
+<% end %>
+<br />
+<% if is_current and current_user.pending? %>
+<span style="color:red; font-weight:bold;">您还没激活您的帐号</span>
+<%= link_to_remote '重新发送激活邮件',
+  :url => { :controller => :my, :action => :resend },
+  :update => 'resend' unless Rails.cache.exist?("activation.#{current_user.id}")%><br />
+<%= link_to '更换邮箱地址并重发激活邮件', edit_user_path(user) if user == current_user%>
+<% end %>
+<% if user == current_user %>
+<br />
+<br />
+<%= link_to '管理我发表的文章', :controller => 'my', :action => 'articles' %>
+<br />
+<br />
+<%= link_to '我围观的文章', :controller => 'my', :action => 'favorites'   %>
+<br />
+<br />
+<%= link_to('审核记录', '/tickets')  %>
+<br />
+<br />
+<%= link_to('修改密码', '/editpass') %>
+<br />
+注册时间<%= user.created_at.is_a?(String) ? user.created_at : user.created_at.strftime("%Y.%m.%d %H:%M:%S") %><br />
+激活时间<%=  user.activated_at.strftime("%Y.%m.%d %H:%M:%S") if user.activated_at%>
+
+<% end %>
+
+<!--发表了<%# user.stat.signed_articles if user.user_stat%>个文章-->
+<div>
+<% user.badges.each do |b| %>
+<%=image_tag b.icon(:tiny), :title => b.title%>
+<% end %>
+</div>
+</div>

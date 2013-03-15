@@ -1,0 +1,30 @@
+<h1>Listing profiles</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Realname</th>
+    <th>Phonenumber</th>
+    <th>Sex</th>
+    <th>Job</th>
+    <th>Birthday</th>
+  </tr>
+
+
+  <tr>
+    <td><%=h @profile.user_id %></td>
+    <td><%=h @profile.realname %></td>
+    <td><%=h @profile.phonenumber %></td>
+    <td><%=h @profile.sex %></td>
+    <td><%=h @profile.job %></td>
+    <td><%=h @profile.birthday %></td>
+    <td><%#= link_to 'Show', profile %></td>
+    <td><%= link_to 'Edit', edit_user_profile_path(current_user,@profile) %></td>
+    <td><%#= link_to 'Destroy', profile, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+
+</table>
+
+<br />
+
+<%#= link_to 'New profile', new_profile_path %>

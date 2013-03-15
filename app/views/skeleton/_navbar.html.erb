@@ -1,0 +1,26 @@
+<!-- Navbar
+    ================================================== -->
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <% if content_for?(:brand) %>
+        <%= yield :brand %>
+      <% else %>
+        <%= link_to @group.try(:name) || Setting.site_name, home_path, :class => 'brand' %>
+      <% end %>
+      <div class="nav-collapse">
+        <ul class="nav">
+          <%= yield :topbar_items %>
+        </ul>
+        <ul class="nav pull-right">
+          <%= yield :nav_right %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

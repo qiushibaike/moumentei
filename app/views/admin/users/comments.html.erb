@@ -1,0 +1,24 @@
+<%@comments.each do |comment|%>
+<li id="comment-<%=comment.id%>" class="comment" title="<%=comment.created_at%>">
+<span id='entity<%= comment.id -%>' class="left comment-manage" >
+  <%= check_box_tag('id[]', comment.id.to_s, comment.status == 'publish', :id => 'id' + comment.id.to_s, :class => 'entry-id') %>
+  [
+    <% if comment.status == 'publish' %>
+      <span style="color: #fff; background-color:green">通过</span>
+    <% else %>
+      <%= link_to_unless_current("通过", :controller => 'admin/comments', :action => :set_status, :id => comment.id, :status => 'publish') {''} %>
+    <% end %>
+    <% if comment.status == 'private' %>
+      <span style="color: #fff; background-color:black">删除</span>
+    <% else %>
+      <%= link_to_unless_current("删除", :controller => 'admin/comments', :action => :set_status, :id => comment.id, :status => 'private') {''} %> ]
+    <% end %></span>
+  <span class='check_comment right' id='entity_text<%= comment.id -%>'
+    style="<%= 'text-decoration: line-through;' if comment.status == 'private' -%>">
+    <%= link_to "<span#{comment.anonymous ? '' : " style='background: yellow'"}>#{comment.user.login}</span>", admin_user_path(comment.user) if comment.user_id > 0 && comment.article.group_id==2 %>
+ <a href="/admin/articles?status=all&id=<%=comment.article.id%>"><%=comment.article.id%></a>
+  <%= format_content comment, comment.article.group %>
+  </span>
+<span class="clear"></span>
+</li>
+<%end%>

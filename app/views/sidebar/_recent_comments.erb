@@ -1,0 +1,24 @@
+<div class="conments_lestest">
+  <h3>最新评论</h3>
+<%com = Comment.find(:all,  :order=>"created_at DESC",  :limit=>10)%>
+<%#if com.article.group_id == @group.id%>
+  <%com.each do |c|%>
+  <div>
+    <div>
+    <%if c.anonymous?%>
+      匿名用户
+    <%else%>
+      <%=link_to c.user.login, user_path(c.user.id)%>
+    <%end%>@
+    <%if c.article.title.nil?%>
+      <%=link_to c.article.id, article_path(c.article.id)%>
+    <%else%>
+      <%=link_to c.article.title,  article_path(c.article.id)%>
+    <%end%>
+    </div>
+    <div>
+      <p><%=c.content.mb_chars[0,20]%></p>
+    </div>
+  </div>
+  <%end%>
+</div>

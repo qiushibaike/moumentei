@@ -1,0 +1,49 @@
+#top.fixed
+  #topnavleft
+    =#link_to '博聆 bling', root_path, :class => 'logo'
+    %ul
+      /%li= link_to t('nav.hottest'), hottest_all_articles_path
+      /%li= link_to t('nav.latest'), latest_all_articles_path
+      %li#logo
+        %a{:href=>groups_path}
+          &nbsp;
+      - if logged_in?
+        %li=link_to '全部', articles_path('all')
+        - current_user.publications(Group).collect{|s|s.publication}.sort{|a,b| b.score <=> a.score}.take(5).each do |group|
+          %li{:class => @group && @group == group ? 'current' : '' }= link_to group.name, group_articles_path(group)
+      -else
+        %li=link_to '全部', '/all/hottest/day'
+        - Group.order('feature desc').limit(5).each do |group|
+          %li{:class => @group && @group == group ? 'current' : '' }= link_to group.name, group_articles_path(group)
+      - if logged_in?
+        %li= link_to '发表', :controller => 'articles', :action => 'new', :group_id => @group.try(:alias)
+        %li= link_to t( 'nav.my_groups'), {:controller => 'my', :action => 'groups'}, :class => 'my-groups'
+  #topnavright
+    %ul
+      - unless logged_in?
+        %li= link_to t('users.signup'), signup_path
+        %li= link_to t('users.login'), login_path,:class=>"need-login"
+      - else
+        %li
+          = link_to salaries_path, :id => 'salary', :class => 'salary' do
+            = current_user.balance.credit
+            - if current_user.salaries.unpaid.size > 0
+              %sup{:title => "#{current_user.salaries.unpaid.size}项工资未领取"}
+                (
+                = current_user.salaries.unpaid.size
+                )
+
+        %li= link_to image_tag(current_user.avatar(:thumb), :size => '16x16'), edit_user_path(current_user)
+        %li= link_to current_user.login, :controller => 'my', :action => 'index'
+        %li= link_to '我关注的文章', :controller => 'my', :action => 'watched'
+        %li.messages
+          = link_to inbox_messages_path do
+            小纸条
+            %sup.value
+              - if current_user.unread_messages_count > 0
+                = current_user.unread_messages_count
+        %li{:class => current_user.notifications.unread.count == 0 ? 'empty unread_notifications_count' : 'unread_notifications_count'}
+          = link_to notifications_path do
+            %span.value= current_user.notifications.unread.count
+            个新通知
+        %li= link_to t('users.logout'), logout_path

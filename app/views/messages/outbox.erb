@@ -1,0 +1,22 @@
+<% content_for :title do %>发出去的纸条<% end %>
+<%= render :partial => 'nav' %>
+<% if @messages.size > 0 %>
+  <% for message in @messages %>
+
+<div  title="<%= message.created_at.strftime("%Y-%m-%d %H:%M:%S") %>" style="margin:10px 0;padding:10px 8px 10px 16px; -webkit-border-radius: 10px; -moz-border-radius:10px; background-color:<%unless message.read %>#FFFFCC<% else %>#EBEBEB<% end%>;"  >
+  <div style="float:left;width:350px;">
+    <%=h(message.content).gsub(/\r/, "<br/>") %><br />
+    <%= link_to '追发新纸条', new_message_path(:id => message.recipient_id), :style => 'color:#8B8B8B; text-decoration:none;background:url(/images/mail_back.gif) no-repeat 0px 2px;padding-left:13px' %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "删除", message, :method => :delete, :style => 'color:#8B8B8B; text-decoration:none;background:url(/images/trash.gif) no-repeat 0px 2px;padding-left:13px' %>
+  </div>
+  <div style="float:right;padding-left:40px;width:80px;background:url(<%= message.recipient.avatar.url("thumb") %>) no-repeat 0px 5px">
+    <%=link_to h(message.recipient.login), message.recipient, :class => message.recipient.roles.collect(&:name).join(' '), :target => '_blank', :style => 'text-decoration:none;' %><br />
+    <span style="color:#8B8B8B"><%= message.created_at.strftime("%Y-%m-%d") %></span><br/>
+  </div>
+  <div style="clear:both"></div>
+</div>
+  <% end %>
+<% else %>
+没有发出去的纸条
+<% end %>
+<%= will_paginate @messages %>
+</div>

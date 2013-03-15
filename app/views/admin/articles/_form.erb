@@ -1,0 +1,57 @@
+<% form_for [:admin, @article], :html => {:multipart => true} do |f|%>
+<%=f.label :group%>
+<%= f.select :group_id, Group.all.collect{|g|[g.name, g.id]} %>
+<%= f.label :title%>
+<%= f.text_field :title %>
+<%# f.label :source%>
+<%# f.text_field :source %>
+<%= f.label :user_id %>
+<%= f.text_field :user_id %> <%= link_to @article.user.login, [:admin, @article.user] if @article.user %>
+<%= f.label :content %>
+<%= f.text_area :content, :rows => 7, :class => 'span6' %>
+<%= f.label :picture %>
+<%= image_tag @article.picture.url if @article.picture.file?%>
+<%= f.file_field :picture %>
+<%= f.label :tag_line %>
+<%= f.text_field :tag_line %>
+<% cache 'tag-list-select', :expires_in => 1.hour do %>
+<dl rel="tag-list">
+<dt>可选标签:</dt>
+<dd>
+<% Tag.counts(:limit => 10).each do |tag| %>
+    <span class="tagbtn"><%= tag.name %></span> &nbsp;
+<% end %>
+</dl>
+<% end %>
+<%= f.label :pos %>
+<%= f.text_field :pos %>
+<%= f.label :neg %>
+<%= f.text_field :neg %>
+
+<label class="checkbox"><%= f.check_box :anonymous %>匿名</label>
+<label class="checkbox"><%= f.check_box :comment_status, {}, 'closed' %>禁止评论</label>
+
+<div class="control-group">
+  <%= f.label :created_at %>
+  <%= f.datetime_select :created_at, {}, :class => 'span1' %>
+  <% if !@article.new_record? and @article.status == 'publish' %>
+      <%= f.label :published_at, '通过时间' %>
+      <%= f.datetime_select :published_at, {}, :class => 'span1' %>
+  <% end %>
+</div>
+
+<%= f.label :status %>
+<%= f.select :status, Article::STATUSES %>
+<div class="form-actions">
+  <%= f.submit @article.new_record? ? 'Create' : 'Update', :class => 'btn btn-primary' %>
+  <%= link_to "Back", admin_articles_path, :class => 'btn' %>
+</div>
+<% end %>
+<% content_for :javascripts do %>
+  <%= javascript_include_tag "/js/jquery.tagbtn" %>
+  <script type="text/javascript">
+    $(function(){
+        $("#article_tag_line").tagbtn();
+    })
+  </script>
+<% end %>

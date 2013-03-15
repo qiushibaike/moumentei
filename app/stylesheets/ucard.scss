@@ -1,0 +1,91 @@
+@import "compass/css3/box-shadow";
+@import "compass/css3/border-radius";
+
+.uCard {
+  //@include box-shadow;
+  @include border-radius(2);
+  background:none repeat scroll 0 0 #EFEFEF;
+  border:1px solid #CFCFCF;
+  height:84px;
+  //left:18px;
+  margin-top:-9px;
+  padding:2px;
+  position:absolute;
+  z-index:99;
+  a:hover {
+    background: none;
+  }
+  .tip {
+    background:none repeat scroll 0 0 #EFEFEF;
+    border-top:4px solid #FFFFFF;
+    bottom:7px;
+    display:none;
+    height:17px;
+    left:8px;
+    line-height:17px;
+    overflow:hidden;
+    padding-left:5px;
+    position:absolute;
+    width:219px;
+    z-index:2;
+  }  
+  .userPic {
+    padding:6px 0 0 6px;
+    position:absolute;
+    width:58px;
+  }
+  .uCardcnt {
+    background:none repeat scroll 0 0 #FFFFFF;
+    color:#999999;
+    height:80px;
+    min-width:174px;
+    padding:4px 6px 0 64px;
+    .btn {
+        bottom:7px;
+        position:absolute;
+        right:8px;
+        z-index:1;
+      }      
+  }
+  .userName {
+    color:#333333;
+    float:none;
+    height:auto !important;
+    line-height:19px;
+    a {
+      display:inline-block;
+      vertical-align:text-top;
+    }    
+  }
+  p, .attentBox {
+    display:block !important;
+    padding-left:1px;
+    white-space:nowrap;
+  } 
+  .nums span {
+    padding:0 5px 0 4px;
+  }  
+  .ico_sFo {
+    background:url("http://mat1.gtimg.com/www/mb/css/../images/b2_100907.png") no-repeat scroll 0 0 transparent;
+    background-position:-198px -405px;
+    display:inline-block;
+    height:21px;
+    position:absolute;
+    width:21px;
+    z-index:2;     
+    margin:0 !important;
+    right:6px;
+    top:6px;
+  }  
+}
+.replies {
+  clear: both;
+  margin-left: 12px;
+  margin-top: 12px;
+  width: 100%;
+}
+.replyform{
+  textarea{
+    width: 90%;
+  }
+}

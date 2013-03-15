@@ -1,0 +1,18 @@
+<% content_for :title do %>我的奖励<% end %>
+
+<h2>您的帐号余额是</h2>
+<%=h @balance.credit%>
+<h2>我领取过的奖励</h2>
+<% if @transactions %>
+<% for transaction in @transactions %>
+<%=h transaction.created_at.strftime("%Y.%m.%d %H:%M")%>
+<%=h transaction.reason%> :
+<%=h transaction.amount%>
+<p></p>
+<%end%>
+<%end%>
+  <%= will_paginate @transactions %>
+<p></p>
+<%=link_to "领取每日登录奖励",:controller=>"salaries",:action=>"get_daily_login_salary" if @should_show_login_saraly_link%>
+<%=link_to "领取每日发贴奖励",:controller=>"salaries",:action=>"get_daily_article_salary" if @should_show_article_saraly_link%>
+<%=link_to "领取每日评论奖励",:controller=>"salaries",:action=>"get_daily_comment_salary" if @should_show_comment_saraly_link%>

@@ -1,0 +1,20 @@
+<% f = comment_counter + 1  %>
+<% t = comment.total_score %>
+<div style="padding:4px 0 4px 20px;" id="comment-<%=comment.id%>" class="comment <%= 'hide' if comment.total_score <= -4 %>">
+<!--<span class="score">
+  <%= t %>
+</span>-->
+<% user=comment.user  %>
+<% if user %>
+<span style="margin-left:-20px;">
+<% anon = (comment.anonymous or comment.user_id == 0 or (not user) or user.deleted?) %>
+<span style="font-size:0.875em; color:#757575"><%=f%>.</span>
+<% if anon %>
+<font class="anonymous">匿名人士</font><% else %>
+<%=link_to h(user.login), user, :class => user.roles.collect(&:name).join(' '), :target => '_blank' %><% end %>
+<% else %><s>该用户已被删除</s><% end %>
+</span>
+<span style="font-size:0.875em;">- </span>
+<span class="body"><%= format_content comment, comment.article.group %></span>
+</div>
+<div style="clear:right"></div>

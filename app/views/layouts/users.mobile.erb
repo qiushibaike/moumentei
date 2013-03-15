@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!--                                               -->
+<!--      ::       :::::::     ::::::::    ::      -->
+<!--     ::                                 ::     -->
+<!--     ::     ::                          ::     -->
+<!--     ::      ::                         ::     -->
+<!--      ::        ::::::::::::::::       ::      -->
+<!--                                               -->
+
+  <title><%= yield :title || '' -%></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="description" content="<%= @title_description || "快乐就是要建立在别人的痛苦之上" -%>" />
+  <link rel="Shortcut Icon" type="image/x-icon" href="http://zuikeai.net/favicon.ico" />
+  <link rel="apple-touch-icon" href="http://zuikeai.net/qiushibaike.png" />
+  <meta content="width=device-width; initial-scale=1.0; maximum-scale=2.0; user-scalable=yes;" name="viewport"/>
+  <link href="/stylesheets/qiushi/qiushi_iphone.css?10" rel="stylesheet" type="text/css" />
+  <% if RAILS_ENV == 'development' %>
+  <%= javascript_include_tag 'jquery'  %>
+  <% else %>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+  <% end %>
+  <script src="/javascripts/application.js?44" type="text/javascript"></script> 
+  <script type="text/javascript"> 
+  window.addEventListener('load', function(){
+    setTimeout(scrollTo, 0, 0, 1);
+    if (document.body.clientWidth < 300) { 
+	var d = $('.fav');
+	d.hide();
+    }
+  }, false);
+function article_comments_path(id){
+  return '/articles/'+id+'/comments.mobile';
+}
+
+  </script> 
+  <style type="text/css">
+    <% if logged_in? %>
+    .login{display:inherit}
+    .logout{display:none}
+    <% else %>
+    .login{display:none}
+    .logout{display:inherit}
+    <% end %>
+  </style>
+</head>
+
+<body>
+
+  <div id="header" >
+    <a href="http://zuikeai.net/"></a>
+    <% if logged_in? %>
+    <%= link_to '退出', logout_path %>
+    <% else %>
+    <%= link_to '登录', login_path %>
+    <% end %>
+    <a href="/groups/2/add">发表</a>
+  </div><!-- header -->
+<%= render :partial => @user || current_user %>
+     <%= yield %>
+
+	<div id="bottom_space" style="font-size:1em;background-color:#333; border-top:3px solid #777; color:#bbb; margin-top:30px; clear:both;padding:15px 16px">
+		是这个星球上最暴笑的真实帖子分享网站，您可以查看世界各地形形色色的<FONT COLOR="white"><%= '' %></FONT>件帖子。
+		<div id="copy" style="border-top:1px solid #444; color:#ddd; clear:both;margin-top:15px;padding-bottom:10px;padding-top:15px;text-align:center;">
+		  © 2005 - 2010<br /><br />传送门：<a href="http://secret.moumentei.com">秘密</a>
+		</div>
+	</div>
+
+	<%= production_partial 'common/analytics' %>
+
+</body>
+</html>

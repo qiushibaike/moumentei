@@ -1,0 +1,17 @@
+<% if logged_in? %>
+  <li class="avatar"><%= link_to image_tag(current_user.avatar(:thumb),:alt=>''), edit_user_path(current_user) %></li>
+  <li><%= link_to current_user.login, current_user %></li>
+  <li><%= link_to '喜欢', :controller => :my, :action => :favorites %></li>
+  <li><%= link_to '专辑', user_lists_path(current_user) %></li>
+  <li><%= link_to '说说', posts_path %></li>
+  <% if current_user.unread_messages_count > 0 %>
+    <li>(<%= link_to "#{current_user.unread_messages_count}条未读消息", inbox_messages_path %>)</li>
+  <% end %>
+  <% if current_user.is_admin? %>
+  <li><%= link_to '管理后台', '/admin' %></li>
+  <% end %>
+  <li><%= link_to '退出', logout_path %></li>
+<% else %>
+  <li><%= link_to "登录", login_path, :class => 'need-login' %></li>
+  <li><%= link_to("注册", signup_path) %></li>
+<% end %>

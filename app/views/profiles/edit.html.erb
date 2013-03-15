@@ -1,0 +1,40 @@
+<h1>Editing profile</h1>
+
+<% form_for([current_user, @profile]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%#= f.label :user_id %><br />
+    <%#= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :realname %><br />
+    <%= f.text_field :realname %>
+  </p>
+  <p>
+    <%= f.label :phonenumber %><br />
+    <%= f.text_field :phonenumber %>
+  </p>
+  <p>
+  <select id ="profile_sex" name="profile[sex]">
+   <%['boy','girl','unknown'].each do |c|%>
+    <option value="<%=c%>" <%="selected='selected'" if c==@profile.sex%> ><%=c%></option>
+
+   <%end%>
+  </select>
+  </p>
+  <p>
+    <%= f.label :job %><br />
+    <%= f.text_field :job %>
+  </p>
+  <p>
+    <%= f.label :birthday %><br />
+    <%= f.date_select :birthday %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', [current_user,@profile] %> |
+<%= link_to 'Back', user_profiles_path %>

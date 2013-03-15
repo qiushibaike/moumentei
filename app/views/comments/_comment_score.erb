@@ -1,0 +1,10 @@
+<% comment=comment_score %>
+<% dom_id = "comment-score-#{comment.id}" %>
+
+<span id="<%=dom_id%>" class="comment-score">
+  <span class="score">
+    <%= comment.score %>
+  </span>
+<%= link_to("顶", "javascript:comment_vote(#{comment.id},1)", :class => 'login') %>
+<%= link_to("拍", "javascript:comment_vote(#{comment.id},-1)", :class => 'login') %>
+</span>

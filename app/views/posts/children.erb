@@ -1,0 +1,20 @@
+<div class='replies'>
+<% @posts.each do |post| %>
+<p class="reply <%= 'reshare' if post.reshare %>" id="reply_<%= post.id%>">
+  <% if post.content.blank? %>
+    <span class="user"><%= link_to post.user.login, post.user%></span> 转发
+  <% else %>
+<span class="user"><%= link_to post.user.login, post.user%></span> <span class="sep">:</span>
+<span class="content"><%= h post.content %></span>
+<span class="date"><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S")%></span>
+  <% end %>
+</p>
+<% end %>
+<div class="replyform">
+<% form_for(Post.new(:parent_id => @post.id), :html => {:id=>nil})do |f| %>
+<%= f.hidden_field :parent_id, :id => nil %>
+<%= f.text_area :content, :id => nil %>
+<p><%= f.submit 'Reply', :id => nil %></p>
+<% end %>
+</div>
+</div>

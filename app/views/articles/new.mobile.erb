@@ -1,0 +1,37 @@
+<% @content_for_title = '发表我的帖子' %>
+<% if flash[:notice] %> <div id="notice"> <%= flash[:notice] %> </div> <% end %>
+<% if flash[:error] %> <div id="notice"> <%= flash[:error] %> </div> <% end %>
+  <% if not @article.nil? and not @article.errors.empty? %>
+    <div class='error_message'>发表帖子出现错误：<br/>
+    <% @article.errors.each do |key,val| %>
+      <%= val %><br/>
+    <% end %>
+    </div>
+<% end %>
+<% if @article and not @article.new_record? and @article.errors.empty? %>
+非常感谢您的分享！您刚刚提交的帖子#<%= @article.id %>将在管理员审核通过之后发表
+<% else %>
+    <% form_for([@group, @article], :html => {:multipart => true}) do |f| %>
+    <%=f.hidden_field :group_id%>
+ <textarea name="article[content]" id="qiushi_text" oninput="if(this.scrollHeight>180){this.style.height=this.scrollHeight+'px';}" onpropertychange="if(this.scrollHeight>180){this.style.height=this.scrollHeight+'px';}" ></textarea><br />
+  <% if logged_in? %><div class="tagbox"><label>真相：<%= f.file_field :picture %></label></div><% end  %>
+      <div id="tagbox">标签：<%= f.text_field(:tag_line, :size =>30, :maxlength =>30, :id => 'qiushi_rtags' )  %>（每个帖子最多3个标签，用空格分隔）</div>
+      <%= f.submit( "发表帖子" , :class =>"submit" , :disable_with => "发表中…", :title => "Ctrl + Enter可以快捷发表" )  %>
+      <label class="ad"><%= f.check_box :comment_status, {}, 'closed' %> 禁止评论 </label>
+      <% if logged_in? %>
+      <label class="ad"><%= f.check_box :anonymous, {:checked=>'checked'}, 1, 0 %> 匿名发贴 </label>
+      <% end %>
+    <% end %>
+<% end %>
+
+      <% if logged_in? %>
+<p><br />
+登录状态下发表的文章可以<%= link_to '在这里查看审核状态', :controller => 'my', :action => 'articles' %>。
+</p>
+<% end %>
+
+<br /><br />
+您可以在这里发表您自己的或者您听说过的帖子，与大家一起分享。发表帖子不需要登录。<br />
+<br />
+<br /><br />
+<b>隐私声明</b>

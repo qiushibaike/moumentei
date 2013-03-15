@@ -1,0 +1,8 @@
+<%
+notification = delete_comment
+comment=Comment.find(notification.key[1].to_i)
+content=comment.content
+article=comment.article
+%>
+您在文章#<%=link_to article.id,article_path(article)%>的评论<%=content%>不符合精神，已经被删除
+<p><a href="<%= notification_path(notification)%>">删除此提醒</a></p>

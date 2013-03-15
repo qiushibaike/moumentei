@@ -1,0 +1,21 @@
+<%=debug @quests%>
+<h1>Listing quest_logs</h1>
+
+<table>
+  <tr>
+    <th>Quest</th>
+  </tr>
+
+<% @quest_logs.each do |quest_log| %>
+  <tr>
+    <td><%=h quest_log.quest %></td>
+    <td><%= link_to 'Show', quest_log %></td>
+    <td><%= link_to 'Edit', edit_quest_log_path(quest_log) %></td>
+    <td><%= link_to 'Destroy', quest_log, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New quest_log', new_quest_log_path %>

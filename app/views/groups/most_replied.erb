@@ -1,0 +1,29 @@
+<% day = GroupsController::DAY %>
+<% keys = GroupsController::KEYS %>
+<% n = keys[keys.index(params[:limit]) + 1] %>
+<% @content_for_title = " - #{day[params[:limit]]}内评论最多的帖子" %>
+<div id="mobile-hotnav">浏览：
+<%= link_to("日", {:limit => "day"},   params[:limit] == "day"   ? {:class=>"current"}:{}) %> 
+<%= link_to("周", {:limit => "week"},  params[:limit] == "week"  ? {:class=>"current"}:{}) %> 
+<%= link_to("月", {:limit => "month"}, params[:limit] == "month" ? {:class=>"current"}:{}) %> 
+<%= link_to("年", {:limit => "year"},  params[:limit] == "year"  ? {:class=>"current"}:{}) %>
+</div>
+  <div id="sub-nav" class="ad">
+      浏览：<% if params[:limit] == 'day' %>24小时内热评<% else %><%= link_to_unless_current('24小时内热评', {:action => :most_replied, :id => @group.id, :limit => 'day'}) %><% end %> |
+  <%= link_to_unless_current '1周内', :action => :most_replied, :id => @group.id, :limit => 'week'%> |
+  <%= link_to_unless_current '1月内', :action => :most_replied, :id => @group.id, :limit => 'month'%> |
+  <%= link_to_unless_current '1年内', :action => :most_replied, :id => @group.id, :limit => 'year'%> |
+  <%= link_to_unless_current '有史以来', :action => :most_replied, :id => @group.id, :limit => 'all'%>
+</div>
+<%= render(:partial => @articles) %>
+<%= render :partial => 'common/pagination' %>
+<% if @articles.size == 0 and params[:limit] !='all'  %>
+     <div id="read-more">
+     提示：<b><%= day[params[:limit]] %></b>内暂无帖子，您可以看看<%= link_to(day[n] + '热评的帖子', :action => :most_replied, :id => @group.id, :limit => n) %>。
+	</div>
+<% end %>
+<% if params[:action] == "most_replied" and @articles.current_page == @articles.total_pages and params[:limit] != "all" %>
+  <div id="read-more">
+  提示：您已经看完了<b><%= day[params[:limit]] %>内</b>热评的帖子，您还可以看看<%= link_to(day[n] + '热评的帖子', :action => :most_replied, :id => @group.id, :limit => n) %>。
+  </div>
+<% end %>

@@ -1,0 +1,5 @@
+<%= render :partial => 'form' %>
+
+<%= link_to 'Show', @badge %> |
+<%= link_to 'Back', badges_path %>
+<%= link_to 'destroy', admin_badge_path(badge), :method => :delete, :class => 'btn btn-danger' %>

@@ -1,0 +1,17 @@
+<%  content_for :title, "帖子\##{@article.id}"  %>
+<%# @comments = @article.comments.public.find :all, :conditions => 'score > 1', :order => 'score desc', :limit => 10 %>
+<% @comments = @article.comments.public.find :all, :order => 'id asc' %>
+<% if ( @msg || flash[:notice] ) %><div id="notice"> <%= ( @msg || flash[:notice] ) %></div> <% end %>
+<% if @article %>
+  <%= render(:partial => @article ) %>
+  <a name="comments-list"></a>
+  <%# link_to '所有评论', article_comments_path(@article, :format => :mobile, :page => 1) %>
+
+  <%= render(:partial => 'comments/index') %>
+<center>
+  <br />
+  <%= @article.prev_in_group.nil? ? "&lt;<span class='ad'> </span>上一帖子" : link_to("&lt;<span class='ad'> </span>上一帖子", article_path(@article.prev_in_group)) %>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <%= @article.next_in_group.nil? ? "下一帖子<span class='ad'> </span>&gt;" : link_to("下一帖子<span class='ad'> </span>&gt;", article_path(@article.next_in_group)) %>
+</center>
+<% end %>

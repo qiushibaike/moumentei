@@ -1,0 +1,54 @@
+<%
+id = article.id
+url = article_url(article)
+group = @group || article.group -%>
+<div class="block untagged article drop-shadow" id="article_<%= id %>">
+  <%- unless article.title.blank? -%>
+  <div class="entry-title">
+    <h2><%=h article.title -%></h2>
+  </div>
+  <%- end -%>
+  <%- if article.picture.file? -%>
+    <div class="thumb">
+      <%# if article.picture.content_type =~ /gif/i %>
+        <%= image_tag(article.picture(:original), :alt => (article.title || article.content.mb_chars[0,10])) %>
+      <%# else %>
+        <%#= link_to image_tag(article.picture(:medium), :alt => (article.title || article.content.mb_chars[0,10])), article.picture(:original),
+          :class => 'picture', :id => "picture-#{id}", :title => (article.title || article.content.mb_chars[0,10]) %>
+      <%# end %>
+    </div>
+  <% end %>
+  <p class="content entry-content" id="BSHARE_TEXT">
+    <%= format_content article, group -%>
+  </p>
+  <div class="author">
+    <%- unless article.anonymous? -%>
+    <%= image_tag article.user.avatar.url(:thumb) %>
+    <%= link_to article.user.login, article.user %>
+    <%- end -%>
+    <%= link_to article.created_at.strftime('%Y-%m-%d'), group_archive_path(:group_id => article.group, :date => article.created_at) if article.created_at -%>
+    <%= link_to article.group.name, group_path(article.group) %>
+  </div>
+  <%- unless article.tag_line.blank? -%>
+    <div class="tags"><span class="bti"></span><%= show_tags(article) -%></div>
+  <%- end -%>
+
+  <div class="bar clearfix" id="qiushi_counts_<%= id %>">
+    <div class="up" id="vote-up-<%= id %>">
+      <a href="javascript:vote2(<%= id %>,1)" id="up-<%= id %>"><%= article.pos_score %></a>
+    </div>
+    <div class="down" id="vote-dn-<%= id %>">
+      <a href="javascript:vote2(<%= id %>,-1)" id="dn-<%= id %>"><%= article.neg_score %></a>
+    </div>
+    <div class="share"></div>
+    <div class="comment">
+      <a href="<%= url %>#qiushi_comments_<%= id %>" class="qiushi_comments" id="c-<%= id %>"><%= article.public_comments_count %></a>
+    </div>
+    <div class="detail">
+      <a href="<%= url %>" target="_blank" class="permalink" rel="bookmark"></a>
+    </div>
+  </div>
+  <%- if controller_name == 'articles' && action_name == 'show' -%>
+    <%= render :partial => "comments/index" -%>
+  <%- end -%>
+</div>

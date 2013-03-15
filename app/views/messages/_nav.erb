@@ -1,0 +1,5 @@
+<h2>
+<%= link_to_unless_current '我收到的纸条', inbox_messages_path%>
+<%= link_to_unless_current '发出去的纸条', outbox_messages_path%>
+<%= link_to_unless_current '写新纸条', new_message_path %>
+</h2>

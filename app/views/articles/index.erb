@@ -1,0 +1,22 @@
+<% content_for :title,
+    case params[:action]
+    when 'latest'
+      "刚刚发生的帖子"
+    when 'tag'
+      "关于#{@current_tag}的帖子"
+    when 'archives'
+      "#{@date.strftime('%Y年%m月%d日')}的帖子"
+    when 'latest_replied'
+      "大家正在讨论的帖子"
+    when 'most_replied'
+      "回复最多的帖子"
+    end
+%>
+<% content_for :title, "#{@user.login} 发表的文章" if @user %>
+<% if params[:action] == 'tag' %>
+<div id="sub-nav" class="ad">
+您正在浏览：关于<strong style="color:#5BBA56"><%= @current_tag %></strong>的帖子
+</div>
+<% end %>
+<%= render(:partial => @articles) %>
+<%= render :partial => 'common/pagination' %>

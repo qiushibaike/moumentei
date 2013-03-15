@@ -1,0 +1,49 @@
+<div id="notice">
+  <%= ( @msg || flash[:notice] ) if ( @msg || flash[:notice] ) %>
+</div>
+<% if @group %>
+<%=@group.name%>
+<%=link_to "编辑这个小组设置",edit_admin_group_path(@group)%>
+<ul class="nav nav-tabs">
+  <% for status in @statuses %>
+  <% c = (params[:group_id] ? @group.articles : Article).by_status(status).count %>
+  <li <%= 'class="active"' if @status == status -%>>
+    <a href="<%= url_for :action => :index, :status => status, :group_id => params[:group_id] %>"><span><%= status %></span>
+      <%= content_tag :span, c, :class => 'badge' if c > 0 %>
+    </a></li>
+  <% end %>
+</ul>
+<% elsif @user %>
+<div>
+<%= @user.login %>的文章
+</div>
+<% end %>
+<%= render :partial => 'search' %>
+<div id="check_body">
+<% if not @articles or @articles.empty?%>
+    <p>No Articles </p>
+<% else %>
+  <% form_tag( {:action => 'batch_set_status'}, {:onsubmit => "return deleteelse(this);"}) do %>
+    <%= render :partial => 'admin/articles/selection' unless params[:id] %>
+
+    <div id="entities">     
+      <%= render :partial => @articles, :locals => {:checkbox => true} %>
+    </div>
+    <% unless params[:id] %>
+    <%= submit_tag '通过', :class => 'btn btn-primary' %>
+    <span style="display: none">
+      <select name="status">
+      <% for s in @statuses; if s != @status%>
+        <option value="<%=s%>"><%=s%></option>
+      <% end; end %>
+      </select></span>
+    <label class="checkbox inline">
+    <input type="checkbox" checked="<%= 'checked' if params[:status] == 'pending'%>" name="delete_else" value="" />不通过其他未标记的</label></label>
+    <% end %>
+    <%= select_tag :group_id, options_for_select(categories_options, @group.id) if @group%>
+    <input type="button" class='btn' onclick="this.form.action='<%=move_admin_articles_path%>';this.form.submit();" value="移动" />
+   <% end %>
+<% end %>
+<%= render :partial => 'admin/articles/pagination' %>
+<div id="status"></div>
+</div>

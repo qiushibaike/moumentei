@@ -1,0 +1,21 @@
+-if logged_in?
+  .current-user-groups(style="display:none")
+    %ul
+      - current_user.publications(Group).each do |s|
+        - next if s.publication.blank?
+        %li= link_to s.publication.name, s.publication
+        - if s.unread_count > 0
+          %sup= s.unread_count
+.container
+  = render 'stat'
+  %ul
+    %li= link_to '问题反馈', articles_path('feedback')
+    %li= link_to '常见问题', articles_path('faq')
+    %li.last= link_to '网友交流群', article_path('faq', 'qqqun-tong-ji')
+  %p.copyright
+    Copyright &copy; #{Date.today.year}
+    %a(href="http://shiningray.cn")
+      ShiningRay
+    沪ICP备09004429号
+  %p.rev
+    %tt= "$REV:#{$revision}$"  

@@ -1,0 +1,66 @@
+<% form_for ['admin', @group] do |f|%>
+  <%= f.error_messages %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :description %>
+  <%= f.text_field :description %>
+  <%= f.label :parent_id %><%= f.select :parent_id, categories_options,{:include_blank => true} %>
+  <%= f.label :domain%>
+  <%=f.text_field :domain%>
+  <h4>    <%= f.label :options %></h4>
+
+  <label>主题</label>
+  <input type="text" name="group[options][theme]" value="<%= @group.options[:theme] %>" />
+  <label>排序算法</label>
+    <input type="text" name="group[options][score_algorithm]" value="<%= @group.options[:score_algorithm] %>" />
+  <label>favicon</label>
+    <input type="text" name="group[options][favicon]" value="<%= @group.options[:favicon] %>" />
+
+  <label>Logo</label>
+    <input type="text" name="group[options][logo]" value="<%= @group.options[:logo] %>" />
+
+  <label>css</label>
+    <input type="text" name="group[options][stylesheet]" value="<%= @group.options[:stylesheet] %>" />
+    <label>水印</label>
+    <input type="text" name="group[options][watermark_path]" value="<%= @group.options[:watermark_path] %>"/>
+    
+
+  <label>Google Analytics Profile ID</label>
+    <input type="text" name="group[options][ga_id]" value="<%= @group.options[:ga_id] %>" />
+  <label>每页数量</label>
+  <input type="text" name="group[options][per_page]" value="<%=@group.options[:per_page]%>" />
+ 
+
+    <%= options_check_box @group, 'force_anonymous', '强制文章匿名' %>
+
+
+    <%= options_check_box @group, 'allow_anonymous_vote', '允许匿名投票' %>
+
+
+    <%= options_check_box @group, 'force_comments_anonymous', '强制评论匿名' %>
+
+
+    <%= options_check_box @group, 'only_member_can_view', '只允许登录用户浏览' %>
+
+
+    <%= options_check_box @group, 'only_member_can_post', '只允许登录用户发贴' %>
+
+
+    <%= options_check_box @group, 'only_member_can_reply', '只允许登录用户回贴' %>
+
+
+    <%= options_check_box @group, 'articles_need_approval', '发贴必须进行审核' %>
+
+
+    <%= options_check_box @group, 'comments_need_approval', '回贴必须进行审核' %>
+
+
+    <%= options_check_box @group, 'encryption', '加密内容' %>
+
+
+    <%= options_check_box @group, 'show_articles_in_children', '显示子分类中的内容' %>
+
+
+  <%= f.submit t("Save"), :class => 'btn btn-primary'%>
+  <%=link_to t('Back'), admin_groups_path%>
+<% end %>

@@ -1,0 +1,26 @@
+.navbar .avatar img {
+    width: 16px;
+    height: 16px;
+}
+
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+
+body{
+    margin-top: 50px;
+    background: #ddd;
+}
+
+
+.box {
+    background-color: white;
+    padding: 10px;
+    margin: 0 0 20px 0;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 0px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 0px 2px rgba(0,0,0,0.1);
+    box-shadow: 0 0px 2px rgba(0, 0, 0, 0.05);
+}

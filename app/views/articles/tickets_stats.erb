@@ -1,0 +1,5 @@
+<% @ticket_types.each do |t| %>
+<p> <%= t.name %> <strong>X <%=@tickets[t.id].to_i%></strong>
+<%= t.description %>
+</p>
+<% end %>

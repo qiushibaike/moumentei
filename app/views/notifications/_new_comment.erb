@@ -1,0 +1,21 @@
+<%
+notification = new_comment
+article_id = notification.key[1].to_i
+user=User.find notification.key[2].to_i if notification.key[2]
+begin
+  article = Article.get_cache article_id 
+rescue 
+  return
+end
+%>
+<%comment=Comment.find(notification.content[1].to_i)%>
+<a href="<%= notification_path(notification)%>">
+<%if comment.anonymous%>
+  匿名用户
+  <%else %>
+<%=user.login if user %>
+  <%end%>
+在<%= article.group_id == 2 ? '帖子' : '秘密' %><strong>#<%=article_id%></strong><br />
+  "<%= h article.content.mb_chars[0...10] %>..."回复了您的评论
+</a>
+<%#link_to_remote%>

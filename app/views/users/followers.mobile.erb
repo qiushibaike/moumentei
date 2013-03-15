@@ -1,0 +1,12 @@
+<%=render :partial => @user%>
+<div id="right">
+<% if @followers.size == 0 %>
+<h2>尚无粉丝</h2>
+<% else %>
+<h2><%= "#{@user.followers.count}位粉丝有正在关注#{@user.login}" %></h2>
+<% for f in @followers %>
+<%= avatar f %>
+<% end %>
+<% end %>
+</div>
+<%= render :partial => 'common/ad3' %>

@@ -1,0 +1,3 @@
+page.insert_html :bottom, :posts, :partial => 'post', :object => @post
+page.replace_html 'posts'
+page[:post_id].reset

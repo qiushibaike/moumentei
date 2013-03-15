@@ -1,0 +1,47 @@
+
+.comments .comments-header {
+    padding-bottom: 6px;
+    color: #999;    
+}
+.comment-list {
+    margin: 0;
+    padding: 0;
+}
+.comment-list .comment {
+    list-style: none;
+    border-top: 1px solid #DDD;
+    padding: 8px 10px;
+    margin: 0 -10px;    
+}
+.comment-list .comment .avatar-block {
+    
+}
+.comment .avatar {
+  width: 32px;
+  height: 32px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.comment-meta {
+    margin-left: 40px;
+    font-size: 12px;
+    color: #BBB;
+    height: 20px;    
+}
+.comment-author {
+    float: left;
+    margin-right: 10px;
+}
+.comment-content {
+    margin-left: 40px; 
+}
+#respond form textarea {
+    width: 670px; 
+}
+#respond #comment_submit {
+    margin-left: 10px;
+}
+.comment .floorlink {
+    float: right;
+}

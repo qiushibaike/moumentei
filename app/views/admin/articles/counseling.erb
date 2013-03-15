@@ -1,0 +1,15 @@
+<div id="notice">
+    <%= ( @msg || flash[:notice] ) if ( @msg || flash[:notice] ) %>
+</div>
+<%= render :partial => @article %>
+<% if @article %>
+<p />
+<form action="/admin/answer" method="post">
+    <input type="hidden" name="id" id="article_id" value="<%= @article.id %>" />
+    <input type="hidden" name="comment[article_id]" id="comment_article_id" value="<%= @article.id %>" />
+    <textarea name="comment[content]" id="comment_content" class="text" rows="6" style="width:360px"></textarea><p />
+    <input type="submit" value="答复" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="/admin/answer?id=<%=@article.id%>" style="color: black">略过此问题，查看下一个</a>
+</form>
+<% else %>
+感谢您的辛勤工作，目前所有问题已经全部被答复。
+<% end %>

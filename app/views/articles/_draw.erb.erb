@@ -1,0 +1,9 @@
+<% if article.picture.file? %>
+  <% if article.picture.content_type =~ /gif/i %>
+    <%= image_tag(article.picture(:original), :alt => (article.title || article.content.mb_chars[0,10])) %>
+  <% else %>
+    <%= link_to image_tag(article.picture(:medium), :alt => (article.title || article.content.mb_chars[0,10])), article.picture(:original),
+      :class => 'picture', :id => "picture-#{id}", :title => (article.title || article.content.mb_chars[0,10]) %><br />
+    <%= link_to article.is_original? ? '给这张图片配上可爱的台词' : '我配的台词更好',draw_article_path(article) %>
+  <% end %>
+<% end %>

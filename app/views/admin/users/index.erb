@@ -1,0 +1,66 @@
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+    <% content_tag :li, :class => params[:state].nil? ? 'active' : '' do%>
+      <% link_to :state => nil do %>
+      all
+      <%= content_tag :span, User.count, :class => 'badge' %>
+      <% end %>
+    <% end %>
+    <% %w(active pending suspended passive deleted).each do |s| %>
+      <% c = User.state_eq(s).count %>
+      <% content_tag :li, :class => params[:state] == s ? 'active' : '' do %>
+        <% link_to :state => s do %>
+          <%= s %>
+          <%= content_tag :span, c, :class => 'badge' if c > 0 %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th><%= t('activerecord.attributes.user.login')%></th>
+      <th><%= t('activerecord.attributes.user.avatar')%></th>
+      <th><%= t('activerecord.attributes.user.email')%></th>
+      <th><%= t('activerecord.attributes.user.state')%></th>
+    </tr>
+  </thead>
+  <% for user in @users %>
+  <tr class="<%= user.state %>">
+    <td><%= user.id %> </td>
+      <td><%= link_to user.login, admin_user_path(user)%></td>
+      <td><%=link_to(image_tag(user.avatar(:thumb)),user)%></td>
+      <td><%= user.email%></td>
+      <td><%=user.state%></td>
+      <td><%= link_to 'edit', edit_admin_user_path(user) %></td>
+      <td><%=link_to "tickets",tickets_admin_user_path(user)%></td>
+      <%if user.state=='pending'%>
+        <td> <%= link_to'active ',active_admin_user_path(user),:method=>:post%></td>
+        <td> <%=link_to'suspend', suspend_admin_user_path(user),:method=>:post%></td>
+        <td> <%= link_to 'Delete',admin_user_path(user),:method => :delete%></td>
+      <%end%>
+      <%if user.state=='active'%>
+        <td><%=link_to'suspend', suspend_admin_user_path(user),:method=>:post%></td>
+        <td><%= link_to 'Delete',admin_user_path(user),:method => :delete%></td>
+      <%end%>
+      <%if user.state=='suspended'%>
+        <td> <%= link_to'unsuspend',unsuspend_admin_user_path(user),:method=>:post%></td>
+          <td><%= link_to 'Delete',admin_user_path(user),:method => :delete%></td>
+      <%end%>
+         <%#*<td> <%=link_to 'delete_avatar',delete_avatar_admin_user_path(user),:method=>:post%>
+          <%#*<td> <%=link_to 'delete_comments',delete_comments_admin_user_path(user),:method=>:post%>
+      <td><%#= user.suspended? ? link_to('unsuspend',unsuspend_admin_user_path(user),:method=>:post): link_to('suspend', suspend_admin_user_path(user),:method=>:post)%></td>
+      <td><%#= user.pending?  ?  link_to('active ',active_admin_user_path(user),:method=>:post) :"pending"%></td>
+      <td><%#= user.deleted? ? " deleted " : link_to('Delete',admin_user_path(user),:method => :delete) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= will_paginate(@users, :class => 'pagination', :inner_window => 2, :outer_window => 0,
+                :renderer => BootstrapLinkRenderer,
+                :previous_label => '&laquo;'.html_safe,
+                :next_label => '&raquo;'.html_safe) %>
+</div>
+</div>

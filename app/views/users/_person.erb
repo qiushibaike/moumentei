@@ -1,0 +1,6 @@
+<% cache ['person', person] do %>
+	<dl class="person">
+		<dt><%=link_to image_tag(person.avatar.url("thumb")), person,  :target => '_blank' %></dt>
+		<dd><%=link_to h(person.login), person, :class => person.roles.collect(&:name).join(' '), :target => '_blank' %></dd>
+	</dl>
+<% end %>

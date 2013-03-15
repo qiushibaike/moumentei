@@ -1,0 +1,20 @@
+Description:
+    The favorite_model generator creates a Role model for use with the ActsAsFavorite plugin.
+
+    The generator takes a model name as its argument, which at this time must be 'Favorite'.
+
+    The generator creates a Role model class in app/models, a test suite in
+    test/unit, test fixtures in test/fixtures/singular_name.yml, and a migration
+    in db/migrate.
+
+Example:
+    ./script/generate favorite_model Favorite
+
+    This will create a Role model:
+        Model:      app/models/favorite.rb
+        Test:       test/unit/favorite_test.rb
+        Fixtures:   test/fixtures/favorites.yml
+        Migration:  db/migrate/XXX_add_favorites.rb
+        
+    You should then run "rake migrate".
+

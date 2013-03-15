@@ -1,0 +1,29 @@
+<div class="uCard" id="uCard_<%=user.id%>">
+	<div class="userPic">
+	  <%= link_to(img_tag(user.avatar), "/users/"+user.id) %>
+	  <% if(currentUser && currentUser.id != user.id){ %>
+		<p class="follow-link">
+      <a href="/users/<%=user.id%>/<%= following ? 'unfollow' : 'follow' %>.js" style="display: block;"><%= following ? '取消关注' : '关注' %></a>
+		</p>
+		<% } %>
+	</div>
+	<div class="uCardcnt">
+		<p class="userName">
+			<%=link_to( user.login, '/users/'+user.id)%><!--br>
+			<span class="en">@nsyncer</span-->
+		</p>
+		<p class="nums"><%=user.public_articles_count||'0'%>篇文章 | <%=user.followers%>人关注 <br/>
+魅力值<%=user.charm%>
+		</p>
+		<% if(currentUser) { %>
+    <% if(currentUser.id != user.id){ %>
+		<p class="btn">
+			<a class="reply" href="#">对话</a><a class="msg" href="/messages/new?id=<%=user.id%>" title="">传纸条</a>
+		</p>
+    <% }else{ %>
+    <p class="btn">这是你自己</p>
+    <% } %>
+    <% } %>
+	</div>
+</div>
+

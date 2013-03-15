@@ -1,0 +1,19 @@
+<% form_tag batch_admin_reports_path do %>
+<div>
+<ul id="nav88">
+  <%['Comment','User','Article'].each do |report|%>
+  <li>
+    <%=link_to "#{report}" ,:controller=>'reports',:action=>'index',:type=>"#{report}"%>
+  </li>
+  <%end%>
+</ul>
+</div>
+<div id="check_body">
+  <div id="entities">
+  <% @reports.each do |report| %>
+    <%= render :partial => report.target_type.underscore, :object => report.target, :locals => {:report => report} %>
+  <%end%>
+  </div>
+</div>
+<%= submit_tag %>
+<% end %>

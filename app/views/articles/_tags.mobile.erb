@@ -1,0 +1,9 @@
+<% if !tag_list.empty? %>
+<%   tag_list.each do |t| 
+   if @current_tag and t.include? @current_tag  %>
+<span class='current_tag'><%= link_to t -%></span>
+<%     else %>
+<%= link_to t, {:controller => :groups, :action => :tag, :id => @group.id, :tag => t}, {:rel => 'tag'} %>
+<%     end
+     end
+  end %>
