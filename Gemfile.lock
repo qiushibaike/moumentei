@@ -24,6 +24,8 @@ GEM
     activerecord-jdbcmysql-adapter (1.2.2)
       activerecord-jdbc-adapter (~> 1.2.2)
       jdbc-mysql (~> 5.1.0)
+    activerecord-mysql2-adapter (0.0.3)
+      mysql2
     activeresource (2.3.14)
       activesupport (= 2.3.14)
     activesupport (2.3.14)
@@ -59,6 +61,7 @@ GEM
       subexec (~> 0.2.1)
     multi_json (1.0.4)
     multi_xml (0.4.1)
+    mysql2 (0.2.18)
     mysql2 (0.2.18-x86-mingw32)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -112,6 +115,7 @@ DEPENDENCIES
   SystemTimer
   aasm
   activerecord-jdbcmysql-adapter
+  activerecord-mysql2-adapter
   capistrano
   compass
   data_fabric
