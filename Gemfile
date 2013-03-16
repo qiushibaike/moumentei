@@ -1,7 +1,7 @@
 #source :gemcutter
 source 'http://ruby.taobao.org'
 gem "rails", "~> 2.3.5"
-gem 'mysql', :platforms => [:ruby, :mingw]
+gem 'mysql2', '~> 0.2.6' , :platforms => [:ruby, :mingw]
 
 platforms :jruby do
   gem 'jruby-openssl'
@@ -10,11 +10,6 @@ end
 
 gem 'will_paginate', '~> 2.3.2'
 gem "aasm"
-# Add eventmachine and amqp gems togem to get config.gem goodies:
-#gem "eventmachine"
-#gem "amqp"
-
-#gem 'ohm'
 gem 'paperclip'
 gem 'compass'
 gem 'mini_magick'
@@ -29,17 +24,15 @@ gem "oauth-plugin"
 gem 'delayed_job', '~> 2.0.4', :git => 'git://github.com/collectiveidea/delayed_job.git', :branch => 'v2.0'
 gem 'searchlogic'
 #gem 'sprinkle'
-gem 'newrelic_rpm'
 gem 'whenever', :require => false
+gem 'super_cache'
 
 group :development do
-  gem 'mongrel'
-  gem 'rdoc'
+  #gem 'mongrel'
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
 end
 
 group :production do
   gem 'rack-cache'
-  gem 'exception_notification', :git => 'git://github.com/rails/exception_notification.git', :branch => '2-3-stable'
 end

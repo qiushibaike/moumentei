@@ -2,13 +2,10 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  include ExceptionNotification::Notifiable if Rails.env.production?
   protect_from_forgery # :secret => 'd7f14b6ea460ab510ef00c7049c8bb56'
   helper :all
   include AuthenticatedSystem
   include RoleRequirementSystem
-  #include PostLock
-  include SuperCache
   include ViewControlMethods
   theme_support
   theme :select_theme

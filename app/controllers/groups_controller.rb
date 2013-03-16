@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
     'year' => 1.year
   }
 
-  super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
+  #super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
   before_filter :date_range_detect, :only => [:hottest,:hottestpage, :most_replied]
 
   def index
