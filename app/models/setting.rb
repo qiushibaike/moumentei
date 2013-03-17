@@ -18,7 +18,8 @@ class Setting < ActiveRecord::Base
     end
     
     def replacelist_pattern
-      @replacelist_pattern ||= Regexp.union(*Setting.replacelist.keys) if Setting.replacelist
+	  nil
+      #@replacelist_pattern ||= Regexp.union(*Setting.replacelist.keys) if Setting.replacelist
     end
 
     def blacklist_pattern
