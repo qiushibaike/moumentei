@@ -18,11 +18,11 @@ class Setting < ActiveRecord::Base
     end
     
     def replacelist_pattern
-      @replacelist_pattern ||= Regexp.union(*Setting.replacelist.keys) if Setting.replacelist
+      @replacelist_pattern ||= Regexp.union(*Setting.replacelist.keys) unless Setting.replacelist.blank?
     end
 
     def blacklist_pattern
-      @blacklist_pattern ||= Regexp.union(*Setting.blacklist) if Setting.blacklist
+      @blacklist_pattern ||= Regexp.union(*Setting.blacklist) unless Setting.blacklist.blank?
     end
     
     def method_missing(selector, *args, &block)

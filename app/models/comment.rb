@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
-  #acts_as_archive
-  CacheOption = {:raw => true }.freeze
   include AntiSpam
   harmonize :content
   include SequenceAspect

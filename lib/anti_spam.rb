@@ -1,9 +1,5 @@
 module AntiSpam
   def self.included(base)
-    #base.class_eval do
-      #before_validation :filter_keywords
-      #before_validation :check_spam
-    #end
     base.extend(ClassMethods)
   end
   module ClassMethods
@@ -29,7 +25,4 @@ module AntiSpam
       end if Setting.replacelist_pattern
     end
   end
-  #def check_spam
-  #  self.status = 'spam' if new_record? and Setting.blacklist_pattern and self.content =~ Setting.blacklist_pattern
-  #end
 end
