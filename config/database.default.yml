@@ -27,7 +27,7 @@ test:
   adapter: mysql2
   database: test
   username: root
-  password: 123456
+  password: "123456"
   #socket: /tmp/mysql.sock
 
 production:
@@ -43,7 +43,7 @@ local_production:
   adapter: mysql2
   database: test
   username: root
-  password: 123456
+  password: "123456"
   host: localhost
   pool: 5
   #socket: /tmp/mysql.sock
