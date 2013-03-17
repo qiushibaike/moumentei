@@ -108,6 +108,10 @@ with msys”，以及“Run git from Windows command prompt option”）
 然后运行数据库迁移
 
     bundle exec rake db:migrate
+    
+最后可以导入默认的范例数据，用户名`admin`，密码`123456`
+
+    bundle exec rake db:seed
 
 ### 启动服务
 
