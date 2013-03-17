@@ -13,7 +13,8 @@
 
 * Ruby 1.8.7 
 * Rails 2.3.x 
-* Bundler
+* RubyGems 1.8.x
+* Bundler 1.0.x
 
 安装前先 bundle install
 
