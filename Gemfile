@@ -13,8 +13,6 @@ gem 'will_paginate', '~> 2.3.2'
 gem "aasm"
 gem 'paperclip'
 gem 'compass'
-gem 'mini_magick'
-gem "thinking-sphinx",'~> 1.4.10', :platforms => [:ruby]
 gem 'data_fabric'
 #gem 'acts_as_archive'
 gem 'SystemTimer', :platforms => :ruby

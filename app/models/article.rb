@@ -65,16 +65,6 @@ class Article < ActiveRecord::Base
   cattr_accessor :per_page
   @@per_page = 20
 
-  unless RUBY_PLATFORM =~ /win32|mingw|java/
-  define_index do
-    indexes content
-    indexes tag_line
-#    indexes user(:login), :as => :author, :sortable => true, :facet => true
-    indexes [group_id, status], :as => :group_status
-    has user_id, created_at
-  end
-  end
-
   def anonymous?
     anonymous or user_id == 0 or !user_id or user.blank?
   end
