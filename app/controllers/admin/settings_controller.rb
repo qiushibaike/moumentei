@@ -1,7 +1,7 @@
 class Admin::SettingsController < Admin::BaseController
   def edit
-    Setting.replacelist = nil unless Setting.replacelist.is_a?(Hash)
-    Setting.blacklist = nil unless Setting.blacklist.is_a?(Array)
+    Setting.replacelist = {} unless Setting.replacelist.is_a?(Hash)
+    Setting.blacklist = [] unless Setting.blacklist.is_a?(Array)
   end
 
   def update
