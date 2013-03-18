@@ -12,7 +12,6 @@ gem 'will_paginate', '~> 2.3.2'
 gem "aasm"
 gem 'paperclip'
 gem 'compass'
-gem 'data_fabric'
 gem 'SystemTimer', :platforms => :ruby
 gem 'memcache-client'
 gem 'httparty'
