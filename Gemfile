@@ -1,4 +1,3 @@
-#source :gemcutter
 source 'http://ruby.taobao.org'
 gem "rails", "~> 2.3.5"
 gem 'mysql2', '~> 0.2.6' , :platforms => [:ruby, :mingw]
@@ -14,7 +13,6 @@ gem "aasm"
 gem 'paperclip'
 gem 'compass'
 gem 'data_fabric'
-#gem 'acts_as_archive'
 gem 'SystemTimer', :platforms => :ruby
 gem 'memcache-client'
 gem 'httparty'
@@ -22,12 +20,9 @@ gem "oauth"
 gem "oauth-plugin"
 gem 'delayed_job', '~> 2.0.4', :git => 'git://github.com/collectiveidea/delayed_job.git', :branch => 'v2.0'
 gem 'searchlogic'
-#gem 'sprinkle'
-gem 'whenever', :require => false
 gem 'super_cache'
 
 group :development do
-  #gem 'mongrel'
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
 end
