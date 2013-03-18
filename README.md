@@ -144,3 +144,12 @@ with msys”，以及“Run git from Windows command prompt option”）
 检出代码并运行
 
     cap deploy
+
+反馈
+====
+
+如有问题，可以联系作者ShiningRay：
+
+* 微博  http://weibo.com/shiningray
+* twitter http://twitter.com/shiningray
+* 博客 http://shiningray.cn
