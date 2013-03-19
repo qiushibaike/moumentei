@@ -11,13 +11,11 @@ class ScoreWorker < BaseWorker
     when :down
       query = "UPDATE scores SET neg=neg-1 WHERE article_id=#{id}"
     end
-    Score.connection.execute query
     update id
   end
 
   def update_comments_count(id, count=nil)
     count ||= Comment.count :conditions => {:article_id => id, :status => 'publish'}
-    Score.update_all({:public_comments_count => count}, {:article_id => id})
   end
 
   def update(id)

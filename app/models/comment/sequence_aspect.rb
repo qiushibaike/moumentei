@@ -66,7 +66,6 @@ module Comment::SequenceAspect
       end
     end
     self.floor = f
-    ScoreWorker.async_update_comments_count(article_id, f)
   end
 	def self.included(receiver)
 		receiver.extend         ClassMethods
