@@ -45,8 +45,9 @@ Rails::Initializer.run do |config|
   config.i18n.default_locale = :zh
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
-  config.active_record.observers = [:user_observer]
-
+  config.after_initialize do
+    config.active_record.observers = [:user_observer]
+  end
   # Make Active Record use UTC-base instead of local time
   # config.active_record.default_timezone = :utc
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20120719092614) do
 
   create_table "announcements", :force => true do |t|
     t.text     "content"
@@ -17,42 +17,13 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "updated_at"
   end
 
-  create_table "archived_articles", :id => false, :force => true do |t|
-    t.integer  "id",                                :default => 0,         :null => false
-    t.string   "tag_line"
-    t.text     "content"
-    t.integer  "user_id",                           :default => 0,         :null => false
-    t.datetime "created_at"
-    t.string   "status",               :limit => 20, :default => "pending", :null => false
-    t.integer  "group_id",                          :default => 0,         :null => false
-    t.string   "comment_status",       :limit => 20, :default => "open",    :null => false
-    t.boolean  "anonymous",                         :default => false,     :null => false
-    t.datetime "updated_at"
-    t.string   "picture_file_name"
-    t.string   "picture_content_type"
-    t.integer  "picture_file_size"
-    t.datetime "picture_updated_at"
-    t.string   "source"
-    t.string   "title"
-    t.string   "email"
-    t.datetime "deleted_at"
+  create_table "anonymous_ratings", :force => true do |t|
+    t.integer "ip",                        :null => false
+    t.integer "article_id",                :null => false
+    t.integer "score",      :default => 1
   end
 
-  create_table "archived_comments", :id => false, :force => true do |t|
-    t.integer  "id",                      :default => 0,         :null => false
-    t.text     "content"
-    t.integer  "article_id",                                     :null => false
-    t.integer  "user_id",                 :default => 0,         :null => false
-    t.datetime "created_at",                                     :null => false
-    t.string   "status",     :limit => 20, :default => "pending", :null => false
-    t.boolean  "anonymous",                                      :null => false
-    t.integer  "pos",                     :default => 0
-    t.integer  "neg",                     :default => 0
-    t.integer  "floor"
-    t.integer  "score"
-    t.integer  "parent_id"
-    t.datetime "deleted_at"
-  end
+  add_index "anonymous_ratings", ["ip", "article_id"], :name => "index_anonymous_ratings_on_ip_and_article_id", :unique => true
 
   create_table "article_references", :id => false, :force => true do |t|
     t.integer "referer", :null => false
@@ -70,27 +41,29 @@ ActiveRecord::Schema.define(:version => 0) do
 
   create_table "articles", :force => true do |t|
     t.string   "tag_line"
-    t.integer  "user_id",                           :default => 0,         :null => false
-    t.integer  "group_id",                          :default => 0,         :null => false
-    t.string   "status",               :limit => 20, :default => "pending", :null => false
-    t.string   "comment_status",       :limit => 20, :default => "open",    :null => false
-    t.boolean  "anonymous",                         :default => false,     :null => false
+    t.integer  "group_id",                           :default => 0,           :null => false
+    t.integer  "user_id",                            :default => 0,           :null => false
+    t.string   "title"
+    t.string   "status",               :limit => 20, :default => "'pending'", :null => false
+    t.string   "comment_status",       :limit => 20, :default => "'open'",    :null => false
+    t.boolean  "anonymous",                          :default => false,       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "content"
-    t.integer  "picture_id"
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
-    t.string   "source"
-    t.string   "title"
     t.string   "email"
-    
+    t.integer  "pos",                                :default => 0
+    t.integer  "neg",                                :default => 0
+    t.integer  "score",                              :default => 0
+    t.datetime "published_at"
+    t.text     "content"
   end
 
   add_index "articles", ["created_at", "group_id", "status"], :name => "created_at"
   add_index "articles", ["created_at"], :name => "index_articles_on_created_at"
+  add_index "articles", ["group_id", "status", "published_at", "score"], :name => "index_articles_on_group_id_and_status_and_published_at_and_score"
   add_index "articles", ["group_id", "status", "updated_at"], :name => "index_articles_on_group_id_and_status_and_updated_at"
   add_index "articles", ["group_id", "status"], :name => "index_articles_on_group_id_and_status"
   add_index "articles", ["id", "status"], :name => "index_articles_on_id_and_status"
@@ -160,14 +133,14 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "comment_ratings", ["user_id", "comment_id"], :name => "index_comment_ratings_on_user_id_and_comment_id", :unique => true
 
   create_table "comments", :force => true do |t|
-    t.integer  "user_id",                 :default => 0,         :null => false
-    t.integer  "article_id",                                     :null => false
+    t.integer  "user_id",                  :default => 0,         :null => false
+    t.integer  "article_id",                                      :null => false
     t.integer  "floor"
-    t.datetime "created_at",                                     :null => false
+    t.datetime "created_at",                                      :null => false
     t.string   "status",     :limit => 20, :default => "pending", :null => false
-    t.boolean  "anonymous",                                      :null => false
-    t.integer  "pos",                     :default => 0
-    t.integer  "neg",                     :default => 0
+    t.boolean  "anonymous",                                       :null => false
+    t.integer  "pos",                      :default => 0
+    t.integer  "neg",                      :default => 0
     t.text     "content"
     t.integer  "score"
     t.integer  "parent_id"
@@ -179,6 +152,21 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "comments", ["article_id", "score"], :name => "index_comments_on_article_id_and_score"
   add_index "comments", ["article_id", "status"], :name => "article_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "favorites", :force => true do |t|
     t.integer  "favorable_id",                 :null => false
@@ -264,6 +252,16 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "messages", ["owner_id", "sender_id", "read"], :name => "owner_id"
 
+  create_table "metadatas", :force => true do |t|
+    t.integer  "article_id"
+    t.string   "key"
+    t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "metadatas", ["article_id", "key"], :name => "index_metadatas_on_article_id_and_key", :unique => true
+
   create_table "name_logs", :force => true do |t|
     t.string   "name"
     t.integer  "user_id"
@@ -308,17 +306,21 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "oauth_tokens", ["token"], :name => "index_oauth_tokens_on_token", :unique => true
 
-  create_table "pictures", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "original_id"
+  create_table "pages", :force => true do |t|
     t.integer  "group_id"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "user_id"
+    t.integer  "parent_id"
+    t.string   "slug"
+    t.string   "path"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "attachment_file_name"
-    t.string   "attachment_content_type"
-    t.integer  "attachment_file_size"
-    t.datetime "attachment_updated_at"
   end
+
+  add_index "pages", ["group_id", "parent_id"], :name => "index_pages_on_group_id_and_parent_id"
+  add_index "pages", ["path"], :name => "index_pages_on_path"
+  add_index "pages", ["user_id"], :name => "index_pages_on_user_id"
 
   create_table "posts", :force => true do |t|
     t.text     "content"
@@ -335,6 +337,19 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "posts", ["parent_id", "reshare"], :name => "index_posts_on_parent_id_and_reshare"
 
+  create_table "preferences", :force => true do |t|
+    t.string   "name",       :null => false
+    t.integer  "owner_id",   :null => false
+    t.string   "owner_type", :null => false
+    t.integer  "group_id"
+    t.string   "group_type"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "preferences", ["owner_id", "owner_type", "name", "group_id", "group_type"], :name => "index_preferences_on_owner_and_name_and_preference", :unique => true
+
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
     t.string   "realname"
@@ -344,15 +359,6 @@ ActiveRecord::Schema.define(:version => 0) do
     t.date     "birthday"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "quest_logs", :force => true do |t|
-    t.string  "quest_id",                                      :null => false
-    t.integer "user_id",                                       :null => false
-    t.string  "status",   :limit => 20, :default => "accepted"
-  end
-
-  create_table "queue", :force => true do |t|
   end
 
   create_table "ratings", :force => true do |t|
@@ -386,23 +392,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
   add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
 
-  create_table "scores", :id => false, :force => true do |t|
-    t.integer  "article_id",                                 :null => false
-    t.integer  "neg",                     :default => 0,     :null => false
-    t.integer  "pos",                     :default => 0,     :null => false
-    t.integer  "public_comments_count",   :default => 0,     :null => false
-    t.integer  "public_references_count", :default => 0,     :null => false
-    t.integer  "score",                   :default => 0,     :null => false
-    t.integer  "ratings_count",           :default => 0,     :null => false
-    t.integer  "group_id",                :default => 0,     :null => false
-    t.datetime "created_at",                                 :null => false
-    t.boolean  "has_picture",             :default => false, :null => false
-  end
-
-  add_index "scores", ["article_id", "group_id"], :name => "article_id", :unique => true
-  add_index "scores", ["created_at", "score", "article_id"], :name => "gid_at_s_aid"
-  add_index "scores", ["public_comments_count"], :name => "public_comments_count"
-
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
     t.text     "data"
@@ -414,28 +403,18 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "settings", :force => true do |t|
-    t.string "key",   :null => false
-    t.text   "value", :null => false
+    t.string "key",   :limit => 64, :null => false
+    t.text   "value",               :null => false
   end
 
   add_index "settings", ["key"], :name => "index_settings_on_key", :unique => true
-
-  create_table "statistics", :force => true do |t|
-    t.datetime "time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "limit"
-    t.text     "article_ids"
-    t.text     "score"
-  end
-
-  add_index "statistics", ["time", "limit"], :name => "index_statistics_on_time_and_limit", :unique => true
+  add_index "settings", ["key"], :name => "sqlite_autoindex_settings_1", :unique => true
 
   create_table "taggings", :force => true do |t|
-    t.integer  "tag_id",                                                        :null => false
-    t.integer  "taggable_id",                                                   :null => false
+    t.integer  "tag_id",                                                         :null => false
+    t.integer  "taggable_id",                                                    :null => false
     t.string   "taggable_type", :limit => 20, :default => "Article",             :null => false
-    t.datetime "created_at",                 :default => '2008-01-01 00:00:00', :null => false
+    t.datetime "created_at",                  :default => '2008-01-01 00:00:00', :null => false
   end
 
   add_index "taggings", ["created_at"], :name => "index_taggings_on_created_at"
@@ -443,7 +422,13 @@ ActiveRecord::Schema.define(:version => 0) do
   add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
 
   create_table "tags", :force => true do |t|
-    t.string "name", :null => false
+    t.string   "name",              :null => false
+    t.string   "description"
+    t.string   "icon_file_name"
+    t.string   "icon_content_type"
+    t.integer  "icon_file_size"
+    t.datetime "icon_updated_at"
+    t.boolean  "hide"
   end
 
   add_index "tags", ["id", "name"], :name => "id"
@@ -469,8 +454,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.datetime "viewed_at"
   end
 
-  add_index "tickets", ["article_id"], :name => "article_id"
-  add_index "tickets", ["user_id", "article_id", "ticket_type_id", "correct"], :name => "full_idx"
+  add_index "tickets", ["article_id"], :name => "fk_article_id"
   add_index "tickets", ["user_id", "article_id"], :name => "index_tickets_on_user_id_and_article_id", :unique => true
 
   create_table "transactions", :force => true do |t|
@@ -493,13 +477,14 @@ ActiveRecord::Schema.define(:version => 0) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                                                           :null => false
-    t.string   "email",                                                           :null => false
-    t.string   "crypted_password",                                                :null => false
-    t.string   "salt",                                                            :null => false
-    t.string   "created_at",                                                      :null => false
-    t.string   "updated_at",                                                      :null => false
-    t.string   "remember_token",                           :default => "",        :null => false
+    t.string   "login",                                                             :null => false
+    t.string   "name",                      :limit => 100
+    t.string   "email",                                                             :null => false
+    t.string   "crypted_password",                                                  :null => false
+    t.string   "salt",                                                              :null => false
+    t.string   "created_at",                                                        :null => false
+    t.string   "updated_at",                                                        :null => false
+    t.string   "remember_token",                           :default => "''",        :null => false
     t.datetime "remember_token_expires_at"
     t.string   "activation_code"
     t.datetime "activated_at"
@@ -507,13 +492,14 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "state",                                    :default => "passive"
+    t.string   "state",                                    :default => "'passive'"
     t.datetime "deleted_at"
-    t.string   "name",                      :limit => 100
   end
 
   add_index "users", ["activation_code"], :name => "activation_code"
   add_index "users", ["email"], :name => "email"
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
   add_index "users", ["login"], :name => "login"
   add_index "users", ["remember_token"], :name => "remember_token"
   add_index "users", ["state"], :name => "index_users_on_state"

@@ -13,7 +13,7 @@ class Setting < ActiveRecord::Base
     end
    
     def []= index, value
-      find_or_create_by_key(:key => index).update_attribute(:value, value)
+      find_or_initialize_by_key(:key => index).update_attribute(:value, value)
       Rails.cache.write("Setting.#{index}", value)
     end
     

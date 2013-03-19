@@ -2,7 +2,7 @@ source 'http://ruby.taobao.org'
 gem "rails", "~> 2.3.5"
 gem 'mysql2', '~> 0.2.6' , :platforms => [:ruby, :mingw]
 gem 'activerecord-mysql2-adapter', :platforms => [:ruby, :mingw]
-
+gem 'sqlite3'
 platforms :jruby do
   gem 'jruby-openssl'
   gem 'activerecord-jdbcmysql-adapter', :require => false
