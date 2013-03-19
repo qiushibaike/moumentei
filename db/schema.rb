@@ -408,7 +408,6 @@ ActiveRecord::Schema.define(:version => 20120719092614) do
   end
 
   add_index "settings", ["key"], :name => "index_settings_on_key", :unique => true
-  add_index "settings", ["key"], :name => "sqlite_autoindex_settings_1", :unique => true
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id",                                                         :null => false
