@@ -24,6 +24,21 @@ group :development do
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
 end
 
+group :test, :development do
+  gem "rspec-rails", "~> 2.0"
+  gem "factory_girl_rails", "1.7.0"
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', '~> 0.9.1', :require => false
+  gem 'rb-fchange', :require => false
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'ruby_gntp'
+  gem 'quiet_assets'
+end
+
 group :production do
   gem 'rack-cache'
 end
