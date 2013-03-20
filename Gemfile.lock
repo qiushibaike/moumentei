@@ -78,6 +78,7 @@ GEM
     ffi (1.4.0)
     ffi (1.4.0-java)
     ffi (1.4.0-x86-mingw32)
+    forgery (0.5.0)
     fssm (0.2.10)
     guard (1.6.2)
       listen (>= 0.6.0)
@@ -255,6 +256,7 @@ DEPENDENCIES
   database_cleaner
   delayed_job
   factory_girl_rails (= 1.7.0)
+  forgery
   guard
   guard-rspec
   jruby-openssl
