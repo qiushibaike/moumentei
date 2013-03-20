@@ -1,11 +1,9 @@
 FactoryGirl.define do
   factory :user do
-		password 'justtest'
-		password_confirmation 'justtest'
-
+    sequence(:email) { |n| "test#{n}@test.com"}
+    sequence(:login) { |n| "justtest#{n}"}
+		password { Forgery(:basic).password }
+		password_confirmation { password }
 		state 'pending'
-
-  	sequence(:email) { |n| "test#{n}@test.com"}
-  	sequence(:login) { |n| "justtest#{n}"}
   end
 end

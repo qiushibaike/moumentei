@@ -37,6 +37,7 @@ group :test, :development do
   gem 'launchy'
   gem 'ruby_gntp'
   gem 'quiet_assets'
+  gem 'forgery'
 end
 
 group :production do

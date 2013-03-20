@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :comment do
-    content '你是个好孩子 嘻嘻'
+    content { Forgery(:lorem_ipsum).words(rand(2..30)) }
     anonymous false
-    status 'publish'
-    article
+    status { Comment::STATUSES.sample }
+    article 
     user
   end
 end

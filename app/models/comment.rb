@@ -20,7 +20,7 @@ class Comment < ActiveRecord::Base
   after_create :comment_notify
 
   #before_update :update_score
-  STATUSES = ['publish', 'pending', 'spam', 'private', 'deleted']
+  STATUSES = %w(publish pending spam private deleted)
 
   #the number of new comments in the day given
   def self.all_number(date)
