@@ -1,11 +1,9 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 
 describe Article do
-  fixtures :articles
-  before(:each) do
-    #@article = Article.new
-  end
-
+  let(:article1) { create :article }
+  let(:article2) { create :article }
+  
   it "should be valid" do
     #@article.should be_valid
   end
