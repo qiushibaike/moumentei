@@ -51,12 +51,5 @@ class Users::ArticlesController < ArticlesController
       }
       format.atom
     end
-    
-  end
-
-  def new
-  puts "1111111111123333333"
-  end
-  def create
   end
 end

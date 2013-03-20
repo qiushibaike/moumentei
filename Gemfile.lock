@@ -24,6 +24,9 @@ GEM
     activerecord-jdbcmysql-adapter (1.2.2)
       activerecord-jdbc-adapter (~> 1.2.2)
       jdbc-mysql (~> 5.1.0)
+    activerecord-jdbcsqlite3-adapter (1.2.2)
+      activerecord-jdbc-adapter (~> 1.2.2)
+      jdbc-sqlite3 (~> 3.7.2)
     activerecord-mysql2-adapter (0.0.3)
       mysql2
     activeresource (2.3.18)
@@ -49,6 +52,7 @@ GEM
       multi_json
       multi_xml
     jdbc-mysql (5.1.13)
+    jdbc-sqlite3 (3.7.2.1)
     jruby-openssl (0.7.6.1)
       bouncy-castle-java (>= 1.5.0146.1)
     memcache-client (1.8.5)
@@ -102,6 +106,7 @@ DEPENDENCIES
   SystemTimer
   aasm
   activerecord-jdbcmysql-adapter
+  activerecord-jdbcsqlite3-adapter
   activerecord-mysql2-adapter
   capistrano
   compass

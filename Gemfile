@@ -1,11 +1,17 @@
 source 'http://ruby.taobao.org'
 gem "rails", "~> 2.3.5"
-gem 'mysql2', '~> 0.2.6' , :platforms => [:ruby, :mingw]
-gem 'activerecord-mysql2-adapter', :platforms => [:ruby, :mingw]
-gem 'sqlite3'
+platforms :ruby, :mingw do
+  # use mysql
+  gem 'mysql2', '~> 0.2.6' 
+  gem 'activerecord-mysql2-adapter'
+  # use sqlite3
+  gem 'sqlite3'
+end
 platforms :jruby do
   gem 'jruby-openssl'
   gem 'activerecord-jdbcmysql-adapter', :require => false
+  # use sqlite3
+  gem 'activerecord-jdbcsqlite3-adapter'
 end
 
 gem 'will_paginate', '~> 2.3.2'
