@@ -32,7 +32,6 @@ class ArchivesController < ApplicationController
     if @year < @start_year or @year > @end_year
       return show_404
     end
-    #fresh_when :last_modif @current_year ==
     render :action => 'year'
   end
 
