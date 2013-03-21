@@ -10,7 +10,7 @@ class Article < ActiveRecord::Base
   include PictureAspect
   include Navigation
   include MetadataAspect
-  include CacheMetaInfo
+  include PublishCallbacksAspect
   meta_field :original_url
   acts_as_taggable
   acts_as_favorite
@@ -18,21 +18,6 @@ class Article < ActiveRecord::Base
   before_save do |rec|
     rec.tag_list = rec.tag_line if rec.tag_line_changed?
     rec.status = 'future' if rec.status == 'publish' and rec.created_at and rec.created_at_changed? and rec.created_at > Time.now + 5.minutes
-  end
-  
-  define_callbacks :before_publish, :after_publish
-
-  before_save :check_publishing
-  def check_publishing 
-    if status_changed? && status_was != 'publish' and status == 'publish'
-      @publishing = true
-      run_callbacks :before_publish
-    end
-  end
-
-  after_save :check_after_publishing
-  def check_after_publishing
-    run_callbacks :after_publish if @publishing
   end
 
   before_publish do |rec|

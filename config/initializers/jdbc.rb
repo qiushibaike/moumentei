@@ -4,4 +4,7 @@
 # This file allows the JDBC drivers to be hooked into ActiveRecord
 # such that you don't have to change anything else in your Rails
 # application.
-require 'arjdbc' if RUBY_PLATFORM == 'java'
+if RUBY_PLATFORM == 'java'
+  require 'arjdbc' 
+  require File.join(Gem.loaded_specs['jdbc-sqlite3'].full_gem_path, 'lib/sqlite-jdbc-3.7.2.jar')
+end
