@@ -1,6 +1,11 @@
 module Article::ScoreAspect
   module ClassMethods
-
+    def recalc_alt_scores
+      logger.debug('recalc_alt_scores')
+      alt_score_gt(0).find_each do |article|
+        article.calc_alt_score
+      end
+    end
   end
   
   module InstanceMethods
@@ -26,6 +31,13 @@ module Article::ScoreAspect
     # total_score
     def total_score
       score
+    end
+
+    def calc_alt_score
+      self.alt_score ||= 0
+      t = Time.now - (published_at || created_at)
+      self.alt_score = (score + public_comments_count + 10) / (t/3600 + 2) ** 1.8
+      save!
     end
   end
   

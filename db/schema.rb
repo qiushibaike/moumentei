@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719092614) do
+ActiveRecord::Schema.define(:version => 20130320145437) do
 
   create_table "announcements", :force => true do |t|
     t.text     "content"
@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(:version => 20120719092614) do
 
   create_table "articles", :force => true do |t|
     t.string   "tag_line"
-    t.integer  "group_id",                           :default => 0,           :null => false
-    t.integer  "user_id",                            :default => 0,           :null => false
+    t.integer  "group_id",                           :default => 0,         :null => false
+    t.integer  "user_id",                            :default => 0,         :null => false
     t.string   "title"
-    t.string   "status",               :limit => 20, :default => "'pending'", :null => false
-    t.string   "comment_status",       :limit => 20, :default => "'open'",    :null => false
-    t.boolean  "anonymous",                          :default => false,       :null => false
+    t.string   "status",               :limit => 20, :default => "pending", :null => false
+    t.string   "comment_status",       :limit => 20, :default => "open",    :null => false
+    t.boolean  "anonymous",                          :default => false,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "picture_file_name"
@@ -59,10 +59,12 @@ ActiveRecord::Schema.define(:version => 20120719092614) do
     t.integer  "score",                              :default => 0
     t.datetime "published_at"
     t.text     "content"
+    t.integer  "alt_score",                          :default => 0
   end
 
   add_index "articles", ["created_at", "group_id", "status"], :name => "created_at"
   add_index "articles", ["created_at"], :name => "index_articles_on_created_at"
+  add_index "articles", ["group_id", "status", "alt_score"], :name => "index_articles_on_group_id_and_status_and_alt_score"
   add_index "articles", ["group_id", "status", "published_at", "score"], :name => "index_articles_on_group_id_and_status_and_published_at_and_score"
   add_index "articles", ["group_id", "status", "updated_at"], :name => "index_articles_on_group_id_and_status_and_updated_at"
   add_index "articles", ["group_id", "status"], :name => "index_articles_on_group_id_and_status"
@@ -476,14 +478,14 @@ ActiveRecord::Schema.define(:version => 20120719092614) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                                                             :null => false
+    t.string   "login",                                                           :null => false
     t.string   "name",                      :limit => 100
-    t.string   "email",                                                             :null => false
-    t.string   "crypted_password",                                                  :null => false
-    t.string   "salt",                                                              :null => false
-    t.string   "created_at",                                                        :null => false
-    t.string   "updated_at",                                                        :null => false
-    t.string   "remember_token",                           :default => "''",        :null => false
+    t.string   "email",                                                           :null => false
+    t.string   "crypted_password",                                                :null => false
+    t.string   "salt",                                                            :null => false
+    t.string   "created_at",                                                      :null => false
+    t.string   "updated_at",                                                      :null => false
+    t.string   "remember_token",                           :default => "",        :null => false
     t.datetime "remember_token_expires_at"
     t.string   "activation_code"
     t.datetime "activated_at"
@@ -491,7 +493,7 @@ ActiveRecord::Schema.define(:version => 20120719092614) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "state",                                    :default => "'passive'"
+    t.string   "state",                                    :default => "passive"
     t.datetime "deleted_at"
   end
 

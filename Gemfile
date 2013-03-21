@@ -26,6 +26,8 @@ gem "oauth-plugin"
 gem 'delayed_job', '~> 2.0.4', :git => 'git://github.com/collectiveidea/delayed_job.git', :branch => 'v2.0'
 gem 'searchlogic'
 gem 'super_cache'
+gem 'eventmachine'
+gem 'rufus-scheduler'
 
 group :development do
   gem 'capistrano'

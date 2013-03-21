@@ -106,25 +106,8 @@ class Article < ActiveRecord::Base
       c
     end
 
-    def recent_new(options)
-      ids     = options[:exclude] || []
-      group   = options[:group]
-      art_ids = Rails.cache.fetch("Articles.recent_ids.#{group.id}", :expires_in => 1.day) do
-        ids2 = group.articles.ids_in(3.days) - ids
-        if ids2.empty? and (ids2 = group.articles.ids_in(10.days) - ids ).empty?
-            ids2 = Article.find_by_sql(
-              "SELECT id FROM articles WHERE status='publish' AND group_id = '#{group.id}' LIMIT 30"
-            ).collect { |t| t.id } - ids
-        end
-        ids2
-      end
-
-      ## no article which is newest but not hottest
-      unless art_ids.empty?
-        r = find( art_ids[ rand(art_ids.size) ] )
-        preload_associations(r, ['score'])
-        r
-      end
+    def recent_hot(page)
+      alt_score_gt(0).paginate :page => page, :order => 'alt_score desc',:include => [:user]
     end
 
     def pictures(group_id, page)

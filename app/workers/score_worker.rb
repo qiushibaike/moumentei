@@ -25,12 +25,6 @@ class ScoreWorker < BaseWorker
     al = 'pos+neg' if al.blank?
     sql = "update articles set score=(#{al}) where id = #{article.id}"
     Article.connection.execute sql
-    #@ids ||= {}
-    #@ids[gid] ||= Set.new
-    #@ids[gid] << id
-    #@timer ||= EM.add_timer 5*60, method(:bulkupdate)
-    #puts @ids.inspect
-    #bulkupdate if @ids[gid].size >= 7
   end
 
   def bulkupdate

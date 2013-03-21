@@ -63,8 +63,8 @@ class GroupsController < ApplicationController
   end
 
   def recent_hot
-    @articles = Article.recent_hot(params[:page])
-    generic_response(:hottest)
+    @articles = @group.public_articles.recent_hot(params[:page])
+    generic_response(:archives)
   end
 
   # test
@@ -208,8 +208,10 @@ class GroupsController < ApplicationController
   end
 
   def favicon
-    if @group
-      path = "#{Theme.path_to_theme(@group.inherited_option(:theme))}/images/favicon.ico"
+    if @group and 
+      (theme = @group.inherited_option(:theme)) and 
+      File.directory?(theme_path = Theme.path_to_theme(theme))
+      path = "#{theme_path}/images/favicon.ico"
       return render :text => 'Not Found', :status => 404 unless File.exists?(path)
       expires_in 1.day, :public => true
       if stale?(:last_modified => File.mtime(path), :public => true)
