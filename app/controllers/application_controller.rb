@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
   def show_error(message = 'An error occurred.', status = :internal_server_error)
     @message = message
-    render :template => 'common/error', :status => status, :layout => false
+    render :template => 'common/error', :status => status
   end
 
   def select_domain group

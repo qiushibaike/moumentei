@@ -309,13 +309,6 @@ return true;
 }  
 }  
 
-$(function(){
-    $('.dropdown-toggle').hover(function(){
-        $(this).dropdown('toggle').parent().toggleClass('open');
-    }).dropdown();
-});
-
-
 function eachScore(ids, cb){
     $.getJSON('/scores?'+ids.join('+'), function(data){
         $.each(data, cb);
