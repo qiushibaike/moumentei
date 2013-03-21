@@ -38,7 +38,7 @@
       <div class="tags">标签：<%= show_tags(article) %></div>
     <% end %>    
     <div class="entry-summary">
-      <%= format_content article, article.group %>
+      <%= auto_link format_content( article, article.group )%>
     </div><!-- .entry-summary -->
 
     <div id="score-<%=id%>" class="score">
