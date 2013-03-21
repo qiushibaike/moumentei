@@ -5,4 +5,4 @@ then
     gem install win32console
 fi
 bundle install
-
+read -p "Press [Enter] key to continue..."
