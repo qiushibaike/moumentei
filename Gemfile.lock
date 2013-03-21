@@ -61,6 +61,7 @@ GEM
       jruby-ehcache
     jruby-openssl (0.7.6.1)
       bouncy-castle-java (>= 1.5.0146.1)
+    jruby-rack (1.1.13.1)
     memcache-client (1.8.5)
     mime-types (1.17.2)
     multi_json (1.0.4)
@@ -102,6 +103,10 @@ GEM
     sqlite3 (1.3.7)
     sqlite3 (1.3.7-x86-mingw32)
     super_cache (0.0.2)
+    trinidad (1.4.4)
+      jruby-rack (>= 1.1.10)
+      trinidad_jars (>= 1.1.0)
+    trinidad_jars (1.2.2)
     tzinfo (0.3.37)
     will_paginate (2.3.16)
     win32console (1.3.2-x86-mingw32)
@@ -135,5 +140,6 @@ DEPENDENCIES
   searchlogic
   sqlite3
   super_cache
+  trinidad
   will_paginate (~> 2.3.2)
   win32console (~> 1.3.2)

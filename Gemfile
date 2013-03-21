@@ -13,6 +13,7 @@ platforms :jruby do
   # use sqlite3
   gem 'activerecord-jdbcsqlite3-adapter'
   gem 'jruby-ehcache-rails2', :require => ['ehcache', 'active_support/ehcache_store']
+  gem 'trinidad', :require => false, :groups => 'production'
 end
 
 gem 'will_paginate', '~> 2.3.2'
