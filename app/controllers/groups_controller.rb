@@ -21,7 +21,6 @@ class GroupsController < ApplicationController
     if Setting.default_group
       find_group
       show
-      #render :action => 'show'
     else
       @groups = Group.roots
     end
@@ -29,8 +28,20 @@ class GroupsController < ApplicationController
 
   # test
   def show
-    params[:action] = 'latest'
-    latest
+    frontpage = @group.inherited_option(:frontpage)
+    if frontpage.blank? or frontpage == 'latest'
+      params[:action] = 'latest'
+      latest
+    elsif frontpage == 'recent_hot'
+      params[:action] = 'recent_hot'
+      params[:group_id] = params[:id]
+      recent_hot
+    else
+      params[:action] = 'hottest'
+      params[:limit] = frontpage
+      date_range_detect
+      hottest
+    end
   end
 
   def search
