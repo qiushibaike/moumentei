@@ -99,9 +99,9 @@ class Article < ActiveRecord::Base
                     :order    => 'count DESC').sort_by{rand}
       end
       if c.size == 0
-      Rails.cache.delete 'tag_clouds'
-      Rails.cache.delete "views/tag_cloud"
-      Rails.cache.delete 'views/tag_cloud_homepage'
+        Rails.cache.delete 'tag_clouds'
+        Rails.cache.delete "views/tag_cloud"
+        Rails.cache.delete 'views/tag_cloud_homepage'
       end
       c
     end
@@ -112,8 +112,8 @@ class Article < ActiveRecord::Base
 
     def pictures(group_id, page)
       with_scope do
-      s = Score.paginate(:page => page, :conditions=>{:has_picture=>1, :group_id => group_id},:order => 'created_at desc')
-      scores_to_articles(s)
+        s = Score.paginate(:page => page, :conditions=>{:has_picture=>1, :group_id => group_id},:order => 'created_at desc')
+        scores_to_articles(s)
       end
     end
 

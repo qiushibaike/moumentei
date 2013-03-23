@@ -15,15 +15,16 @@
 
 .article .entry-meta {
     clear: both;
+    margin-top: 20px;
 }
 .article .entry-meta a{
     text-decoration: none;
 }
 
 .article .entry-meta .score {
-    float: right;
-    border: 1px;
+    float: left;
 }
+
 
 /*
 .article .entry-meta .score .up {
@@ -32,31 +33,26 @@
     background-repeat: no-repeat;
 }
 */
-.article .entry-meta .score .up:before {
-    content: url(icons/like.png);
-}
-
+/*
 .article .entry-meta .score a {
     cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
+    display: block;
+    float: left;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 3px;
+    border: 1px solid #000000;
+    margin-right: 10px;
+    text-align: center;
 }
 .article .entry-meta .score a:hover {
-    border: 1px solid #666;
+    border-color: #000;
+    box-shadow: 0 0 3px rgba(0, 255, 0, .5);
 }
-.article .entry-meta .comment_head {
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    float: right;
-}
+.article .entry-meta .score a:active {
+    box-shadow: 0 0 3px rgba(0, 255, 0, .5) inset;
+}*/
 .article .entry-meta .comments {
-    border: 1px solid #ccc;
-    padding: 5px 10px;
     float: right;
-}
-.article .entry-meta .comments:hover {
-    border-color: #666;
-}
-.article:after {
-/*    content: "<div class='shadow'></div>";*/
 }
