@@ -17,29 +17,12 @@
       <% end %>
     </h3>
 
-    <div class="byline">
-      <% if article.anonymous or not article.user %>
-          匿名人士
-      <% else %>
-          <% user=article.user %>
-          <span class="author vcard"><%= image_tag user.avatar.url("thumb"), :alt => user.login, :size => '16x16', :class => 'avatar' %>
-            <%= link_to user.login, user, :class => "url fn n" %>
-        </span>
-          <!--
-          | <span class="edit"><a class="post-edit-link" href="http://localhost/wordpress/wp-admin/post.php?post=761&amp;action=edit" title="Edit 文章">Edit</a></span>
-          -->
-      <% end %>
-      发表于
-      <% link_to archive_path(article.group, :date => article.created_at) do %>
-          <abbr class="published" title="<%= article.created_at.iso8601 %>"><%= article.created_at.strftime("%Y-%m-%d") %></abbr>
-      <% end %>
-    </div>
-    <% unless article.tag_line.blank? %>
-        <div class="tags">标签：<%= show_tags(article) %></div>
-    <% end %>
     <div class="entry-summary">
       <%= auto_link format_content(article, article.group) %>
     </div><!-- .entry-summary -->
+    <% unless article.tag_line.blank? %>
+        <div class="tags">标签：<%= show_tags(article) %></div>
+    <% end %>
     <div class="entry-meta clearfix">
       <div id="score-<%= id %>" class="score">
         <a href="javascript:vote3(<%= id %>,1)" id="up-<%= id %>" class="up btn">
@@ -49,6 +32,23 @@
         <a href="javascript:vote3(<%= id %>,-1)" id="dn-<%= id %>" class="down btn  ">
           <i class="icon-arrow-down"></i>
           <span id="neg-score-<%= id %>"><%= article.neg_score %></span>拍</a>
+      </div>
+      <div class="byline">
+        <% if article.anonymous? %>
+            匿名人士
+        <% else %>
+            <% user=article.user %>
+            <span class="author vcard"><%= image_tag user.avatar.url("thumb"), :alt => user.login, :size => '16x16', :class => 'avatar' %>
+              <%= link_to user.login, user, :class => "url fn n" %>
+        </span>
+            <!--
+            | <span class="edit"><a class="post-edit-link" href="http://localhost/wordpress/wp-admin/post.php?post=761&amp;action=edit" title="Edit 文章">Edit</a></span>
+            -->
+        <% end %>
+        发表于
+        <% link_to archive_path(article.group, :date => article.created_at) do %>
+            <abbr class="published" title="<%= article.created_at.iso8601 %>"><%= article.created_at.strftime("%Y-%m-%d") %></abbr>
+        <% end %>
       </div>
       <div class="comments_link">
         <a href="<%= article_path(article, :anchor => "comments") %>" class="comments btn " id="c-<%= article.id %>">

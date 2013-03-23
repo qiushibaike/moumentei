@@ -154,24 +154,22 @@ function vote2(id, v){
     }    
 }
 function vote3(id, v){
-  var posscore = parseInt($('#pos-score-'+id).text()),
-      negscore = parseInt($('#neg-score-'+id).text()),
+    var posscore_el = $('#pos-score-'+id), negscore_el = $('#neg-score-'+id);
+  var posscore = parseInt(posscore_el.text()),
+      negscore = parseInt(negscore_el.text()),
       d = (v>0?'up':'dn');
   //showAnimation(d+'-'+id, v);
-  $.get('/articles/'+id+'/'+d);
-  v>0 ? posscore++ : negscore--;
-  hidevotelink2(id, posscore, negscore);
+  $.post('/articles/'+id+'/'+d);
+  if(v>0){
+      posscore++;
+      posscore_el.text(posscore);
+
+  }else{
+      negscore--;
+      negscore_el.text(negscore);
+  }
+  $('#score-'+id).find('a').addClass('disabled');
 }
-
-function hidevotelink2(id, p, n){
-    var posscore = p || parseInt($('#pos-score-'+id).text());
-    var negscore = n || parseInt($('#neg-score-'+id).text());
-    //$('#score-'+id).html('<strong>' + posscore + '</strong> :)<span class="space" style="zoom:1">|</span><strong>' + negscore + '</strong> :(');
-    $('#score-'+id).html('<strong>' + posscore + '</strong>').addClass('voted');
-}
-
-
-
 
 $(document).keypress(function(e){
   if(e.ctrlKey && e.which == 13 || e.which == 10) {
