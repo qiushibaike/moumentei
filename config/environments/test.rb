@@ -19,3 +19,4 @@ config.action_controller.perform_caching             = false
 config.action_mailer.delivery_method = :test
 
 config.cache_store = :memory_store
+config.active_record.schema_format = :ruby
