@@ -66,9 +66,5 @@
   <a class="sina" title="分享到新浪微博" href="javascript:shareToSina(<%= id %>)"><img src="/images/tsina.png" alt="分享到新浪微博"/></a>-->
       <!--<span class="category">Posted in <a href="http://localhost/wordpress/?cat=1" rel="tag">未分类</a></span>   | -->
     </div>
+    <%= render(:partial => 'comments/index') if controller_name == 'articles' && action_name == 'show'%>
 <% end %>
-<div class="wumii-hook">
-  <input type="hidden" name="wurl" value="<%= url %>"/>
-  <input type="hidden" name="wtitle" value="<%= article.title %>"/>
-  <input type="hidden" name="wpic" value="<%= article.picture(:medium) if article.picture.file? %>"/>
-</div>

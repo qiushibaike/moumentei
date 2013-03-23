@@ -30,35 +30,6 @@
 .article .entry-meta .score {
     float: left;
 }
-
-
-/*
-.article .entry-meta .score .up {
-    padding-left: 20px;
-    background-image: url(icons/like.png);
-    background-repeat: no-repeat;
-}
-*/
-/*
-.article .entry-meta .score a {
-    cursor: pointer;
-    display: block;
-    float: left;
-    width: 80px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 3px;
-    border: 1px solid #000000;
-    margin-right: 10px;
-    text-align: center;
-}
-.article .entry-meta .score a:hover {
-    border-color: #000;
-    box-shadow: 0 0 3px rgba(0, 255, 0, .5);
-}
-.article .entry-meta .score a:active {
-    box-shadow: 0 0 3px rgba(0, 255, 0, .5) inset;
-}*/
 .article .entry-meta .comments {
     float: right;
 }

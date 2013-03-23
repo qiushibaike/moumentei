@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
     opt = {}
     opt[:public] = true unless is_mobile_device?
     opt[:last_modified] = @article.updated_at.utc
-    opt[:etag] = [@article, @article.score.public_comments_count, request.format]
+    opt[:etag] = [@article, @article.public_comments_count, request.format]
     
     if stale?(opt)
       cond = ''

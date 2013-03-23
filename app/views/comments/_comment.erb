@@ -1,6 +1,7 @@
 <% f = comment.floor  %>
 <% user = comment.user  %>
 <% anon = comment.anonymous or comment.user_id == 0 or (not user) or user.deleted? %>
+
 <li class="comment <%=cycle('even', 'odd')%> thread-<%=cycle('even', 'odd')%> <%=cycle('', 'alt')%> depth-1 comment reader" id="comment-<%=comment.id%>">
   <% if comment.status == 'private' %>
   该评论已被删除

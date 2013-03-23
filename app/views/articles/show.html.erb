@@ -8,7 +8,6 @@
 
 <% if @article %>
   <%= render(:partial => @article ) %>
-  <%= render(:partial => 'comments/index') %>
   <% if @article.public_references.count > 0 %>
       <%= link_to_unless_current("#{@article.public_references.count}个相关帖子", :controller => :articles, :action => :ref, :id => @article.id) do
           "<span style='color: #96dd99'>以下是链接到该帖子的相关帖子</span>"
