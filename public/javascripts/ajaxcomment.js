@@ -1,18 +1,15 @@
 function postComment(){
-    var e =$(this),f = this.form, fe = $(f);
-    var v = $.trim(fe.find('.comment_input').val());
+    var e =$(this),f = this.form, fe = $(f), textarea = fe.find('textarea');
+    var v = $.trim(textarea.val());
     if(v == ''){
         return false;
     }
 
     $.post(f.action, fe.serialize(), function(data){
-        e.val('发表评论').attr('disabled', false);
-        fe.find(".comment_input").val('').height('50px');
-        var u = $('#qiushi_comments_'+fe.attr('data-article_id')).children('ul');
-        if(u.size()>0){u.append(data);}
-        else{
-          $('<div>'+data+'</div>').insertBefore(fe);
-        }
+        e.val('发表评论').prop('disabled', false);
+        var ol = fe.parents('.comments-wrap').find('ol');
+        textarea.val('').height('50px');
+        ol.append(data);
     });
     this.value = ('正在发表');
     this.disabled = true;
@@ -55,7 +52,7 @@ function showall(id){
 }
 
 $(function(){
-    $('input.comment_submit').live('click', postComment);
+    $('.respond form input[type=submit]').live('click', postComment);
     $('a.comments').live('click', loadComments);
     var hash=window.location.hash;
     if(hash.indexOf('#c-') === 0){
