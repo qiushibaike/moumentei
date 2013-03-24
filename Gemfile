@@ -30,7 +30,7 @@ gem 'eventmachine'
 gem 'rufus-scheduler'
 gem 'awesome_nested_set'
 gem 'themes_for_rails'
-
+gem 'mobile-fu'
 group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
