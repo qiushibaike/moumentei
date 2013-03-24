@@ -28,6 +28,8 @@ gem 'delayed_job'
 gem 'super_cache'
 gem 'eventmachine'
 gem 'rufus-scheduler'
+gem 'awesome_nested_set'
+gem 'themes_for_rails'
 
 group :development do
   gem 'capistrano'
