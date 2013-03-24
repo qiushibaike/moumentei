@@ -1,6 +1,6 @@
 <% if logged_in? %>
   <li class="avatar dropdown" xmlns="http://www.w3.org/1999/html">
-    <% link_to edit_user_path(current_user), {:class => "dropdown-toggle", :id => 'user_menu_toggle', 'data-toggle'=>"dropdown", 'data-target' => '#'} do %>
+    <%= link_to edit_user_path(current_user), {:class => "dropdown-toggle", :id => 'user_menu_toggle', 'data-toggle'=>"dropdown", 'data-target' => '#'} do %>
         <%= image_tag(current_user.avatar(:thumb),:alt=>'') %>
         <%= current_user.login %>
         <b class="caret"></b>

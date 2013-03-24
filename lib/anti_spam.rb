@@ -19,10 +19,10 @@ module AntiSpam
         end
       end
     end
-    def filter_keywords(content)
-      content.gsub(Setting.replacelist_pattern) do
-        Setting.replacelist[$&] 
-      end if Setting.replacelist_pattern
-    end
   end
+  def filter_keywords(content)
+    content.gsub(Setting.replacelist_pattern) do
+      Setting.replacelist[$&] 
+    end if Setting.replacelist_pattern
+  end  
 end

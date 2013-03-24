@@ -10,7 +10,7 @@
 <% if @articles.size == 0 %>
   <p> 无评论 </p>
 <% else %>
-  <% form_tag({:action => :batch_set_status }, {:onsubmit => "return deleteelse(this);"}) do  %>
+  <%= form_tag({:action => :batch_set_status }, {:onsubmit => "return deleteelse(this);"}) do  %>
     <%= render :partial => 'admin/articles/selection' %>
     <div id="entities">
       <% for article in @articles %>

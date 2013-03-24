@@ -2,7 +2,7 @@
 
 <%=@post.user.login %>
 
-<% form_for([@user,@post]) do |f| %>
+<%= form_for([@user,@post]) do |f| %>
   <%= f.error_messages %>
 
  <p>

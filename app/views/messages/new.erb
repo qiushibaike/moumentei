@@ -1,6 +1,6 @@
 <% content_for :title do %>写新纸条<% end %>
 <%=render :partial => 'nav'%>
-<% form_for(@message) do |f| %>
+<%= form_for(@message) do |f| %>
   <%= f.error_messages %>
 <%= f.label :recipient, '写给：' %>
   <% if @message.recipient  %>

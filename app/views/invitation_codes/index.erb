@@ -44,7 +44,7 @@ $(function(){
     <td><tt><%= code.code[0,4] %> <%= code.code[4,4] %> <%= code.code[8,4] %> <%= code.code[12,4] %></tt></td>
     <td><%=link_to code.consumer.login, user_path(code.consumer) if code.consumer %></td>
     <%if !code.consumer%>
-        <% form_tag '/my/sendcode' do -%>
+        <%= form_tag '/my/sendcode' do -%>
           <td><input title="请输入要邀请的好友的邮箱地址" type="hidden" id="code" name="code" value= <%=code.code%> /></td>
           <td>  <%=text_field_tag "email"%>   </td>
           <td> <%= submit_tag '送给您的朋友' %></td>

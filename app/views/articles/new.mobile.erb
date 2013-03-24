@@ -11,7 +11,7 @@
 <% if @article and not @article.new_record? and @article.errors.empty? %>
 非常感谢您的分享！您刚刚提交的帖子#<%= @article.id %>将在管理员审核通过之后发表
 <% else %>
-    <% form_for([@group, @article], :html => {:multipart => true}) do |f| %>
+    <%= form_for([@group, @article], :html => {:multipart => true}) do |f| %>
     <%=f.hidden_field :group_id%>
  <textarea name="article[content]" id="qiushi_text" oninput="if(this.scrollHeight>180){this.style.height=this.scrollHeight+'px';}" onpropertychange="if(this.scrollHeight>180){this.style.height=this.scrollHeight+'px';}" ></textarea><br />
   <% if logged_in? %><div class="tagbox"><label>真相：<%= f.file_field :picture %></label></div><% end  %>

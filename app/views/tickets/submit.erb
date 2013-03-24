@@ -145,7 +145,7 @@ border-width:0 5px 5px 0;color:#000;padding:25px;font-size:14px
 
 <div id="tickets">
 <% if @ticket %>
-  <% form_for @ticket do |f| %>
+  <%= form_for @ticket do |f| %>
   <%= f.hidden_field :article_id %>
   <%= f.hidden_field :ticket_type_id, :value => 0 %>
   <%= f.hidden_field :viewed_at %>

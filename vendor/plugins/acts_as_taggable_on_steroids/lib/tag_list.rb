@@ -99,7 +99,7 @@ class TagList < Array
     #   tag_list = TagList.from("One , Two,  Three")
     #   tag_list # ["One", "Two", "Three"]
     def from(source)
-      returning new do |tag_list|
+      new.tap do |tag_list|
         case source
 	      when nil
         when Array

@@ -1,7 +1,7 @@
 
 <h2>修改头像</h2>
 <%=image_tag @user.avatar.url(:medium), :alt=>'当前头像'%>
-<% form_for @user, :html => {:multipart => true } do |f|%>
+<%= form_for @user, :html => {:multipart => true } do |f|%>
   <p>
     <%= f.label :avatar, '选取头像（200x200，文件大小不得超过2M）' %><br/>
     <%= f.file_field :avatar %>

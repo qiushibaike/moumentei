@@ -1,6 +1,6 @@
 <% if ( @msg || flash[:notice] ) %> <div id="notice"> <%= ( @msg || flash[:notice] ) %> </div> <% end %>
 
-<% form_for :usercond, :html=>{:name=>"usercond"} do |f| %>
+<%= form_for :usercond, :html=>{:name=>"usercond"} do |f| %>
  <p>名字(模糊) <%= f.text_field(:name, :size =>10) %> &nbsp;
     用户角色 <%= f.select(:roll,[["普通用户","user"],["管理员","admin"]],{:include_blank=>true}) %> &nbsp;
     用户状态 <%= f.select(:activated,[["激活","not null"],["未激活","null"]],{:include_blank=>true}) %> &nbsp;

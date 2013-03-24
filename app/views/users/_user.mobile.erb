@@ -7,16 +7,16 @@
         <%=image_tag b.icon(:tiny), :title => b.title%>
       <% end %>
     </p>
-    <% link_to followers_user_path(user) do -%>
+    <%= link_to followers_user_path(user) do -%>
       <span class="follow">粉丝</span><span class="stats_count numeric"><%=user.followers.count%></span>
     <%- end -%>
-    <% link_to followings_user_path(user) do %>
+    <%= link_to followings_user_path(user) do %>
       <span class="follow">关注</span><span class="stats_count numeric"><%= user.friends.count %></span>
     <% end %>
-    <% link_to user_articles_path(user) do %>
+    <%= link_to user_articles_path(user) do %>
       <span class="function">文章</span><span class="stats_count numeric"><%= user.articles.public.signed.count %></span>
     <%end%>
-    <% link_to user_comments_path(user) do %>
+    <%= link_to user_comments_path(user) do %>
       <span class="function">评论</span><span class="stats_count numeric"><%= user.comments.public.signed.count %></span>
     <%end%>
     <% if logged_in? %>

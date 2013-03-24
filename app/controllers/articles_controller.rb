@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
     else
       find_group
       g =  @group.self_and_children_ids
-      @articles = Article.paginate_latest_by_group(params[:page], g)
+      @articles = Article.by_group(g).public.latest.paginate(:page => params[:page])
       if @articles.size == 0 && @articles.total_pages < @articles.current_page
         params[:page] = @articles.total_pages
         return redirect_to(params)

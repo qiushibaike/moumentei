@@ -51,7 +51,7 @@ module User::AuthenticationAspect
     def forget_me
       self.remember_token_expires_at = ''
       self.remember_token            = ''
-      save(false)
+      save(:validate => false)
     end
 
 

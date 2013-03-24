@@ -10,7 +10,7 @@
     end
   %>
   <span class="thumb vcard author" data-user_id="<%=user.id%>">
-    <% link_to( user, :class => 'post-url profile-pic url' ) do %>
+    <%= link_to( user, :class => 'post-url profile-pic url' ) do %>
       <img width="48" height="48" src="<%= user.avatar.url(:thumb)%>" class="photo fn" alt="<%=user.login%>"/>
     <% end %> </span>
   <span class="post-body">
@@ -20,7 +20,7 @@
       <span class="entry-content"><%=h post.content%></span>
     </span>
     <span data="{}" class="meta entry-meta">
-      <% link_to( post, :rel => 'bookmark', :class => "entry-date" ) do %>
+      <%= link_to( post, :rel => 'bookmark', :class => "entry-date" ) do %>
         <span data="{time:'Tue Sep 07 21:32:58 +0000 2010'}" class="published timestamp"><%= time_ago_in_words post.created_at if post.created_at%></span>
       <% end %>
       <span>via web</span>

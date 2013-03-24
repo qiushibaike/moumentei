@@ -18,7 +18,13 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+module ActionView
+  module Helpers
+    module AssetTagHelper
+      STYLESHEETS_DIR = "stylesheets"
+    end
+  end
+end
 module MobilizedStyles
   
   # This logic was taken from Michael Bleigh's browserized styles
@@ -60,8 +66,8 @@ module MobilizedStyles
 
       for possible_source in possible_sources
         path = File.join(ActionView::Helpers::AssetTagHelper::STYLESHEETS_DIR,"#{possible_source}.css")
-        sass_path = File.join(ActionView::Helpers::AssetTagHelper::STYLESHEETS_DIR,"sass","#{possible_source}.sass")
-        mobilized_sources << possible_source if File.exist?(path) || File.exist?(sass_path)
+        #sass_path = File.join(ActionView::Helpers::AssetTagHelper::STYLESHEETS_DIR,"sass","#{possible_source}.sass")
+        #mobilized_sources << possible_source if File.exist?(path) || File.exist?(sass_path)
       end
     end
 

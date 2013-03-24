@@ -11,7 +11,7 @@
       <% if content_for?(:brand) %>
         <%= yield :brand %>
       <% else %>
-        <%= link_to @group.try(:name) || Setting.site_name, home_path, :class => 'brand' %>
+        <%= link_to @group.try(:name) || Setting.site_name, root_path, :class => 'brand' %>
       <% end %>
       <div class="nav-collapse">
         <ul class="nav">

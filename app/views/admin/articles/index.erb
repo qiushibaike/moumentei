@@ -23,7 +23,7 @@
 <% if not @articles or @articles.empty?%>
     <p>No Articles </p>
 <% else %>
-  <% form_tag( {:action => 'batch_set_status'}, {:onsubmit => "return deleteelse(this);"}) do %>
+  <%= form_tag( {:action => 'batch_set_status'}, {:onsubmit => "return deleteelse(this);"}) do %>
     <%= render :partial => 'admin/articles/selection' unless params[:id] %>
 
     <div id="entities">     

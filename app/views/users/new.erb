@@ -1,6 +1,6 @@
 <% content_for :title do%>注册<% end %>
 <div>
-<% form_for @user, :html => {:class => 'form-horizontal well'} do |f| -%>
+<%= form_for @user, :html => {:class => 'form-horizontal well'} do |f| -%>
   <fieldset>
     <legend>注册新用户</legend>
     <div class="control-group">
@@ -9,7 +9,7 @@
     <%= f.text_field :login %>
     <div id="insertlogin"></div>
     <p class="help-block">不可加入@、&amp;、‘、&lt;、或&gt;符号，不可在开头和结尾使用空格或缩格</p>
-    <span style="color: red"><%= @user.errors.on(:login) %></span>
+    <span style="color: red"><%= @user.errors[:login] %></span>
       </div>
     </div>
 
@@ -19,7 +19,7 @@
         <%= f.text_field :email %>
         <div id="insertemail"></div>
         <p class="help-block">仅用来确认您的身份, 绝不公开</p>
-        <span style="color: red"><%= @user.errors.on(:email) %></span>
+        <span style="color: red"><%= @user.errors[:email] %></span>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
       <label class="control-label" for="password_confirmation">重复一次密码：</label>
       <div class="controls">
         <%= f.password_field :password_confirmation %>
-        <span style="color: red"><%= @user.errors.on(:password) %></span>
+        <span style="color: red"><%= @user.errors[:password] %></span>
       </div>
     </div>
     <!--
