@@ -15,7 +15,7 @@ class AnonymousRating < ActiveRecord::Base
 sql
     begin
       connection.execute sql
-      ScoreWorker.async_rate(article_id, score) 
+      #ScoreWorker.async_rate(article_id, score) 
     rescue ActiveRecord::StatementInvalid => e
       if e.message =~ /Duplicate/
         logger.info("#{long2ip(ip)} vote #{article_id} duplicated")

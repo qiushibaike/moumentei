@@ -2,6 +2,7 @@
 # This model stores the global configuration of the website
 class Setting < ActiveRecord::Base
   serialize :value
+  attr_accessible :key, :value
   class << self
     attr_accessor :replacelist_pattern, :blacklist_pattern
     def [] index

@@ -256,7 +256,7 @@ class UsersController < ApplicationController
         if user.deleted? or user.suspended?
           @msg = "用户状态异常，请联系管理员"
         else
-          UserNotifier.deliver_fetchpasswd(user,3)
+          UserNotifier.fetchpasswd(user,3).deliver
           @msg = "您的密码已经被重置，新密码已发送到您的邮箱#{user.email}，请查收"
           @ret = 'ok'
         end

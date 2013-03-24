@@ -16,6 +16,7 @@ Moumentei::Application.routes.draw do
    match '/login'    => "sessions#new",     :as  => :login
    match '/register' => "users#create",     :as  => :register
    match '/signup'   => "users#new",        :as  => :signup
+   match '/activate/:activation_code' => 'users#activate',:as => :activate
 
    match '/fetchpass' => "users#fetchpass"
    match '/editpass'  => "users#editpass"
@@ -151,7 +152,7 @@ Moumentei::Application.routes.draw do
             get :comments
             post :suspend
             post :unsuspend
-            post :active
+            get :activate
             post :delete_avatar
             post :delete_comments
             get :tickets

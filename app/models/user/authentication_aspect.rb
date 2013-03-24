@@ -82,7 +82,7 @@ module User::AuthenticationAspect
       if active? and email_changed?
         self.state = 'pending'
         self.make_activation_code
-        UserNotifier.deliver_signup_notification(self)
+        UserNotifier.signup_notification(self).deliver
       end
     end
 
