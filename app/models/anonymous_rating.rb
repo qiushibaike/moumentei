@@ -1,9 +1,9 @@
 class AnonymousRating < ActiveRecord::Base
   belongs_to :article
-  named_scope :pos, :conditions => 'anonymous_ratings.score > 0'
-  named_scope :neg, :conditions => 'anonymous_ratings.score < 0'
-  named_scope :by_period, lambda {|s, e| {:conditions => ['anonymous_ratings.created_at >= ? and anonymous_ratings.created_at < ?', s, e]}}
-  named_scope :by_group, lambda {|group_id| {:conditions => [ "articles.group_id = ?", group_id], :joins => [:article]}}
+  scope :pos, :conditions => 'anonymous_ratings.score > 0'
+  scope :neg, :conditions => 'anonymous_ratings.score < 0'
+  scope :by_period, lambda {|s, e| {:conditions => ['anonymous_ratings.created_at >= ? and anonymous_ratings.created_at < ?', s, e]}}
+  scope :by_group, lambda {|group_id| {:conditions => [ "articles.group_id = ?", group_id], :joins => [:article]}}
 
   def self.vote(ip, article, score)
     ip = ip2long(ip) unless ip.is_a?(Integer)

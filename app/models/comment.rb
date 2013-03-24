@@ -7,11 +7,11 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   has_many :ratings, :class_name => 'CommentRating', :dependent => :delete_all
   has_many :reports ,:as => :target
-  named_scope :today, lambda {{:conditions => {:created_at => Date.today}}}
-  named_scope :public, :conditions => {:status => ['publish', 'private']}
-  named_scope :anonymous, :conditions => {:anonymous => true}
-  named_scope :signed, :conditions => {:anonymous => false}
-  named_scope :by_status, lambda {|status| {:conditions => {:status => status}}}
+  scope :today, lambda {{:conditions => {:created_at => Date.today}}}
+  scope :public, :conditions => {:status => ['publish', 'private']}
+  scope :anonymous, :conditions => {:anonymous => true}
+  scope :signed, :conditions => {:anonymous => false}
+  scope :by_status, lambda {|status| {:conditions => {:status => status}}}
   attr_protected :user_id, :status
   after_save :create_notification
   #validates_length_of :content, :minimum => 1

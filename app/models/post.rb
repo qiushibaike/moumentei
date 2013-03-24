@@ -18,5 +18,5 @@ class Post < ActiveRecord::Base
     end
   end
   
-  #named_scope :time
+  #scope :time
 end

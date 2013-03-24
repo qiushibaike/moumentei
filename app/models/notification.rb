@@ -1,6 +1,6 @@
 class Notification < ActiveRecord::Base
   belongs_to :user
-  named_scope :unread, :conditions => {:read => false}
+  scope :unread, :conditions => {:read => false}
 
   serialize :content
 

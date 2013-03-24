@@ -160,8 +160,8 @@ module Preferences
         after_save :update_preferences
         
         # Named scopes
-        named_scope :with_preferences, lambda {|preferences| build_preference_scope(preferences)}
-        named_scope :without_preferences, lambda {|preferences| build_preference_scope(preferences, true)}
+        scope :with_preferences, lambda {|preferences| build_preference_scope(preferences)}
+        scope :without_preferences, lambda {|preferences| build_preference_scope(preferences, true)}
         
         extend Preferences::ClassMethods
         include Preferences::InstanceMethods

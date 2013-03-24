@@ -11,7 +11,7 @@ class Article < ActiveRecord::Base
   include Navigation
   include MetadataAspect
   include PublishCallbacksAspect
-  meta_field :original_url
+  #meta_field :original_url
   acts_as_taggable
   acts_as_favorite
   
@@ -36,15 +36,15 @@ class Article < ActiveRecord::Base
   validates_presence_of :group
   belongs_to :user
   validates_presence_of :user, :unless => :anonymous
-  named_scope :by_status, lambda {|status| {:conditions => {:status => status}}}
-  named_scope :by_period, lambda {|s, e| {:conditions => ['articles.created_at >= ? and articles.created_at < ?', s, e]}}
-  named_scope :by_group, lambda {|group_id| {:conditions => {:group_id => group_id}}}
-  named_scope :public, :conditions => {:status => 'publish'}
-  named_scope :anonymous, :conditions => {:anonymous => true}
-  named_scope :signed, :conditions => {:anonymous => false}
-  named_scope :pending, :conditions => {:status => 'pending'}
-  named_scope :hottest, :order => 'score desc'
-  named_scope :latest, :order => 'published_at desc'
+  scope :by_status, lambda {|status| {:conditions => {:status => status}}}
+  scope :by_period, lambda {|s, e| {:conditions => ['articles.created_at >= ? and articles.created_at < ?', s, e]}}
+  scope :by_group, lambda {|group_id| {:conditions => {:group_id => group_id}}}
+  scope :public, :conditions => {:status => 'publish'}
+  scope :anonymous, :conditions => {:anonymous => true}
+  scope :signed, :conditions => {:anonymous => false}
+  scope :pending, :conditions => {:status => 'pending'}
+  scope :hottest, :order => 'score desc'
+  scope :latest, :order => 'published_at desc'
   attr_protected :user_id, :status
 
   cattr_accessor :per_page
