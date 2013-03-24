@@ -3,7 +3,6 @@ class Comment < ActiveRecord::Base
   include AntiSpam
   harmonize :content
   include SequenceAspect
-  # belongs_to :post ,:foreign_key => 'article_id'
   belongs_to :article, :touch => true
   belongs_to :user
   has_many :ratings, :class_name => 'CommentRating', :dependent => :delete_all
@@ -19,7 +18,6 @@ class Comment < ActiveRecord::Base
   #after_save :update_score
   after_create :comment_notify
 
-  #before_update :update_score
   STATUSES = %w(publish pending spam private deleted)
 
   #the number of new comments in the day given

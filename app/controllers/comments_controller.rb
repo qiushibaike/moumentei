@@ -5,9 +5,8 @@ class CommentsController < ApplicationController
   before_filter :find_post, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:post_id)}
   before_filter :oauthenticate, :only => [:create]
   before_filter :login_required, :except => [:index, :count, :create, :up, :dn,:report]
-  after_filter :must_revalidate, :only => [:index, :count]
-  after_filter :proxy_revalidate, :only => [:index, :count]
-  # super_caches_page :index
+  super_caches_page :index
+
   # GET /comments
   # GET /comments.xml
   def index
@@ -15,7 +14,7 @@ class CommentsController < ApplicationController
     opt = {}
     opt[:public] = true unless is_mobile_device?
     opt[:last_modified] = @article.updated_at.utc
-    opt[:etag] = [@article, @article.score.public_comments_count, request.format]
+    opt[:etag] = [@article, @article.public_comments_count, request.format]
     
     if stale?(opt)
       cond = ''
@@ -25,12 +24,11 @@ class CommentsController < ApplicationController
       elsif @article
         @comments = @article.comments.paginate :conditions => cond, :page => params[:page],:order => 'id asc', :include => :user
       end
-      @cache_subject = [@article, @comments]
       respond_to do |format|
         format.html {
           render :layout => false
         }
-        format.mobile{
+        format.mobile {
           render :layout => false if request.xhr?
         }
         format.any(:json, :js) do

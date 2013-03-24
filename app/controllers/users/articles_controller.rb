@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 class Users::ArticlesController < ArticlesController
-  layout 'users'
+  #layout 'users'
   theme nil
-  skip_before_filter :super_caches_page
+  #skip_before_filter :super_caches_page
   
   def index   
     if params[:user_id]
@@ -51,12 +51,5 @@ class Users::ArticlesController < ArticlesController
       }
       format.atom
     end
-    
-  end
-
-  def new
-  puts "1111111111123333333"
-  end
-  def create
   end
 end

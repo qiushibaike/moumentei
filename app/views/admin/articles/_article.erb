@@ -11,8 +11,7 @@
     <% if article.status == 'publish' %>
       <%= article.pos_score %>   /  <%= article.neg_score %>
     <% end %>  
-    
-    <%= link_to '+', article.source, :target => '_blank' if article.source and not article.source.blank? %>
+
     <% if article.user_id and article.user_id > 0 %>
       <%= '<u>' unless article.anonymous %>
       (<%= article.user_id%> <%= article.user.try(:login) %>)

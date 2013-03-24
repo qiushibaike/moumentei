@@ -99,6 +99,8 @@ ActionController::Routing::Routes.draw do |map|
     end
     group.latest 'latest.:format', :controller => 'groups', :action => 'latest'
     group.connect 'latest/page/:page.:format', :controller => :groups, :action => 'latest'
+    group.recent_hot 'recent_hot.:format', :controller => 'groups', :action => 'recent_hot'
+    group.connect 'recent_hot/page/:page.:format', :controller => :groups, :action => 'recent_hot'
     
     group.connect 'hottest/:limit/page/:page.:format', :controller => 'groups', :action => 'hottest'
     group.hottest 'hottest/:limit.:format',
@@ -109,7 +111,7 @@ ActionController::Routing::Routes.draw do |map|
     group.connect 'pictures/:limit/page/:page.:format', :controller => 'groups', :action => 'pictures'
     group.most_replied 'most_replied/:limit/page/:page.:format', :controller => 'groups', :action => 'most_replied'
     group.resources :tickets, :only => [:index, :show, :create], :collection => {:submit => :get}
-    group.connect '*path', :controller => 'pages', :action => 'show'
+    group.connect 'pages/*path', :controller => 'pages', :action => 'show'
   end
 
 =begin
@@ -181,9 +183,9 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default route as the lowest priority.
   #map.connect ':controller/:action/:id.:format'
   #map.connect ':controller/:action/:id'
-  
+  map.connect 'pages/*path', :controller => 'pages', :action => 'show'
   map.connect 'my/:action/:id', :controller => 'my'
   map.connect 'my/:action',:controller => 'my'
-  map.connect '*path', :controller => 'pages', :action => 'show'
+  
   #  map.connect ':controller/service.wsdl', :action => 'wsdl'
 end

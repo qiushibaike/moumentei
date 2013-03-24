@@ -21,7 +21,6 @@ class GroupsController < ApplicationController
     if Setting.default_group
       find_group
       show
-      #render :action => 'show'
     else
       @groups = Group.roots
     end
@@ -29,8 +28,20 @@ class GroupsController < ApplicationController
 
   # test
   def show
-    params[:action] = 'latest'
-    latest
+    frontpage = @group.inherited_option(:frontpage)
+    if frontpage.blank? or frontpage == 'latest'
+      params[:action] = 'latest'
+      latest
+    elsif frontpage == 'recent_hot'
+      params[:action] = 'recent_hot'
+      params[:group_id] = params[:id]
+      recent_hot
+    else
+      params[:action] = 'hottest'
+      params[:limit] = frontpage
+      date_range_detect
+      hottest
+    end
   end
 
   def search
@@ -63,8 +74,8 @@ class GroupsController < ApplicationController
   end
 
   def recent_hot
-    @articles = Article.recent_hot(params[:page])
-    generic_response(:hottest)
+    @articles = @group.public_articles.recent_hot(params[:page])
+    generic_response(:archives)
   end
 
   # test
@@ -208,8 +219,10 @@ class GroupsController < ApplicationController
   end
 
   def favicon
-    if @group
-      path = "#{Theme.path_to_theme(@group.inherited_option(:theme))}/images/favicon.ico"
+    if @group and 
+      (theme = @group.inherited_option(:theme)) and 
+      File.directory?(theme_path = Theme.path_to_theme(theme))
+      path = "#{theme_path}/images/favicon.ico"
       return render :text => 'Not Found', :status => 404 unless File.exists?(path)
       expires_in 1.day, :public => true
       if stale?(:last_modified => File.mtime(path), :public => true)

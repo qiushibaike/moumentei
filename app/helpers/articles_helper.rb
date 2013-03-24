@@ -25,12 +25,9 @@ module ArticlesHelper
 
   # TODO: optimize out the regexp match
   def rated? article
-    if logged_in?
-      current_user.has_rated? article
-    else
-      cookies['rating_histories'] =~ Regexp.new("\\b" + (article.is_a?(Article)? article.id : article).to_s + "\\b")
-    end
+    logged_in? && current_user.has_rated?(article)
   end
+
   def format_content(article, group, watermark=false)
     prefix = group.name.mb_chars[0,2]
     

@@ -10,7 +10,7 @@ class Article < ActiveRecord::Base
   include PictureAspect
   include Navigation
   include MetadataAspect
-  include CacheMetaInfo
+  include PublishCallbacksAspect
   meta_field :original_url
   acts_as_taggable
   acts_as_favorite
@@ -18,21 +18,6 @@ class Article < ActiveRecord::Base
   before_save do |rec|
     rec.tag_list = rec.tag_line if rec.tag_line_changed?
     rec.status = 'future' if rec.status == 'publish' and rec.created_at and rec.created_at_changed? and rec.created_at > Time.now + 5.minutes
-  end
-  
-  define_callbacks :before_publish, :after_publish
-
-  before_save :check_publishing
-  def check_publishing 
-    if status_changed? && status_was != 'publish' and status == 'publish'
-      @publishing = true
-      run_callbacks :before_publish
-    end
-  end
-
-  after_save :check_after_publishing
-  def check_after_publishing
-    run_callbacks :after_publish if @publishing
   end
 
   before_publish do |rec|
@@ -114,38 +99,21 @@ class Article < ActiveRecord::Base
                     :order    => 'count DESC').sort_by{rand}
       end
       if c.size == 0
-      Rails.cache.delete 'tag_clouds'
-      Rails.cache.delete "views/tag_cloud"
-      Rails.cache.delete 'views/tag_cloud_homepage'
+        Rails.cache.delete 'tag_clouds'
+        Rails.cache.delete "views/tag_cloud"
+        Rails.cache.delete 'views/tag_cloud_homepage'
       end
       c
     end
 
-    def recent_new(options)
-      ids     = options[:exclude] || []
-      group   = options[:group]
-      art_ids = Rails.cache.fetch("Articles.recent_ids.#{group.id}", :expires_in => 1.day) do
-        ids2 = group.articles.ids_in(3.days) - ids
-        if ids2.empty? and (ids2 = group.articles.ids_in(10.days) - ids ).empty?
-            ids2 = Article.find_by_sql(
-              "SELECT id FROM articles WHERE status='publish' AND group_id = '#{group.id}' LIMIT 30"
-            ).collect { |t| t.id } - ids
-        end
-        ids2
-      end
-
-      ## no article which is newest but not hottest
-      unless art_ids.empty?
-        r = find( art_ids[ rand(art_ids.size) ] )
-        preload_associations(r, ['score'])
-        r
-      end
+    def recent_hot(page)
+      alt_score_gt(0).paginate :page => page, :order => 'alt_score desc',:include => [:user]
     end
 
     def pictures(group_id, page)
       with_scope do
-      s = Score.paginate(:page => page, :conditions=>{:has_picture=>1, :group_id => group_id},:order => 'created_at desc')
-      scores_to_articles(s)
+        s = Score.paginate(:page => page, :conditions=>{:has_picture=>1, :group_id => group_id},:order => 'created_at desc')
+        scores_to_articles(s)
       end
     end
 

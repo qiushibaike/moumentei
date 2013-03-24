@@ -1,11 +1,19 @@
 source 'http://ruby.taobao.org'
 gem "rails", "~> 3.2.1"
-gem 'mysql2' , :platforms => [:ruby, :mingw]
-gem 'sqlite3'
+platforms :ruby, :mingw do
+  # use mysql
+  gem 'mysql2'
+  # use sqlite3
+  gem 'sqlite3'
+end
 
 platforms :jruby do
   gem 'jruby-openssl'
   gem 'activerecord-jdbcmysql-adapter', :require => false
+  # use sqlite3
+  gem 'activerecord-jdbcsqlite3-adapter'
+  gem 'jruby-ehcache-rails2', :require => ['ehcache', 'active_support/ehcache_store']
+  gem 'trinidad', :require => false, :groups => 'production'
 end
 
 gem 'will_paginate'
@@ -18,6 +26,8 @@ gem "oauth"
 gem "oauth-plugin"
 gem 'delayed_job'
 gem 'super_cache'
+gem 'eventmachine'
+gem 'rufus-scheduler'
 
 group :development do
   gem 'capistrano'

@@ -3,7 +3,6 @@ class ArticlesController < ApplicationController
   #before_filter :oauthenticate, :only => [:create]
   before_filter :find_article, :except => [:index, :new, :create, :scores]
   after_filter :store_location, :except => [:up, :dn, :score, :scores]
-  #after_filter :cache_except_mobile, :only => :show
   #super_caches_page :show
   cache_sweeper :article_sweeper, :only => [ :create ]
 

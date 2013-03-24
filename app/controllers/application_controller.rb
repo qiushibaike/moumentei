@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
   def show_error(message = 'An error occurred.', status = :internal_server_error)
     @message = message
-    render :template => 'common/error', :status => status, :layout => false
+    render :template => 'common/error', :status => status
   end
 
   def select_domain group
@@ -51,9 +51,9 @@ class ApplicationController < ActionController::Base
     theme = @group.options[:theme] if not @group.blank? and not @group.options.blank? and @group.options.include?(:theme)
   end
 
-#  def default_url_options(options={})
-#    options.reverse_merge!({:format => request.format.to_sym})
-#  end
+  #  def default_url_options(options={})
+  #    options.reverse_merge!({:format => request.format.to_sym})
+  #  end
 
   # figure out which group to operate on
   # according to the requested host name or params[:domain]
@@ -66,23 +66,5 @@ class ApplicationController < ActionController::Base
     return show_404 unless @group
     select_domain @group if request.host != 'localhost' and RAILS_ENV != 'development'
     return @group
-  end
-
-  def must_revalidate
-    cc = response.headers['Cache-Control']
-    if cc.blank?
-      response.headers['Cache-Control'] = 'must-revalidate, max-age=10'
-    else
-      response.headers['Cache-Control'] << ', must-revalidate, max-age=10' unless cc =~ /must-revalidate/
-    end
-  end
-
-  def proxy_revalidate
-    cc = response.headers['Cache-Control']
-    if cc.blank?
-      response.headers['Cache-Control'] = 'proxy-revalidate, s-maxage=10'
-    else
-      response.headers['Cache-Control'] << ', proxy-revalidate, s-maxage=10' unless cc =~ /proxy-revalidate/
-    end    
   end
 end

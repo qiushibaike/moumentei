@@ -94,24 +94,9 @@ with msys”，以及“Run git from Windows command prompt option”）
 如果需要创建数据库
 
     bundle exec rake db:setup
-
-如果需要初始化数据库
-
-    bundle exec rake db:schema:load
-
-加入基本数据
-
-    bundle exec rake db:seed
-
-或者直接导入 `vendor/base.sql`
-
-然后运行数据库迁移
-
-    bundle exec rake db:migrate
     
-最后可以导入默认的范例数据，用户名`admin`，密码`123456`
+导入默认的范例数据，用户名`admin`，密码`123456`
 
-    bundle exec rake db:seed
 
 ### 启动服务
 

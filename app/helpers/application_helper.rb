@@ -22,6 +22,11 @@ module ApplicationHelper
     render :partial => 'common/pagination'
   end
 
+  def active_li_link(title, link, link_options={}, li_options={})
+    link = url_for(link)
+    content_tag :li, link_to(title, link, link_options), li_options.merge({:class => current_page?(link) && 'active'})
+  end
+
   def content_for?(name)
     instance_variable_defined?("@content_for_#{name}")
   end
