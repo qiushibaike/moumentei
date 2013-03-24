@@ -264,7 +264,7 @@ DEPENDENCIES
   forgery
   guard
   guard-rspec
-  jruby-ehcache-rails2
+  jruby-ehcache
   jruby-openssl
   launchy
   memcache-client

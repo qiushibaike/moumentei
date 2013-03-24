@@ -12,7 +12,7 @@ platforms :jruby do
   gem 'activerecord-jdbcmysql-adapter', :require => false
   # use sqlite3
   gem 'activerecord-jdbcsqlite3-adapter'
-  gem 'jruby-ehcache-rails2', :require => ['ehcache', 'active_support/ehcache_store']
+  gem 'jruby-ehcache', :require => 'ehcache'
   gem 'trinidad', :require => false, :groups => 'production'
 end
 
