@@ -4,6 +4,12 @@ GIT
   specs:
     acts_as_favorite (0.0.1)
 
+GIT
+  remote: https://github.com/ShiningRay/acts_as_taggable_on_steroids.git
+  revision: ec56014e040b9e384339cfa4d6bad7649c813c8d
+  specs:
+    acts_as_taggable_on_steroids (1.1)
+
 GEM
   remote: http://ruby.taobao.org/
   specs:
@@ -288,6 +294,7 @@ DEPENDENCIES
   activerecord-jdbcsqlite3-adapter
   acts_as_favorite!
   acts_as_list
+  acts_as_taggable_on_steroids!
   awesome_nested_set
   calendar_helper
   capistrano
