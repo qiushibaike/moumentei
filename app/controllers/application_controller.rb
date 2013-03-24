@@ -7,10 +7,9 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include RoleRequirementSystem
   include ViewControlMethods
-  theme_support
+  #theme_support
   theme :select_theme
   has_mobile_fu
-  filter_parameter_logging [:password, :password_confirmation]
   attr_accessor :show_login
 
   protected

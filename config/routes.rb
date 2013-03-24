@@ -82,7 +82,7 @@ Moumentei::Application.routes.draw do
             get :count
          end
       end
-      match 'comments/after/:after.:format'=> "comments#index"
+      match 'comments/after/:after(.:format)'=> "comments#index"
 
       resources :tickets, :only => [:index, :new, :create] do
          collection do
@@ -102,7 +102,7 @@ Moumentei::Application.routes.draw do
          get :comments
       end
       resources :articles, :only => [:index]
-      match 'articles/page/:page.:format', :action => :index
+      match 'articles(/page/:page)(.:format)', :action => :index
       resources :posts
       resources :groups
       resources :profiles
@@ -116,17 +116,17 @@ Moumentei::Application.routes.draw do
 
    resources :groups do
       resources :archives
-      match 'archives/:id/page/:page.:format'=> "archives#show"
+      match 'archives/:id(/page/:page)(.:format)'=> "archives#show"
       resources :articles
       resources :tags, :only => [:index, :show] do
          resources :articles, :only => :index
-         match 'articles/:order(/page/:page).:format' => 'tags/articles#index'
+         match 'articles/:order(/page/:page)(.:format)' => 'tags/articles#index'
       end
-      match 'latest(/page/:page).:format'                => 'groups#latest',       :as  => :latest
-      match 'recent_hot(/page/:page).:format'            => "groups#recent_hot",   :as  => :recent_hot
-      match 'hottest(/:limit(/page/:page)).:format'      => "groups#hottest",      :as  => :hottest
-      match 'pictures(/:limit(/page/:page)).:format'     => "groups#pictures",     :as  => :picture
-      match 'most_replied(/:limit(/page/:page)).:format' => "groups#most_replied", :as  => :most_replied
+      match 'latest(/page/:page)(.:format)'                => 'groups#latest',       :as  => :latest
+      match 'recent_hot(/page/:page)(.:format)'            => "groups#recent_hot",   :as  => :recent_hot
+      match 'hottest(/:limit(/page/:page))(.:format)'      => "groups#hottest",      :as  => :hottest
+      match 'pictures(/:limit(/page/:page))(.:format)'     => "groups#pictures",     :as  => :picture
+      match 'most_replied(/:limit(/page/:page))(.:format)' => "groups#most_replied", :as  => :most_replied
       resources :tickets, :only => [:index, :show, :create] do
          collection do
             get :submit
@@ -136,8 +136,8 @@ Moumentei::Application.routes.draw do
    end
 
    match 'favicon.ico'=> "groups#favicon"
-   match 'hottest(/:limit(/page/:page)).:format'=> "groups#hottest", :as => :hottest
-   match 'latest(/page/:page).:format'=> "groups#latest", :as => :latest
+   match 'hottest(/:limit(/page/:page))(.:format)'=> "groups#hottest", :as => :hottest
+   match 'latest(/page/:page)(.:format)'=> "groups#latest", :as => :latest
    match 'tags'=> "groups#tags"
    match 'tag/:tag(/page/:page)'=> "groups#tag"
    match 'rss.xml'=> "groups#rss"
@@ -215,7 +215,7 @@ Moumentei::Application.routes.draw do
    #match ':controller/:action/:id/page/:page', :requirements =>{ :page => /\d+/} #, :page => nil
    #match ':controller/:action/page/:page', :requirements =>{ :page => /\d+/} #, :page => nil
    # Install the default route as the lowest priority.
-   #match ':controller/:action/:id.:format'
+   #match ':controller/:action/:id(.:format)'
    #match ':controller/:action/:id'
    match 'pages/*path' => "pages#show"
    match 'my/:action/:id' => 'my'
