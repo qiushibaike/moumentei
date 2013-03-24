@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/ShiningRay/acts_as_favorite.git
+  revision: 642e1356e08c2587d3c4bacede60710cfc00c4bc
+  specs:
+    acts_as_favorite (0.0.1)
+
 GEM
   remote: http://ruby.taobao.org/
   specs:
@@ -44,6 +50,8 @@ GEM
       activerecord (>= 3.0.0)
     bouncy-castle-java (1.5.0147)
     builder (3.0.4)
+    calendar_helper (0.2.5)
+      open4
     capistrano (2.14.2)
       highline
       net-scp (>= 1.0.0)
@@ -158,6 +166,7 @@ GEM
       multi_json (~> 1.0)
       multi_xml (~> 0.5)
       rack (~> 1.2)
+    open4 (1.3.0)
     paperclip (2.8.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -212,6 +221,7 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rinku (1.7.2)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -276,8 +286,10 @@ DEPENDENCIES
   aasm
   activerecord-jdbcmysql-adapter
   activerecord-jdbcsqlite3-adapter
+  acts_as_favorite!
   acts_as_list
   awesome_nested_set
+  calendar_helper
   capistrano
   capybara
   compass
@@ -303,6 +315,7 @@ DEPENDENCIES
   rb-fchange
   rb-fsevent (~> 0.9.1)
   rb-inotify
+  rinku
   rspec-rails (~> 2.0)
   ruby_gntp
   rufus-scheduler

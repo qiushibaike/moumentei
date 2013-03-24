@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include RoleRequirementSystem
   include ViewControlMethods
   #theme_support
+  alias_method :current_theme, :theme_name
   theme :select_theme
   has_mobile_fu
   attr_accessor :show_login

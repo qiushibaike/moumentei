@@ -57,7 +57,7 @@
           <% if article.comment_status == 'closed' %>
               禁止评论
           <% else %>
-              <%= article.public_comments_count > 0 ? "<strong>#{article.public_comments_count}</strong>条评论" : "暂无评论" %>
+              <%= article.public_comments_count > 0 ? "#{article.public_comments_count}条评论" : "暂无评论" %>
           <% end %>
         </a>
       </div>

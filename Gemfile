@@ -15,7 +15,7 @@ platforms :jruby do
   gem 'jruby-ehcache', :require => 'ehcache'
   gem 'trinidad', :require => false, :groups => 'production'
 end
-gem 'acts_as_list'
+
 gem 'will_paginate'
 gem "aasm"
 gem 'paperclip', '~> 2.0'
@@ -28,9 +28,15 @@ gem 'delayed_job'
 gem 'super_cache'
 gem 'eventmachine'
 gem 'rufus-scheduler'
+
+gem 'acts_as_list'
 gem 'awesome_nested_set'
 gem 'themes_for_rails'
 gem 'mobile-fu'
+gem "calendar_helper"
+gem "rinku", :require => 'rails_rinku'
+gem 'acts_as_favorite', :git => 'https://github.com/ShiningRay/acts_as_favorite.git'
+gem 'acts_as_taggable_on_steroids'
 group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw

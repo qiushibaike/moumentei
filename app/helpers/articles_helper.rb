@@ -40,7 +40,7 @@ module ArticlesHelper
       gsub(/ /, '&nbsp;').
       gsub(r){ link_to "#{prefix}\#" + $2, article_path($2)}
     #content = add_watermark(content) if watermark
-    content
+    content.html_safe
       #gsub(r){ "<a href=\"http://#{group.inherited(:domain)}/articles/#{$2}.htm\">#{prefix}\##{$2}</a>"}
   end
 
