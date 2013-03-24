@@ -15,7 +15,7 @@ platforms :jruby do
   gem 'jruby-ehcache', :require => 'ehcache'
   gem 'trinidad', :require => false, :groups => 'production'
 end
-
+gem 'acts_as_list'
 gem 'will_paginate'
 gem "aasm"
 gem 'paperclip', '~> 2.0'

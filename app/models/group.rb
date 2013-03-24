@@ -10,10 +10,7 @@ class Group < ActiveRecord::Base
   validates_format_of :domain, :with => /(\w+\.)+\w+/, :message => "mael format",
     :allow_nil => true,
     :allow_blank => true
-#  include IdentityMap
-#  preference :force_anonymous, :default => false
-#  preference :force_comments_anonymous, :default => false
-#  preference
+
   def after_initialize
     self.options ||= {}
   end

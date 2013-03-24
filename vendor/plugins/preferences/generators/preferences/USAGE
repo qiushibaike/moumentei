@@ -1,5 +1,0 @@
-Usage:
-
-  script/generate preferences
-
-This will create a migration that will add the proper table to store preferences.
