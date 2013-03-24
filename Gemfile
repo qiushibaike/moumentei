@@ -36,7 +36,7 @@ gem 'mobile-fu'
 gem "calendar_helper"
 gem "rinku", :require => 'rails_rinku'
 gem 'acts_as_favorite', :git => 'https://github.com/ShiningRay/acts_as_favorite.git'
-gem 'acts_as_taggable_on_steroids', :git => 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git'
+gem 'acts_as_taggable_on_steroids', :git => 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git', :require => 'acts_as_taggable'
 
 group :development do
   gem 'capistrano'
