@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
   cache_sweeper :comment_sweeper, :only => [ :create ]
   before_filter :find_article, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:article_id)}
   before_filter :find_post, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:post_id)}
-  before_filter :oauthenticate, :only => [:create]
+  #before_filter :oauthenticate, :only => [:create]
   before_filter :login_required, :except => [:index, :count, :create, :up, :dn,:report]
   super_caches_page :index
 

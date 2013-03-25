@@ -25,7 +25,8 @@ module User::RatingAspect
     def has_rated? article
       @rated ||= {}
       case article
-      when Array
+      when Array, ActiveRecord::Relation
+        article = article.to_a
         if article.size > 0
           if article[0].is_a? Article
             ids = article.collect{|o|o.id}
