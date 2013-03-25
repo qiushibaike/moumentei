@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::CommentsController < Admin::BaseController
   cache_sweeper :comment_sweeper, :only => [ :set_status,  :batch_set_status]
   

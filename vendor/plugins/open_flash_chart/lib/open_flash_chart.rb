@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'open_flash_chart/base'
 require 'open_flash_chart/bar_base'
 require 'open_flash_chart/bar'

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Authorization
   def self.included(recipient)
     recipient.extend(ModelClassMethods)

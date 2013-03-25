@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ArchivesController < ApplicationController
   after_filter :store_location, :except => [:index, :show]
   super_caches_page :index, :show

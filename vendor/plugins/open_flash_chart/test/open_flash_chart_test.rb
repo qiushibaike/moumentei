@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'test/unit'
 
 class OpenFlashChartTest < Test::Unit::TestCase

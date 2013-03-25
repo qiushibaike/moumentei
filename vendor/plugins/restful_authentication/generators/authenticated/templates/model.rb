@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'digest/sha1'
 
 class <%= class_name %> < ActiveRecord::Base

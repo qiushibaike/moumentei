@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Message < ActiveRecord::Base
   belongs_to :owner, :class_name => "User", :foreign_key => 'owner_id'
   belongs_to :sender, :class_name => "User", :foreign_key => 'sender_id'

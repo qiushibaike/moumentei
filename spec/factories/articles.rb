@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
   factory :article do
     title { Forgery(:lorem_ipsum).words(rand(3..10)) }

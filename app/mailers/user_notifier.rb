@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class UserNotifier < ActionMailer::Base
   def signup_notification(user)

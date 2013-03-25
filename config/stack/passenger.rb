@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 package :passenger, :provides => :appserver do
   description 'Phusion Passenger (mod_rails)'

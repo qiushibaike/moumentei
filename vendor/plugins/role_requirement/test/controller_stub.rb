@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ControllerStub
   
   attr_writer :params

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module OpenFlashChart
   class YAxisLabel < Base
     def initialize(y, text)

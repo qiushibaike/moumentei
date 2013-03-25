@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Admin::GroupsHelper
   def options_check_box obj, field, label
     checked = "checked='check'" if @group.options[field.to_sym]

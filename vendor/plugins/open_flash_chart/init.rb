@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'open_flash_chart'
 
 ActionView::Base.send :include, OpenFlashChart::View

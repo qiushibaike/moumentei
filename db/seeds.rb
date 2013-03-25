@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 group = Group.find_or_create_by_name 'youwenti'
 group.alias = 'youwenti'
 group.domain ||= 'localhost'

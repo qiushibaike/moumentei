@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AccessToken < OauthToken
   validates_presence_of :user
   before_create :set_authorized_at

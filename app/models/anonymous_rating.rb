@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AnonymousRating < ActiveRecord::Base
   belongs_to :article
   scope :pos, :conditions => 'anonymous_ratings.score > 0'

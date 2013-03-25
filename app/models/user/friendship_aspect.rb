@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class User
 module FriendshipAspect
   def self.included(base)

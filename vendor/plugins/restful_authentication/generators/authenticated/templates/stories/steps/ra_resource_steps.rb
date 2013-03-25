@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # The flexible code for resource testing came out of code from Ben Mabey
 # http://www.benmabey.com/2008/02/04/rspec-plain-text-stories-webrat-chunky-bacon/
 steps_for(:ra_resource) do

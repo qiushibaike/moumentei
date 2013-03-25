@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Rails::Generator::Commands::Create.class_eval do
   def route_resource(*resources)
     resource_list = resources.map { |r| r.to_sym.inspect }.join(', ')

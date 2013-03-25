@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 # Defines named favorites for users that may be applied to objects in a polymorphic fashion.
 class Favorite < ActiveRecord::Base

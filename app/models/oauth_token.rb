@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class OauthToken < ActiveRecord::Base
   belongs_to :client_application
   belongs_to :user

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Authentication
   mattr_accessor :login_regex, :bad_login_message, 
     :name_regex, :bad_name_message,

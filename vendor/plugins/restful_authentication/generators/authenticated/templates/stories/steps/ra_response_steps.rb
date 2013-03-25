@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #
 # What you should see when you get there
 #

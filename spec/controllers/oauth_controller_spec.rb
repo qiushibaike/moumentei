@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/oauth_controller_spec_helper'
 require 'oauth/client/action_controller_request'

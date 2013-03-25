@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 # caching the user-related parameters in folks approval 
 class Weight < ActiveRecord::Base
   belongs_to :user

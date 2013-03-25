@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Trustification
   def self.included(recipient)
     recipient.extend(ModelClassMethods)

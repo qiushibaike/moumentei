@@ -1,4 +1,6 @@
-module GroupsHelper  
+# -*- encoding : utf-8 -*-
+module GroupsHelper
+  
   def url_for_group group
     group = Group.find(group) unless group.is_a? Group
     if group.parent_id.nil?

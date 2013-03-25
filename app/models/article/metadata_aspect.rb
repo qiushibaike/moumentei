@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Article::MetadataAspect
 	module ClassMethods
 		def meta_field(key)

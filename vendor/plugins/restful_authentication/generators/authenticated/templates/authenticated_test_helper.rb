@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module AuthenticatedTestHelper
   # Sets the current <%= file_name %> in the session from the <%= file_name %> fixtures.
   def login_as(<%= file_name %>)

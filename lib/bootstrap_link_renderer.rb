@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class BootstrapLinkRenderer < WillPaginate::LinkRenderer
     def initialize
       @gap_marker = '<span class="gap">&hellip;</span>'

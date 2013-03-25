@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # a simple identity map implementation
 module IdentityMap
   def self.included(base)

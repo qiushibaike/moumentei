@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::InvitationCodesController < Admin::BaseController
   # GET /invitation_codes
   # GET /invitation_codes.xml

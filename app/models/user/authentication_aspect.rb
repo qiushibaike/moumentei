@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module User::AuthenticationAspect
   module ClassMethods
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.

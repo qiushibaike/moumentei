@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Moumentei::Application.routes.draw do
   themes_for_rails
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.dirname(__FILE__) + '/../spec_helper'
 describe ClientApplication do 
   fixtures :users, :client_applications, :oauth_tokens

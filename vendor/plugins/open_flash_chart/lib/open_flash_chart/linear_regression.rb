@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # by David Lowenfels @ InternautDesign.com
 # example usage: fitted_data = LinearRegression.new(data).fit
 

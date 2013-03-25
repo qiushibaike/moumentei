@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module AliasFallback
   def alias_fallback(method, fallback_method = nil, &block)
     original_method = "original_#{method}"

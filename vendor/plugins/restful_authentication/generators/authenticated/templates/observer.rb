@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class <%= class_name %>Observer < ActiveRecord::Observer
   def after_create(<%= file_name %>)
     <%= class_name %>Mailer.deliver_signup_notification(<%= file_name %>)

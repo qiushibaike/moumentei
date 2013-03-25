@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 Moumentei::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 

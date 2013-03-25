@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class <%= class_name %>Mailer < ActionMailer::Base
   def signup_notification(<%= file_name %>)
     setup_email(<%= file_name %>)

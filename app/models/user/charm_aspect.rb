@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class User
   module CharmAspect
     def total_comments_score

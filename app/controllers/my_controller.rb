@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class MyController < ApplicationController
   before_filter :login_required
   before_filter :cache_control

@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
   cache_sweeper :comment_sweeper, :only => [ :create ]
   before_filter :find_article, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:article_id)}

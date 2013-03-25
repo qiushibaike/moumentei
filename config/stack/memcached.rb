@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 package :memcached_daemon, :provides => :memcached do
   description 'Memcached, a distributed memory object store'
   apt %w( memcached )

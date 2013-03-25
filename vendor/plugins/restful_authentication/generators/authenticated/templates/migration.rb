@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class <%= migration_name %> < ActiveRecord::Migration
   def self.up
     create_table "<%= table_name %>", :force => true do |t|

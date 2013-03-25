@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # cache meta data in object
 module Article::MetadataLocalCache
   def get_metadata(key)

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Main module for authentication.  
 # Include this in ApplicationController to activate RoleRequirement
 #

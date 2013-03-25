@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Trustification
   module EmailValidation
     unless Object.constants.include? "CONSTANTS_DEFINED"

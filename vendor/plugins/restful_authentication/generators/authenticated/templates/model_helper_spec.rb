@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.dirname(__FILE__) + '/../spec_helper'
 include ApplicationHelper
 include <%= model_controller_class_name %>Helper

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Authorization
   module AasmRoles
     unless Object.constants.include? "STATEFUL_ROLES_CONSTANTS_DEFINED"

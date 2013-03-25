@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Admin::ArticlesHelper
   #Public bootstrap风格的日期选择
   #

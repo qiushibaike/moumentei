@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Authentication
   module ByPassword
     # Stuff directives into including module

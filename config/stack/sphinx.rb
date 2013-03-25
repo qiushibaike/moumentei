@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # wget http://www.coreseek.cn/uploads/csft/3.1/Source/mmseg-3.1.tar.gz
 # wget http://www.coreseek.cn/uploads/csft/3.1/Source/csft-3.1.tar.gz
 # tar zxvf mmseg-3.1.tar.gz 

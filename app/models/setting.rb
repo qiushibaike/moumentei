@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 # This model stores the global configuration of the website
 class Setting < ActiveRecord::Base

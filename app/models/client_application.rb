@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'oauth'
 class ClientApplication < ActiveRecord::Base
   belongs_to :user

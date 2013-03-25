@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PostsController < ApplicationController
   before_filter :login_required
   before_filter :find_user, :only => [:show,:index, :edit, :update, :destroy]

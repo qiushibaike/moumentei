@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module PostLock
   def self.included(base)
     if RAILS_ENV != 'development'  

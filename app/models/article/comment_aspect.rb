@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Article::CommentAspect  
   module InstanceMethods
     def has_comments? status='publish'

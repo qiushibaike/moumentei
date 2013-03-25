@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'paperclip_processors/watermark'
 module Article::PictureAspect
 	module ClassMethods

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Comment::SequenceAspect
   module Noop
     def next_id(article_id)

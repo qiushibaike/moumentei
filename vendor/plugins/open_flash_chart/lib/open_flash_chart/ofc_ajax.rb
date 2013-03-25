@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module OpenFlashChart
   module View
     def periodically_call_function(function, options = {})

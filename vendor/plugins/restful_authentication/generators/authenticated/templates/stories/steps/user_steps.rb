@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require File.dirname(__FILE__) + '/../helper'
 
 RE_<%= file_name.capitalize %>      = %r{(?:(?:the )? *(\w+) *)}

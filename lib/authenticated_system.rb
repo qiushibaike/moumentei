@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module AuthenticatedSystem
   protected
     # Returns true or false if the user is logged in.

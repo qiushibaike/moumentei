@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # If you have a global stories helper, move this line there:
 include AuthenticatedTestHelper
 

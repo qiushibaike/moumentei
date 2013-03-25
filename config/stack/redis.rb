@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 package :redis do
   description 'Redis In-Memory Database'
   apt %w( redis )

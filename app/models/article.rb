@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 # The article model
 class Article < ActiveRecord::Base
@@ -45,6 +46,7 @@ class Article < ActiveRecord::Base
   scope :pending, :conditions => {:status => 'pending'}
   scope :hottest, :order => 'score desc'
   scope :latest, :order => 'published_at desc'
+  scope :published_after, lambda{|time| where{published_at >= time} }
   attr_protected :user_id, :status
 
   cattr_accessor :per_page
@@ -107,7 +109,7 @@ class Article < ActiveRecord::Base
     end
 
     def recent_hot(page)
-      alt_score_gt(0).paginate :page => page, :order => 'alt_score desc',:include => [:user]
+      where{alt_score > 0}.paginate :page => page, :order => 'alt_score desc',:include => [:user]
     end
 
     def pictures(group_id, page)

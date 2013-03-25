@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 # A Site key gives additional protection against a dictionary attack if your
 # DB is ever compromised.  With no site key, we store

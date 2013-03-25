@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module CacheControlMethods
   def must_revalidate
     cc = response.headers['Cache-Control']

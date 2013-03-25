@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class <%= model_controller_class_name %>Controller < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem

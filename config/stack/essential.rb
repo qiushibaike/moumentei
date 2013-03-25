@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 package :build_essential do
   description 'Build tools'
   apt 'build-essential' do

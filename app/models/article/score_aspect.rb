@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Article::ScoreAspect
   module ClassMethods
     def recalc_alt_scores

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 package :utils do
   requires :htop, :wget, :imagemagick
 end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class GroupsController < ApplicationController
   before_filter :find_group, :except => [:index]
@@ -83,7 +84,7 @@ class GroupsController < ApplicationController
     per_page = @group.inherited_option(:per_page)
     per_page = 20 if per_page.blank?
     g = @group.options[:show_articles_in_children] ? @group.self_and_descendants.collect{|i|i.id} : [@group.id]
-    @articles = Article.hottest.public.published_at_gte(@date).by_group(g).paginate :page => params[:page], :per_page => per_page, :include => :user
+    @articles = Article.hottest.public.published_after(@date).by_group(g).paginate :page => params[:page], :per_page => per_page, :include => :user
 
     if not @articles || @articles.size == 0 && params[:limit] != 'all'
       return redirect_to(group_hottest_path(@group, :limit => keys[keys.index(params[:limit])+1]))

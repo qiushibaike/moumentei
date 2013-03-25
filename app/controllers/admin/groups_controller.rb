@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::GroupsController < Admin::BaseController
   # GET /keywords
   # GET /keywords.xml

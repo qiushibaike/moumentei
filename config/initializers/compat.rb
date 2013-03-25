@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #-*- coding:utf-8 -*-
 #unless [].respond_to?(:nitems)
 #  class Array

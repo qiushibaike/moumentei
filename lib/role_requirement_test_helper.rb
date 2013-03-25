@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Include this is test_helper.rb to enable test-case helper support for RoleRequirement via:
 #   include RoleRequirementTestHelper
 #

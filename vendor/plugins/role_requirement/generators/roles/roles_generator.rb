@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require( File.join( File.dirname(__FILE__), "../role_generator_helpers" ))
 
 class RolesGenerator < Rails::Generator::NamedBase

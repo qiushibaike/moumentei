@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Statistics < ActiveRecord::Base
   serialize :article_ids
   serialize :score
