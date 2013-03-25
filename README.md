@@ -5,6 +5,8 @@
 
 > 版权所有糗事百科 [http://www.qiushibaike.com]
 
+![https://github.com/qiushibaike/moumentei](http://ww3.sinaimg.cn/large/61e8950ejw1e31qqhu9mrj.jpg)
+
 安装
 ====
 
