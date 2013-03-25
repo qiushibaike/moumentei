@@ -35,10 +35,11 @@ gem 'themes_for_rails'
 gem 'squeel'
 gem 'mobile-fu'
 gem "calendar_helper"
-gem "rinku", :require => 'rails_rinku'
+#gem "rinku", :require => 'rails_rinku', :platforms
+gem 'rails_autolink'
 gem 'acts_as_favorite', :git => 'https://github.com/ShiningRay/acts_as_favorite.git'
 gem 'acts_as_taggable_on_steroids', :git => 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git', :require => 'acts_as_taggable'
-
+gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
 group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw

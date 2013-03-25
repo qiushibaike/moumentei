@@ -308,7 +308,7 @@ class ArticlesController < ApplicationController
     _id = params[:id].to_i
     @article = Article.get_cache(_id)
     @group = @article.group
-    if !@group.domain.blank? && request.host != 'localhost' && RAILS_ENV != 'development'
+    if !@group.domain.blank? && request.host != 'localhost' && Rails.env.production?
       select_domain @group
 #if not @group.is_or_is_ancestor_of?(@article.group)
 #        render :template => 'articles/not_found', :status => 404

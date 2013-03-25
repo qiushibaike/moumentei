@@ -3,7 +3,7 @@
 <% content_for :title do  %>
 帖子#<%=@article.id%> <%= m.size > 20 ? "#{m[0, 20]}..." : m%>
 <% end %>
-<% url=URI::encode("http://#{request.domain}#{request.request_uri}")%>
+<% url=URI::encode("http://#{request.domain}#{request.fullpath}")%>
 <% if ( @msg || flash[:notice] ) %><div id="notice"> <%= ( @msg || flash[:notice] ) %></div> <% end %>
 
 <% if @article %>

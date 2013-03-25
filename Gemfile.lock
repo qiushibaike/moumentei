@@ -1,14 +1,20 @@
 GIT
   remote: https://github.com/ShiningRay/acts_as_favorite.git
-  revision: 642e1356e08c2587d3c4bacede60710cfc00c4bc
+  revision: 51185c43c64e4477243943098005bf0d7487d837
   specs:
     acts_as_favorite (0.0.1)
 
 GIT
   remote: https://github.com/ShiningRay/acts_as_taggable_on_steroids.git
-  revision: ec56014e040b9e384339cfa4d6bad7649c813c8d
+  revision: ef12a1a33ccb84481db9df1690a26bd47f883127
   specs:
     acts_as_taggable_on_steroids (1.1)
+
+GIT
+  remote: https://github.com/ShiningRay/alias_fallback.git
+  revision: bd47796de2a9e6a8e3bccff10e012a924716c30d
+  specs:
+    alias_fallback (0.0.1)
 
 GEM
   remote: http://ruby.taobao.org/
@@ -214,6 +220,8 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
+    rails_autolink (1.0.9)
+      rails (~> 3.1)
     railties (3.2.13)
       actionpack (= 3.2.13)
       activesupport (= 3.2.13)
@@ -229,7 +237,6 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
-    rinku (1.7.2)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -301,6 +308,7 @@ DEPENDENCIES
   acts_as_favorite!
   acts_as_list
   acts_as_taggable_on_steroids!
+  alias_fallback!
   awesome_nested_set
   calendar_helper
   capistrano
@@ -325,10 +333,10 @@ DEPENDENCIES
   quiet_assets
   rack-cache
   rails (~> 3.2.1)
+  rails_autolink
   rb-fchange
   rb-fsevent (~> 0.9.1)
   rb-inotify
-  rinku
   rspec-rails (~> 2.0)
   ruby_gntp
   rufus-scheduler

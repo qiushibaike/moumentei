@@ -200,7 +200,7 @@ class CommentsController < ApplicationController
     if params[:article_id]
       @article = Article.find(params[:article_id])
       @group = @article.group
-      if request.host != 'localhost' and RAILS_ENV != 'development'
+      if request.host != 'localhost' and Rails.env.production?
         select_domain @group
         #if not @group.is_or_is_ancestor_of?(@article.group)
         #  render :template => 'articles/not_found', :status => 404
