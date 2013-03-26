@@ -45,6 +45,7 @@ gem "rolify"
 group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
+  gem 'jruby-pageant', :require => false, :platforms => :jruby
 end
 
 group :test, :development do
