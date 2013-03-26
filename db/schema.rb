@@ -1,16 +1,16 @@
-# -*- encoding : utf-8 -*-
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320145437) do
+ActiveRecord::Schema.define(:version => 20130326132509) do
 
   create_table "announcements", :force => true do |t|
     t.text     "content"
@@ -42,12 +42,12 @@ ActiveRecord::Schema.define(:version => 20130320145437) do
 
   create_table "articles", :force => true do |t|
     t.string   "tag_line"
-    t.integer  "group_id",                           :default => 0,         :null => false
-    t.integer  "user_id",                            :default => 0,         :null => false
+    t.integer  "group_id",                           :default => 0,           :null => false
+    t.integer  "user_id",                            :default => 0,           :null => false
     t.string   "title"
-    t.string   "status",               :limit => 20, :default => "pending", :null => false
-    t.string   "comment_status",       :limit => 20, :default => "open",    :null => false
-    t.boolean  "anonymous",                          :default => false,     :null => false
+    t.string   "status",               :limit => 20, :default => "'pending'", :null => false
+    t.string   "comment_status",       :limit => 20, :default => "'open'",    :null => false
+    t.boolean  "anonymous",                          :default => false,       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "picture_file_name"
@@ -385,15 +385,15 @@ ActiveRecord::Schema.define(:version => 20130320145437) do
   end
 
   create_table "roles", :force => true do |t|
-    t.string "name"
+    t.string   "name"
+    t.string   "resource_type"
+    t.integer  "resource_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "role_id"
-    t.integer "user_id"
-  end
-
-  add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
+  add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
+  add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -479,14 +479,14 @@ ActiveRecord::Schema.define(:version => 20130320145437) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                                                           :null => false
+    t.string   "login",                                                             :null => false
     t.string   "name",                      :limit => 100
-    t.string   "email",                                                           :null => false
-    t.string   "crypted_password",                                                :null => false
-    t.string   "salt",                                                            :null => false
-    t.string   "created_at",                                                      :null => false
-    t.string   "updated_at",                                                      :null => false
-    t.string   "remember_token",                           :default => "",        :null => false
+    t.string   "email",                                                             :null => false
+    t.string   "crypted_password",                                                  :null => false
+    t.string   "salt",                                                              :null => false
+    t.string   "created_at",                                                        :null => false
+    t.string   "updated_at",                                                        :null => false
+    t.string   "remember_token",                           :default => "''",        :null => false
     t.datetime "remember_token_expires_at"
     t.string   "activation_code"
     t.datetime "activated_at"
@@ -494,7 +494,7 @@ ActiveRecord::Schema.define(:version => 20130320145437) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "state",                                    :default => "passive"
+    t.string   "state",                                    :default => "'passive'"
     t.datetime "deleted_at"
   end
 
@@ -505,6 +505,13 @@ ActiveRecord::Schema.define(:version => 20130320145437) do
   add_index "users", ["login"], :name => "login"
   add_index "users", ["remember_token"], :name => "remember_token"
   add_index "users", ["state"], :name => "index_users_on_state"
+
+  create_table "users_roles", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
+  add_index "users_roles", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
 
   create_table "weights", :force => true do |t|
     t.integer "user_id",     :null => false
