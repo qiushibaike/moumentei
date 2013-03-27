@@ -50,6 +50,9 @@ end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
+end
+
+group :test do
   gem "factory_girl_rails", "1.7.0"
   gem 'guard'
   gem 'guard-rspec'
@@ -62,6 +65,7 @@ group :test, :development do
   gem 'ruby_gntp'
   gem 'quiet_assets'
   gem 'forgery'
+  gem 'cucumber-rails', :require => false
 end
 
 group :production do

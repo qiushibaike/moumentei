@@ -1,14 +1,13 @@
 # -*- encoding : utf-8 -*-
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
   
 # Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead
 # Then, you can remove it from this and the units test.
 include AuthenticatedTestHelper
 
 describe UsersController do
-  fixtures :users
 
-  it 'allows signup' do
+  it 'should allows signup' do
     lambda do
       create_user
       response.should be_redirect
@@ -16,18 +15,19 @@ describe UsersController do
   end
 
   
-  it 'signs up user in pending state' do
+  it 'should signs up user in pending state' do
     create_user
     assigns(:user).reload
     assigns(:user).should be_pending
   end
 
-  it 'signs up user with activation code' do
+  it 'should signs up user with activation code' do
     create_user
     assigns(:user).reload
     assigns(:user).activation_code.should_not be_nil
   end
-  it 'requires login on signup' do
+
+  it 'should requires login on signup' do
     lambda do
       create_user(:login => nil)
       assigns[:user].errors.on(:login).should_not be_nil
