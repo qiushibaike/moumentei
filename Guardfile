@@ -3,8 +3,11 @@
 is_jruby = RUBY_PLATFORM =~ /java/
 if is_jruby
   interactor :simple
+  cli = ["-c", "-t~slow"]
+else
+  cli ="--format nested --fail-fast --color"
 end
-guard is_jruby ? 'jruby-rspec' : 'rspec', :cli => "--format nested --fail-fast" do
+guard is_jruby ? 'jruby-rspec' : 'rspec', :cli => cli do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }

@@ -305,17 +305,11 @@ class ArticlesController < ApplicationController
   protected
   # find correct article according to "id" get params
   def find_article
-    _id = params[:id].to_i
-    @article = Article.get_cache(_id)
+    @article = Article.find(params[:id])
     @group = @article.group
     if !@group.domain.blank? && request.host != 'localhost' && Rails.env.production?
       select_domain @group
-#if not @group.is_or_is_ancestor_of?(@article.group)
-#        render :template => 'articles/not_found', :status => 404
-#        return false
-#      end
     end
-    #preload
     if @article && logged_in?
       current_user.has_rated? @article
       current_user.has_favorite? @article

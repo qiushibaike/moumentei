@@ -46,6 +46,8 @@ group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
   gem 'jruby-pageant', :require => false, :platforms => :jruby
+  gem 'better_errors'
+  
 end
 
 group :test, :development do

@@ -119,20 +119,6 @@ class Article < ActiveRecord::Base
       end
     end
 
-    # get multiple records from cache
-    def get_caches(ids)
-      if ids.size > 0
-        find_all_by_id(ids, :order => "FIELD(id,#{ids.join(',')})")
-      else
-        []
-      end
-    end
-
-    # get single record from cache
-    def get_cache(id)
-      find id
-    end
-
     protected
       # find corresponding article records according to the scores records
       # from the database, and then combine the two dataset together into a

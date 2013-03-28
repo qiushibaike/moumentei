@@ -60,6 +60,9 @@ GEM
     arel (3.0.2)
     awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
+    better_errors (0.7.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
     bouncy-castle-java (1.5.0147)
     builder (3.0.4)
     calendar_helper (0.2.5)
@@ -343,6 +346,7 @@ DEPENDENCIES
   acts_as_taggable_on_steroids!
   alias_fallback!
   awesome_nested_set
+  better_errors
   calendar_helper
   capistrano
   capybara

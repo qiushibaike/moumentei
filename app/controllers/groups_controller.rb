@@ -235,16 +235,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  def render(*args)
-    if @articles && ! @articles.empty? && logged_in?
-      current_user.has_rated? @articles
-      current_user.has_favorite? @articles
-      current_user.roles
-     # Article.send(:preload_associations, @articles, ['score'])
-    end
-    super(*args)
-  end
-
   protected
   def generic_response(action=nil)
   

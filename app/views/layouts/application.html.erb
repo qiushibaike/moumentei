@@ -15,7 +15,7 @@
     </ul>
   </li>
   <%= active_li_link '历史', group_archives_path(@group) %>
-  <%= active_li_link '标签', [@group, :tags] %>
+  <%# active_li_link '标签', [@group, :tags] %>
   <%= active_li_link '发表', [:new, @group, :article] %>
 <%- end if @group -%>
 <%-
