@@ -50,6 +50,9 @@ end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
+  gem 'guard-livereload' 
+  gem 'rack-livereload'
+  gem 'guard-jruby-rspec', :platforms => :jruby
 end
 
 group :test do
