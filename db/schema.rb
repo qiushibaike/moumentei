@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
     t.integer  "group_id",                           :default => 0,           :null => false
     t.integer  "user_id",                            :default => 0,           :null => false
     t.string   "title"
-    t.string   "status",               :limit => 20, :default => "'pending'", :null => false
-    t.string   "comment_status",       :limit => 20, :default => "'open'",    :null => false
+    t.string   "status",               :limit => 20, :default => "pending", :null => false
+    t.string   "comment_status",       :limit => 20, :default => "open",    :null => false
     t.boolean  "anonymous",                          :default => false,       :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -486,7 +486,7 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
     t.string   "salt",                                                              :null => false
     t.string   "created_at",                                                        :null => false
     t.string   "updated_at",                                                        :null => false
-    t.string   "remember_token",                           :default => "''",        :null => false
+    t.string   "remember_token",                           :default => "",        :null => false
     t.datetime "remember_token_expires_at"
     t.string   "activation_code"
     t.datetime "activated_at"
@@ -494,7 +494,7 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.string   "state",                                    :default => "'passive'"
+    t.string   "state",                                    :default => "passive"
     t.datetime "deleted_at"
   end
 

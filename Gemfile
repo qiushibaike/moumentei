@@ -20,7 +20,7 @@ gem 'will_paginate'
 gem "aasm"
 gem 'paperclip', '~> 2.0'
 gem 'compass'
-gem 'SystemTimer', :platforms => :ruby
+gem 'SystemTimer', :platforms => [:mingw_18, :ruby_18]
 gem 'memcache-client'
 gem "oauth"
 gem "oauth-plugin"
@@ -46,13 +46,15 @@ group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
   gem 'jruby-pageant', :require => false, :platforms => :jruby
-  gem 'better_errors'
+  gem 'better_errors', :platforms => [:mingw_19, :ruby_19]
   
 end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
   gem 'guard-livereload' 
+  gem 'guard-cucumber'
+  gem 'guard-bundler'
   gem 'rack-livereload'
   gem 'guard-jruby-rspec', :platforms => :jruby
 end

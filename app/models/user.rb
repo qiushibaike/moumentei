@@ -39,6 +39,9 @@ class User < ActiveRecord::Base
     end
   end
 
+  def is_admin?
+    has_role?('admin')
+  end
   
   def ensure_profile
     profile ? profile : create_profile
