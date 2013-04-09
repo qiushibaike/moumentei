@@ -20,7 +20,7 @@ gem 'will_paginate'
 gem "aasm"
 gem 'paperclip', '~> 2.0'
 gem 'compass'
-gem 'SystemTimer', :platforms => [:mingw_18, :ruby_18]
+gem 'SystemTimer', :platforms => :ruby_18
 gem 'memcache-client'
 gem "oauth"
 gem "oauth-plugin"

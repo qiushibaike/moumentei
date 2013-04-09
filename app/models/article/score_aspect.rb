@@ -3,7 +3,7 @@ module Article::ScoreAspect
   module ClassMethods
     def recalc_alt_scores
       logger.debug('recalc_alt_scores')
-      alt_score_gt(0).find_each do |article|
+      where{alt_score > 0}.find_each do |article|
         article.calc_alt_score
       end
     end
