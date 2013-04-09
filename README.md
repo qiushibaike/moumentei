@@ -7,6 +7,8 @@
 
 ![https://github.com/qiushibaike/moumentei](http://ww3.sinaimg.cn/large/61e8950ejw1e31qqhu9mrj.jpg)
 
+先已经过裁剪和优化，并升级至了Rails 3.2.
+
 安装指南请查看[INSTALL.md](https://github.com/qiushibaike/moumentei/blob/master/INSTALL.md)
 
 演示地址： http://moumentei.bling0.com/
