@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 $:<< File.join(File.dirname(__FILE__), 'stack')
 REE_PATH = "/usr/local"
 # Require the stack base

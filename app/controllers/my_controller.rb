@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class MyController < ApplicationController
   before_filter :login_required
   before_filter :cache_control
@@ -55,7 +56,7 @@ class MyController < ApplicationController
       return render :text => '请勿频繁尝试'
     end
     if current_user.pending?
-      UserNotifier.deliver_signup_notification(current_user)
+      UserNotifier.signup_notification(current_user).deliver
       render :text => '发送成功请查收，邮件大约在1小时内到达'
       Rails.cache.write(key, '1', :raw => true, :expires_in => 1.hour)
     else
@@ -72,7 +73,7 @@ class MyController < ApplicationController
   
   def sendcode
     if params[:email] =~ Authentication.email_regex
-      UserNotifier.deliver_invitation_code(current_user,params[:email],params[:code])
+      UserNotifier.invitation_code(current_user,params[:email],params[:code]).deliver
       flash[:notice] = '发送成功'
     else
       flash[:error] = '请输入正确的邮箱地址'

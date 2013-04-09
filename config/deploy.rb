@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "bundler/capistrano"
 require "delayed/recipes"
 require 'lib/recipes/db'

@@ -2,14 +2,14 @@
 
 <ul id="items">
   <% for item in @list.items %>
-  <%content_tag_for :li,item do %>
+  <%= content_tag_for :li,item do %>
     <span class ="handle">#</span><%=link_to item.article_id, item.article%>
     <%= link_to 'X', [@list, item], :method => :delete %>
 <%end%>
 <% end %>
 </ul>
 <%=sortable_element("items",:url=>sort_list_path(@list),:handle=>'handle')%>
-<% form_tag append_list_path(@list) do %>
+<%= form_tag append_list_path(@list) do %>
 <label>帖子id: <%= text_field_tag :article_id %></label>
 <%= submit_tag '添加'%>
 <% end %>

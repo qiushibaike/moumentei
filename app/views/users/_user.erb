@@ -5,17 +5,17 @@
     <%= link_to image_tag(user.avatar.url(:medium), :class => "userphoto photo_m"), user_path(user) if user.avatar %>
     <p class="userxxx" title="发表了<%# user.stat.signed_comments if user.user_stat %>个评论<% if @is_current  %>，<%# user.user_stat.anonymous_comments %>个匿名评论<% end %>"><%=user.login%></p>
     <ul class="stats">
-      <li id="followers"><% link_to followers_user_path(user) do -%>
+      <li id="followers"><%= link_to followers_user_path(user) do -%>
       <span class="follow">粉丝</span><span class="stats_count numeric"><%=user.followers.count%></span>
       <%- end -%></li>
-      <li id="following"><% link_to followings_user_path(user) do %>
+      <li id="following"><%= link_to followings_user_path(user) do %>
       <span class="follow">关注</span><span class="stats_count numeric"><%= user.friends.count %></span>
       <% end %></li>					
-      <li id="updates"><div class="list"><% link_to user_articles_path(user) do %>
+      <li id="updates"><div class="list"><%= link_to user_articles_path(user) do %>
           <span class="function">文章</span><span class="stats_count numeric"><%= user.articles.public.signed.count %></span>
         <%end%></div>
       </li>
-      <li id="user-comments"><div class="list"><% link_to user_comments_path(user) do %>
+      <li id="user-comments"><div class="list"><%= link_to user_comments_path(user) do %>
           <span class="function">评论</span><span class="stats_count numeric"><%= user.comments.public.signed.count %></span>
         <%end%></div>
       </li>

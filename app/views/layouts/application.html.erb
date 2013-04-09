@@ -2,7 +2,7 @@
   <%= active_li_link '近期热点', group_recent_hot_path(@group)%>
   <%= active_li_link '最新', group_latest_path(@group) %>
   <li class="dropdown">
-  <% link_to({:controller =>:groups, :action =>:hottest, :id => (@group.id), :limit => 'day', :page => nil}, {:class => "dropdown-toggle", :id => 'hottest_menu_toggle', 'data-toggle'=>"dropdown", 'data-target' => '#'})do %>
+  <%= link_to({:controller =>:groups, :action =>:hottest, :id => @group.id, :limit => 'day', :page => nil}, {:class => "dropdown-toggle", :id => 'hottest_menu_toggle', 'data-toggle'=>"dropdown", 'data-target' => '#'}) do %>
       最热
       <b class="caret"></b>
     <% end %>
@@ -15,7 +15,7 @@
     </ul>
   </li>
   <%= active_li_link '历史', group_archives_path(@group) %>
-  <%= active_li_link '标签', [@group, :tags] %>
+  <%# active_li_link '标签', [@group, :tags] %>
   <%= active_li_link '发表', [:new, @group, :article] %>
 <%- end if @group -%>
 <%-

@@ -1,6 +1,6 @@
 <h1> invitation_code</h1>
 
-<% form_for([:admin, @invitation_code]) do |f| %>
+<%= form_for([:admin, @invitation_code]) do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :applicant_id %><br />

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Reportable
   def self.included(base)
     @@model = Kernel.const_get(base.controller_name.singularize.capitalize)

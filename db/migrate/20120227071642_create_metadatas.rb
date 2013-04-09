@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateMetadatas < ActiveRecord::Migration
   def self.up
     create_table :metadatas do |t|

@@ -11,7 +11,7 @@
 <% if @article and @article.errors.empty? %>
 非常感谢您的分享！您刚刚提交的帖子#<%= @article.id %>将在管理员审核通过之后发表，接下来的日子，您将生活的更加幸福快乐。
 <% else %>
-    <% form_for(:article, :html => {:multipart => true}) do |f| %>
+    <%= form_for(:article, :html => {:multipart => true}) do |f| %>
  <textarea name="article[content]" id="qiushi_text" oninput="if(this.scrollHeight>180){this.style.height=this.scrollHeight+'px';}" onpropertychange="if(this.scrollHeight>180){this.style.height=this.scrollHeight+'px';}" ></textarea><br />
   <% if logged_in? %><div class="tagbox"><label>真相：<%= f.file_field :picture %></label></div><% end  %>
       <div id="tagbox">标签：<%= f.text_field(:tag_line, :size =>30, :maxlength =>30, :id => 'qiushi_rtags' )  %>（每个帖子最多3个标签，用空格分隔）</div>

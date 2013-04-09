@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # place per-project configurations here
 
 # EMAIL SETTINGS #############################

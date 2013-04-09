@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'rufus/scheduler'
 scheduler = Rufus::Scheduler.start_new
 

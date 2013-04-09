@@ -1,6 +1,6 @@
 <% id = article.id %>
 <% url = article_url(article) %>
-<% div_for(article, :class => "hentry #{cycle('even', 'odd')} #{article.picture.file? && 'picture'} box") do %>
+<%= div_for(article, :class => "hentry #{cycle('even', 'odd')} #{article.picture.file? && 'picture'} box") do %>
     <% if article.picture.file? %>
         <% if article.picture.content_type =~ /gif/i %>
             <%= image_tag(article.picture(:original), :alt => (article.title || article.content.mb_chars[0, 10])) %>
@@ -47,7 +47,7 @@
             -->
         <% end %>
         发表于
-        <% link_to archive_path(article.group, :date => article.created_at) do %>
+        <%= link_to archive_path(article.group, :date => article.created_at) do %>
             <abbr class="published" title="<%= article.created_at.iso8601 %>"><%= article.created_at.strftime("%Y-%m-%d") %></abbr>
         <% end %>
       </div>
@@ -57,7 +57,7 @@
           <% if article.comment_status == 'closed' %>
               禁止评论
           <% else %>
-              <%= article.public_comments_count > 0 ? "<strong>#{article.public_comments_count}</strong>条评论" : "暂无评论" %>
+              <%= article.public_comments_count > 0 ? "#{article.public_comments_count}条评论" : "暂无评论" %>
           <% end %>
         </a>
       </div>

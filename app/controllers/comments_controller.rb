@@ -1,9 +1,9 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 class CommentsController < ApplicationController
   cache_sweeper :comment_sweeper, :only => [ :create ]
   before_filter :find_article, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:article_id)}
   before_filter :find_post, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:post_id)}
-  before_filter :oauthenticate, :only => [:create]
+  #before_filter :oauthenticate, :only => [:create]
   before_filter :login_required, :except => [:index, :count, :create, :up, :dn,:report]
   super_caches_page :index
 
@@ -200,7 +200,7 @@ class CommentsController < ApplicationController
     if params[:article_id]
       @article = Article.find(params[:article_id])
       @group = @article.group
-      if request.host != 'localhost' and RAILS_ENV != 'development'
+      if request.host != 'localhost' and Rails.env.production?
         select_domain @group
         #if not @group.is_or_is_ancestor_of?(@article.group)
         #  render :template => 'articles/not_found', :status => 404

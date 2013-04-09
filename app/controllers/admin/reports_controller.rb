@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::ReportsController < Admin::BaseController
   def index
     params[:type] ||= 'Comment'
@@ -20,7 +21,7 @@ class Admin::ReportsController < Admin::BaseController
       case result[:type]
       when 'suspend'
         user.suspend
-        UserNotifier.deliver_suspend(user)
+        UserNotifier.suspend(user).deliver
       when 'silence'
         
       when 'noop'

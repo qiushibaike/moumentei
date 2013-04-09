@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::ArticlesController < Admin::BaseController
   #before_filter :admin_required, :except =>[:secret_question, :answer_secret, :remove_secret_cmt ]
   #before_filter :doctor_required, :only  => [:secret_question, :answer_secret, :remove_secret_cmt ]

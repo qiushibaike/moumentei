@@ -1,6 +1,6 @@
 <h1><%= @badge.new_record? ? 'New' : 'Edit' %> badge</h1>
 
-<% form_for([:admin,@badge], :html => {:multipart => true }) do |f| %>
+<%= form_for([:admin,@badge], :html => {:multipart => true }) do |f| %>
   <%= f.error_messages %>
     <%= f.label :name %> 
     <%= f.text_field :name %>

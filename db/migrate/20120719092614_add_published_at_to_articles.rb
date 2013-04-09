@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddPublishedAtToArticles < ActiveRecord::Migration
   def self.up
   	add_column :articles, :published_at, :datetime

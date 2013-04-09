@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::StatisticController < Admin::BaseController
      before_filter :login_required, :only => [:index]
      require_role "admin", :except => [:index]

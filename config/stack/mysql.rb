@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 package :mysql, :provides => :database do
   description 'MySQL Database'
   apt %w( mysql-server mysql-client libmysqlclient-dev )

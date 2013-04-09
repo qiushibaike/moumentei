@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 package :postgres, :provides => :database do
   description 'PostgreSQL database'
   apt %w( postgresql postgresql-client libpq-dev )

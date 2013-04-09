@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
@@ -7,10 +8,10 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include RoleRequirementSystem
   include ViewControlMethods
-  theme_support
+  #theme_support
+  alias_method :current_theme, :theme_name
   theme :select_theme
   has_mobile_fu
-  filter_parameter_logging [:password, :password_confirmation]
   attr_accessor :show_login
 
   protected
@@ -64,7 +65,7 @@ class ApplicationController < ActionController::Base
       Group.find_by_domain(request.host) || (Setting.default_group ? Group.find(Setting.default_group) : Group.first)
     end
     return show_404 unless @group
-    select_domain @group if request.host != 'localhost' and RAILS_ENV != 'development'
+    select_domain @group if request.host != 'localhost' and Rails.env.production?
     return @group
   end
 end

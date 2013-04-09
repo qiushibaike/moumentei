@@ -5,7 +5,7 @@
     <div id="branding">
       <h1 id="site-title">
         <% if @group %>
-          <% link_to home_path(:domain => @group.domain), :title => @group.description, :rel => 'home' do %>
+          <%= link_to root_path(:domain => @group.domain), :title => @group.description, :rel => 'home' do %>
             <% if @group.options[:logo].blank? %>
               <span><%= @group.try(:name) %></span>
             <% else %>

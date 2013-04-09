@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ActiveSupport::Cache
   class MemCacheStore
     def append(key, value)

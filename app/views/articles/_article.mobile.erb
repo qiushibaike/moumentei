@@ -1,4 +1,4 @@
-<% div_for article do %>
+<%= div_for article do %>
 <% cache ["phone", article] do %>
 <% unless article.title.blank? %>
 <h4><%= link_to article.title, article, :rel => 'permalink' %></h4>
@@ -16,7 +16,7 @@
 <% if rated?(article)%>
 <%= article.pos_score %>人喜欢 
 <% else %>
-<% link_to up_article_path(article) do %>
+<%= link_to up_article_path(article) do %>
 <%= image_tag('flower-2.png', :class => 'voteicon')%><%=  article.pos_score %>
 <% end %>
 <% end %>

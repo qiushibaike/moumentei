@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module User::FavoriteAspect
   #extend ActiveSupport::Concern
   def self.included(base)

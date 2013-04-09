@@ -91,7 +91,7 @@
           <%- groups = Group.find(:all) -%>
           <%- groups.each do |g| -%>
             <li>
-              <% link_to admin_articles_path(:group_id => g.id) do%>
+              <%= link_to admin_articles_path(:group_id => g.id) do%>
               <%= g.name %>
               <% cache [g, 'counts'] do  %>
               <%= g.articles.pending.count %>/<%= g.articles.count %>

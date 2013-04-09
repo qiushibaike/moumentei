@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ArchivesHelper
   def group_archive_path(*args)
     options = args.extract_options!

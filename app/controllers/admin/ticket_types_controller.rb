@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::TicketTypesController < Admin::BaseController
   # GET /ticket_types
   # GET /ticket_types.xml

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Article::ReferenceAspect  
   module InstanceMethods
     def detect_reference

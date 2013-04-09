@@ -1,6 +1,6 @@
 <h1>Admin::Tags#edit</h1>
 
-<% form_for [:admin, @tag], :html => {:multipart => true} do |f| %>
+<%= form_for [:admin, @tag], :html => {:multipart => true} do |f| %>
   <%= f.label :name %>
   <%= f.text_field(:name) %>
   <%= f.label :icon %>

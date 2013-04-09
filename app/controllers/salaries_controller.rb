@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class SalariesController < ApplicationController
   before_filter :login_required
   layout 'users'

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Report < ActiveRecord::Base
   belongs_to :target, :polymorphic => true
   belongs_to :operator, :class_name => 'User'

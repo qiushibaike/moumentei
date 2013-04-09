@@ -1,5 +1,5 @@
-<% content_tag_for :li, group do %>
-  <% link_to articles_path(group) do %>
+<%= content_tag_for :li, group do %>
+  <%= link_to articles_path(group) do %>
     <%# image_tag(group.icon(:small), :alt => group.name) %>
     <h3><%= h group.name %></h3>
     <p><%= h group.description %></p>

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # CacheExtension
 ActiveSupport::Cache::Store.class_eval do
   def get_multi(keys, options = nil)

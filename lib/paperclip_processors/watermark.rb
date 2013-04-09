@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Based on
 # https://github.com/ng/paperclip-watermarking-app/blob/master/lib/paperclip_processors/watermark.rb
 # Modified by Laurynas Butkus

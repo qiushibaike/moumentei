@@ -1,5 +1,5 @@
 <h1>Editing #<%= @user.id %></h1>
-<% form_for [:admin, @user], :html => {:multipart => true} do |f| %>
+<%= form_for [:admin, @user], :html => {:multipart => true} do |f| %>
   <%= f.label :login %>
   <%= f.text_field :login %>
   <%= f.label :email %>

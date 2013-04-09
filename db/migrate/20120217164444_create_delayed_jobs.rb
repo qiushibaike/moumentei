@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateDelayedJobs < ActiveRecord::Migration
   def self.up
     create_table :delayed_jobs, :force => true do |table|

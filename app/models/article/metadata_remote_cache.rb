@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # cache metadata in shared cache store
 module Article::MetadataRemoteCache
   def get_metadata(key)

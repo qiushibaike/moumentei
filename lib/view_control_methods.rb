@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ViewControlMethods
   def body_attributes(opt=nil)
     @body_attributes ||= {}

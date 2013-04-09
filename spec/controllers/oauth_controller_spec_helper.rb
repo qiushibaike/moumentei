@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module OAuthControllerSpecHelper
   def login
     controller.stub!(:local_request?).and_return(true)

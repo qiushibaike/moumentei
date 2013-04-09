@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::PagesController < Admin::BaseController
   def index
     @pages = Page.all

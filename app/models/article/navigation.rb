@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Article::Navigation
 	module ClassMethods
 		
@@ -10,19 +11,10 @@ module Article::Navigation
       group ||= self.group 
       group = Group.find(group) unless group.is_a? Group
 
-      Rails.cache.fetch("article_next/#{group.id}/#{self.id}", :expires_in => 86400) do
-        a = Article.find(:first,
-          :select => 'articles.id',
-          :conditions => ['status = ? AND id > ? AND group_id IN (?)', 
-                          'publish',
-                          self.id,
-                          #group.options[:show_articles_in_children] ? group.full_set.collect(&:id) : group.id
-                          group.id
-                          ],
-          :order => "id",
-          :limit => 1)
-        a ? a.id : nil
-      end
+      #Rails.cache.fetch("article_next/#{group.id}/#{self.id}", :expires_in => 86400) do
+      group.public_articles.where('id > ?', self.id).order('id asc').first
+        
+      #end
     end
 
     # find the previous entry in specific group
@@ -30,19 +22,10 @@ module Article::Navigation
     def prev_in_group(group=nil)
       group ||= self.group 
       group = Group.find(group) unless group.is_a? Group
-      Rails.cache.fetch("article_prev/#{group.id}/#{self.id}", :expires_in => 86400) do
-        a = Article.find(:first,
-          :select => 'articles.id',
-          :conditions => ['status = ? AND id < ? AND group_id IN (?)', 
-                          'publish',
-                          self.id,
-                          #group.options[:show_articles_in_children] ? group.full_set.collect(&:id) : group.id
-        group.id
-                          ],
-          :order => "id DESC",
-          :limit => 1)
-        a ? a.id : nil
-      end
+      #Rails.cache.fetch("article_prev/#{group.id}/#{self.id}", :expires_in => 86400) do
+      group.public_articles.where('id < ?', id).order('id desc').first
+      #  a ? a.id : nil
+      #end
     end		
 	end
 	

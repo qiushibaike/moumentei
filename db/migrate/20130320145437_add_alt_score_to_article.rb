@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddAltScoreToArticle < ActiveRecord::Migration
   def self.up
     add_column :articles, :alt_score, :integer , :default => 0

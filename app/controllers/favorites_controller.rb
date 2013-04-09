@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class FavoritesController < ApplicationController
   before_filter :login_required
