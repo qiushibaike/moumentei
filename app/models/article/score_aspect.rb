@@ -8,20 +8,20 @@ module Article::ScoreAspect
       end
     end
   end
-  
+
   module InstanceMethods
     def neg_score
       neg
     end
-    
+
     def neg_score=(s)
-      self.neg = -s.to_i.abs 
+      self.neg = -s.to_i.abs
       save
     end
-    
+
     def pos_score=(s)
-      pos = s.to_i.abs 
-      save    
+      pos = s.to_i.abs
+      save
     end
 
     # pos_score
@@ -41,9 +41,9 @@ module Article::ScoreAspect
       save!
     end
   end
-  
+
   def self.included(base)
-    base.class_eval do 
+    base.class_eval do
       extend ClassMethods
       include InstanceMethods
 

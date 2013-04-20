@@ -41,6 +41,7 @@ gem 'acts_as_favorite', :git => 'https://github.com/ShiningRay/acts_as_favorite.
 gem 'acts_as_taggable_on_steroids', :git => 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git', :require => 'acts_as_taggable'
 gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
 gem "rolify", '~> 3.1'
+gem 'thin'
 
 group :development do
   gem 'capistrano'

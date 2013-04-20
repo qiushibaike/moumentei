@@ -220,8 +220,8 @@ class GroupsController < ApplicationController
   end
 
   def favicon
-    if @group and 
-      (theme = @group.inherited_option(:theme)) and 
+    if @group and
+      (theme = @group.inherited_option(:theme)) and
       File.directory?(theme_path = Theme.path_to_theme(theme))
       path = "#{theme_path}/images/favicon.ico"
       return render :text => 'Not Found', :status => 404 unless File.exists?(path)
@@ -237,7 +237,7 @@ class GroupsController < ApplicationController
 
   protected
   def generic_response(action=nil)
-  
+
     s = true
     expires_in [60 * (params[:page].to_i / 10 + 1), 3600].min if params[:page]
     @expires_in = [60 * (params[:page].to_i * 5 + 1), 3600].min if params[:page]
@@ -247,21 +247,21 @@ class GroupsController < ApplicationController
       s = true
     else
       s = stale?(:last_modified => @articles.first.created_at.utc, :etag => [current_theme, @articles, logged_in? ? current_user.id : ''])
-     
+
     end
     if s
       @cache_subject = @articles
 
       respond_to do |format|
-        format.html {render :action => action if action}
-        format.mobile {render :action => action if action}
+        format.html {render :action => action if action && !performed?}
+        format.mobile {render :action => action if action && !performed?}
         format.any :js, :json do
-         
+
           render :json => {
-         
+
             :articles => @articles,
             :total_pages => @articles.total_pages
-            
+
           }
         end
       end

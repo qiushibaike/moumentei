@@ -6,7 +6,7 @@ Moumentei::Application.configure do
   config.cache_classes = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
@@ -42,6 +42,7 @@ Moumentei::Application.configure do
 
   # Use a different cache store in production
   # config.cache_store = :ehcache_store
+  # config.cache_store = :file_store
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
