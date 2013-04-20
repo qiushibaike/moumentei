@@ -32,6 +32,7 @@ gem 'rufus-scheduler'
 gem 'acts_as_list'
 gem 'awesome_nested_set'
 gem 'themes_for_rails'
+gem 'inherited_resources'
 gem 'squeel'
 gem 'mobile-fu'
 gem "calendar_helper"

@@ -1,10 +1,10 @@
 # -*- encoding : utf-8 -*-
-class CommentsController < ApplicationController
+class CommentsController < InheritedResources::Base
   cache_sweeper :comment_sweeper, :only => [ :create ]
   before_filter :find_article, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:article_id)}
   before_filter :find_post, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:post_id)}
   #before_filter :oauthenticate, :only => [:create]
-  before_filter :login_required, :except => [:index, :count, :create, :up, :dn,:report]
+  before_filter :login_required, :except => [:index, :show, :count, :create, :up, :dn,:report]
   super_caches_page :index
 
   # GET /comments
@@ -61,6 +61,17 @@ class CommentsController < ApplicationController
             :pubDate => @article.updated_at
         end
       end
+    end
+  end
+
+  def show
+    @comment = @article.comments.public.find_by_floor(params[:id])
+    return show_404 unless @comment
+    @cache_subject = @comment
+    respond_to do |format|
+      format.html{
+        render :partial => @comment
+      }
     end
   end
 
