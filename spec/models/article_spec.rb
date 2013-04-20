@@ -9,8 +9,8 @@ describe Article do
   it "should navigate to correct record" do
     #article = Article.find
     #$stderr << article1.inspect << "\n" << article2.inspect
-    article1.reload
-    article2.reload
+    article1
+    article2
     article1.next_in_group.should eql(article2)
     article2.prev_in_group.should eql(article1)
   end

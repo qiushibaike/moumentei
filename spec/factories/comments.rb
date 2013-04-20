@@ -4,7 +4,7 @@ FactoryGirl.define do
     content { Forgery(:lorem_ipsum).words(rand(2..30)) }
     anonymous false
     status { Comment::STATUSES.sample }
-    article 
-    user
+    association :article 
+    association :user
   end
 end

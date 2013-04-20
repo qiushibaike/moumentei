@@ -7,6 +7,7 @@ describe ArticlesController do
   it "should use ArticlesController" do
     controller.should be_an_instance_of(ArticlesController)
   end
+  
   context "given there is no article existing" do
     let(:user) { create :user }
     let(:group) { create :group }
@@ -33,6 +34,6 @@ describe ArticlesController do
       get :show, :id => article.id
       assigns(:article).should be_a_kind_of(Article)
       assigns(:article).should == article
-    end    
+    end
   end
 end

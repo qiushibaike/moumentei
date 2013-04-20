@@ -13,7 +13,6 @@ describe UsersController do
       response.should be_redirect
     end.should change(User, :count).by(1)
   end
-
   
   it 'should signs up user in pending state' do
     create_user
