@@ -22,7 +22,7 @@ class ArticlesController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find params[:user_id]
-      @articles = @user.articles.public.created_at_lt(Time.now).paginate :page => params[:page], :conditions => {:anonymous => false}, :order => 'id desc'
+      @articles = @user.articles.public.where{created_at<Time.now}.paginate :page => params[:page], :conditions => {:anonymous => false}, :order => 'id desc'
     else
       find_group
       g =  @group.self_and_children_ids

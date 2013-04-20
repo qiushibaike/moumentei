@@ -3,10 +3,9 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery # :secret => 'd7f14b6ea460ab510ef00c7049c8bb56'
+  #protect_from_forgery # :secret => 'd7f14b6ea460ab510ef00c7049c8bb56'
   helper :all
   include AuthenticatedSystem
-  include RoleRequirementSystem
   include ViewControlMethods
   #theme_support
   alias_method :current_theme, :theme_name
