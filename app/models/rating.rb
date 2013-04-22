@@ -3,11 +3,11 @@
 class Rating < ActiveRecord::Base
   belongs_to :article
   belongs_to :user
-  scope :pos, :conditions => 'ratings.score > 0'
-  scope :neg, :conditions => 'ratings.score < 0'
-  #validate_uniqueness_of :user_id
+  scope :pos, lambda{ where{score > 0} }
+  scope :neg, lambda{ where{score < 0} } 
   scope :by_period, lambda {|s, e| {:conditions => ['ratings.created_at >= ? and ratings.created_at < ?', s, e]}}
   scope :by_group, lambda {|group_id| {:conditions => [ "articles.group_id = ?", group_id], :joins => [:article]}}
+  validate_uniqueness_of [:article_id, :user_id]
   attr_accessible :article_id, :user_id, :score
 
   def self.stats_count(options = {})
