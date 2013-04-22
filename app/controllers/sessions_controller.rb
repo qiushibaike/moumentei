@@ -68,10 +68,10 @@ class SessionsController < ApplicationController
       respond_to do |format|
         format.any(:html, :mobile){
           flash[:error] = "错误的用户名/密码组合"
-          render :action => 'new'
+          render :action => 'new', :status => :forbidden
         }
         format.js {
-          render :json => {:error => "错误的用户名/密码组合"}
+          render :json => {:error => "错误的用户名/密码组合"}, :status => :forbidden
         }
       end
     end

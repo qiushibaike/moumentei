@@ -167,7 +167,6 @@ GEM
     jdbc-mysql (5.1.24)
     jdbc-sqlite3 (3.7.2.1)
     journey (1.0.4)
-    jruby-ehcache (1.3.2)
     jruby-openssl (0.8.6)
       bouncy-castle-java (>= 1.5.0147)
     jruby-pageant (1.1.1-java)
@@ -379,7 +378,6 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   inherited_resources
-  jruby-ehcache
   jruby-openssl
   jruby-pageant
   launchy
