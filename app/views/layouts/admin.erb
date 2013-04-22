@@ -81,7 +81,7 @@
             </div>
           <%- end if flash -%>
           <%= yield(:before_content) -%>
-          <%= yield(:content) or yield -%>
+          <%= yield -%>
           <%= yield :after_content -%>
         </div>
         <div class="sidebar span3">

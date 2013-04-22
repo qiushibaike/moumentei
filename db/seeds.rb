@@ -26,4 +26,5 @@ comment = article.comments.build
 comment.user = admin
 comment.content = '测试服务器会每天重置数据库'
 comment.status = 'publish'
+comment.anonymous = false
 comment.save(:validate => false)

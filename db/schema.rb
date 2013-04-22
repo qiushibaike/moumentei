@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
     t.integer  "floor"
     t.datetime "created_at",                                      :null => false
     t.string   "status",     :limit => 20, :default => "pending", :null => false
-    t.boolean  "anonymous",                                       :null => false
+    t.boolean  "anonymous",                :default => false,     :null => false
     t.integer  "pos",                      :default => 0
     t.integer  "neg",                      :default => 0
     t.text     "content"
