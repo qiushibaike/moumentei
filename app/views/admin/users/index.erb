@@ -7,7 +7,7 @@
       <% end %>
     <% end %>
     <% %w(active pending suspended passive deleted).each do |s| %>
-      <% c = User.state_eq(s).count %>
+      <% c = User.where(:state => s).count %>
       <%= content_tag :li, :class => params[:state] == s ? 'active' : '' do %>
         <%= link_to :state => s do %>
           <%= s %>

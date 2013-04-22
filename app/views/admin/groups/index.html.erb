@@ -1,7 +1,7 @@
 <% title t("activerecord.models.group")%>
 <table>
 <% for c in @groups %>
-  <%= category_traverse(c) do |i, l| %>
+  <% category_traverse(c) do |i, l| %>
     <tr><td><%= '&nbsp;'*l%><%=link_to i.name, edit_admin_group_path(i) %></td>
     <td>
       <%= link_to 'Up', moveup_admin_group_path(i) if i.left_sibling %>
@@ -14,5 +14,4 @@
   <% end %>
 <% end %>
 </table>
-
 <%= link_to 'New', new_admin_group_path %>
