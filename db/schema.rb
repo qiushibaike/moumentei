@@ -371,7 +371,7 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
     t.datetime "created_at",                :null => false
   end
 
-  add_index "ratings", ["article_id", "user_id"], :name => "index_ratings_on_article_id_and_user_id", :unique => true
+  add_index "ratings", ["article_id", "user_id"], :name => "pk_ratings", :unique => true
   add_index "ratings", ["score"], :name => "index_ratings_on_score"
 
   create_table "reports", :force => true do |t|
