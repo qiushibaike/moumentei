@@ -114,7 +114,7 @@ Moumentei::Application.routes.draw do
 
 
    match "/favorites"=> "favorites#index", :as => :favorites
-
+   resources :archives
    resources :groups do
       resources :archives
       match 'archives/:id(/page/:page)(.:format)'=> "archives#show"

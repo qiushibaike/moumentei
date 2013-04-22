@@ -1,12 +1,12 @@
 # -*- encoding : utf-8 -*-
-require File.dirname(__FILE__) + '/../spec_helper'
+require 'spec_helper'
 include ApplicationHelper
 include UsersHelper
-include AuthenticatedTestHelper
+#include AuthenticatedTestHelper
 
 describe UsersHelper do
   before do
-    @user = mock_user
+    @user = create :user
   end
   
   describe "if_authorized" do 
