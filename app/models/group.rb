@@ -11,7 +11,7 @@ class Group < ActiveRecord::Base
   validates_format_of :domain, :with => /(\w+\.)+\w+/, :message => "mael format",
     :allow_nil => true,
     :allow_blank => true
-
+  attr_accessible :options, :domain, :name, :description, :parent_id, :alias
   def after_initialize
     self.options ||= {}
   end

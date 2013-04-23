@@ -20,7 +20,7 @@ module Paperclip
     # Performs the conversion of the +file+ into a watermark. Returns the Tempfile
     # that contains the new image.
     def make
-      l = RAILS_DEFAULT_LOGGER
+      l = Rails.logger
       l.info("watermark------#{watermark_path.inspect}")
       
       return file unless watermark_path
