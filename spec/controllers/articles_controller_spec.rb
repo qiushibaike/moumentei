@@ -28,12 +28,37 @@ describe ArticlesController do
     end    
   end
 
-  context "given an article exists" do
-    let(:article) { create :article }
+  context "given an published article exists" do
+    let(:article) { create :article, :status => 'publish' }
     it "should show article" do
       get :show, :id => article.id
       assigns(:article).should be_a_kind_of(Article)
       assigns(:article).should == article
+    end
+    context "a user logged in" do
+      let(:current_user){create :user}
+      before(:each) do
+        session[:user_id] = current_user.id
+      end
+      it "should be able to vote up the article" do
+        #lambda{
+        post :up, :id => article.id  
+        response.should be_redirect
+
+        article.reload
+        #}.should change(article, :score).by(1)
+        article.score.should == 1
+        article.pos.should == 1
+        current_user.ratings.should_not be_empty
+      end
+      it "should be able to vote down the article" do
+        post :dn, :id => article.id
+        response.should be_redirect
+        article.reload
+        article.score.should == -1
+        article.neg.should == -1 
+        current_user.ratings.should_not be_empty
+      end
     end
   end
 end
