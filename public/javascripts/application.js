@@ -154,7 +154,9 @@ function vote2(id, v){
     }    
 }
 function vote3(id, v){
-    var posscore_el = $('#pos-score-'+id), negscore_el = $('#neg-score-'+id);
+  var posscore_el = $('#pos-score-'+id), negscore_el = $('#neg-score-'+id);
+  var scorea = $('#score-'+id).find('a');
+  if(scorea.hasClass('disabled')) return;
   var posscore = parseInt(posscore_el.text()),
       negscore = parseInt(negscore_el.text()),
       d = (v>0?'up':'dn');
@@ -168,7 +170,7 @@ function vote3(id, v){
       negscore--;
       negscore_el.text(negscore);
   }
-  $('#score-'+id).find('a').addClass('disabled');
+  scorea.addClass('disabled');
 }
 
 $(document).keypress(function(e){
