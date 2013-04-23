@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: https://github.com/ShiningRay/acts_as_taggable_on_steroids.git
-  revision: 9647379863f00b8b14cac9784e2356cc0b8dd9df
+  revision: d197733dea2b14d7bff85bdd73ab0d17f2f64e34
   specs:
     acts_as_taggable_on_steroids (1.1)
 
@@ -169,6 +169,7 @@ GEM
     journey (1.0.4)
     jruby-openssl (0.8.6)
       bouncy-castle-java (>= 1.5.0147)
+    jruby-pageant (1.1.1)
     jruby-pageant (1.1.1-java)
     jruby-rack (1.1.13.1)
     json (1.7.7)
