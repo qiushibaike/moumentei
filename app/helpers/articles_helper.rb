@@ -25,7 +25,7 @@ module ArticlesHelper
 
   # TODO: optimize out the regexp match
   def rated? article
-    logged_in? ? current_user.has_rated?(article) : AnonymousRating.has_rated?(article)
+    logged_in? ? current_user.has_rated?(article) : AnonymousRating.has_rated?(request.remote_ip, article)
   end
 
   def format_content(article, group, watermark=false)

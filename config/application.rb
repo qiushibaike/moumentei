@@ -68,6 +68,6 @@ module Moumentei
     config.i18n.default_locale = :zh
     config.after_initialize do
         config.active_record.observers = [:user_observer]
-    end    
+    end
   end
 end

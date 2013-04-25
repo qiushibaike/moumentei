@@ -5,25 +5,28 @@ class AnonymousRating < ActiveRecord::Base
   scope :neg, :conditions => 'anonymous_ratings.score < 0'
   scope :by_period, lambda {|s, e| {:conditions => ['anonymous_ratings.created_at >= ? and anonymous_ratings.created_at < ?', s, e]}}
   scope :by_group, lambda {|group_id| {:conditions => [ "articles.group_id = ?", group_id], :joins => [:article]}}
-
+  attr_accessible :ip, :score, :article_id
   def self.vote(ip, article, score)
     ip = ip2long(ip) unless ip.is_a?(Integer)
-    
-    article_id = article.is_a?(Article) ? article.id : article
-    sql = <<sql
-      INSERT INTO #{quoted_table_name}
-      (`ip`, article_id, score)VALUES(#{ip}, #{article_id}, #{score.to_i})
-sql
-    begin
-      connection.execute sql
-      #ScoreWorker.async_rate(article_id, score) 
-    rescue ActiveRecord::StatementInvalid => e
-      if e.message =~ /Duplicate/
-        logger.info("#{long2ip(ip)} vote #{article_id} duplicated")
-      else
-        raise e
-      end
+    if article.is_a?(Article)
+      article_id = article
+    else
+      article_id = article
+      article = Article.find article
     end
+
+    r = article.anonymous_ratings.new :ip => ip
+    if score > 0
+      article.pos += score
+      article.score += score
+      r.score = score
+    elsif score < 0
+      article.neg += score
+      article.score += score
+      r.score = score
+    end
+    r.save!
+    article.calc_alt_score
   end
 
   def self.has_rated?(ip, article_id)
@@ -31,12 +34,12 @@ sql
     case article_id
     when Article
       article_id = article_id.id if article_id.is_a?(Article)
-      search(:ip => ip, :article_id => article_id).count > 0
+      where(:ip => ip, :article_id => article_id).exists?
     when Integer
-      search(:ip => ip, :article_id => article_id).count > 0
+      where(:ip => ip, :article_id => article_id).exists?
     when Array
       m = {}
-      all(:conditions => {:ip => ip, :article_id => article_id}).each do |r|
+      where(:ip => ip, :article_id => article_id).each do |r|
         m[r.article_id] = r.score
       end
       m
