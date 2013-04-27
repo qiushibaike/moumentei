@@ -8,6 +8,6 @@ describe ArchivesController do
   end
 
   it "should route to date in group" do
-    expect(get '/groups/1/archives/2013-04-05').to route_to(:controller => 'archives', :action => 'show', :id => '2013-04-05')
+    expect(get '/groups/1/archives/2013-04-05').to route_to(:controller => 'archives', :action => 'show', :group_id => '1', :id => '2013-04-05')
   end
 end
