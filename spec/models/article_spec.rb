@@ -1,19 +1,18 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+# -*- encoding : utf-8 -*-
+require 'spec_helper'
 
 describe Article do
-  fixtures :articles
-  before(:each) do
-    #@article = Article.new
-  end
-
-  it "should be valid" do
-    #@article.should be_valid
-  end
+  let(:group) { create :group }
+  let(:article1) { create :article, :status => 'publish', :group => group }
+  let(:article2) { create :article, :status => 'publish', :group => group }
   
   it "should navigate to correct record" do
     #article = Article.find
-    articles(:one).next_in_group.should eql(articles(:two))
-    articles(:two).prev_in_group.should eql(articles(:one))
+    #$stderr << article1.inspect << "\n" << article2.inspect
+    article1
+    article2
+    article1.next_in_group.should eql(article2)
+    article2.prev_in_group.should eql(article1)
   end
-  
+
 end

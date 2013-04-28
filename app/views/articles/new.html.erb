@@ -10,7 +10,7 @@
 <% if @article and not @article.new_record? and @article.errors.empty? %>
   <p>非常感谢您的分享！您刚刚提交的帖子#<%= @article.id %>将在管理员审核通过之后发表，您将生活的更加幸福快乐。</p>
 <% else %>
-  <% form_for([@article.group, @article], :html => {:multipart => true, :class => 'well'}) do |f| %>
+  <%= form_for([@article.group, @article], :html => {:multipart => true, :class => 'well'}) do |f| %>
   <%=f.hidden_field :group_id%>
   <div class="control-group">
     <label>标题</label>
@@ -30,7 +30,7 @@
       <% end %>
     <div class="control-group">
       <div class="controls">
-      <%= f.submit( "发&nbsp;&nbsp;表" , :class =>"btn btn-primary" , :disable_with => "正在发表…", :title => "Ctrl + Enter可以快捷发表" )  %>&nbsp;&nbsp;
+      <%= f.submit( "发  表" , :class =>"btn btn-primary" , :disable_with => "正在发表…", :title => "Ctrl + Enter可以快捷发表" )  %>&nbsp;&nbsp;
       <label class="checkbox inline"><%= f.check_box :comment_status, {}, 'closed' %> 禁止评论 </label>
       <% if logged_in? %>
       <label class="checkbox inline"><%= f.check_box :anonymous, {}, 1, 0 %> 匿名发贴 </label>

@@ -1,5 +1,5 @@
-<% form_for ['admin', @group] do |f|%>
-  <%= f.error_messages %>
+<%= form_for ['admin', @group] do |f|%>
+  <%# f.error_messages %>
   <%= f.label :name %>
   <%= f.text_field :name %>
   <%= f.label :description %>
@@ -11,14 +11,14 @@
 
   <label>主题</label>
   <input type="text" name="group[options][theme]" value="<%= @group.options[:theme] %>" />
-  <label>排序算法</label>
-    <input type="text" name="group[options][score_algorithm]" value="<%= @group.options[:score_algorithm] %>" />
+  <label>首页显示</label>
+      <%optionss=%w{latest day week month all recent_hot}.collect{|c| [t(c),c]}%>
+    <%= select_tag('group[options][frontpage]', options_for_select(optionss,@group.options[:frontpage]))%>
+  
   <label>favicon</label>
     <input type="text" name="group[options][favicon]" value="<%= @group.options[:favicon] %>" />
-
   <label>Logo</label>
     <input type="text" name="group[options][logo]" value="<%= @group.options[:logo] %>" />
-
   <label>css</label>
     <input type="text" name="group[options][stylesheet]" value="<%= @group.options[:stylesheet] %>" />
     <label>水印</label>

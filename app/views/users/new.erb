@@ -1,88 +1,58 @@
 <% content_for :title do%>注册<% end %>
-<div style="width:250px; margin-left:380px">
-<h1>注册</h1>
-<% form_for @user do |f| -%>
-<label for="login">您想要注册的用户名：</label>
-<%= f.text_field :login %>
-<div id="insertlogin"></div>
-<p class="help-block">不可加入@、&amp;、‘、&lt;、或&gt;符号，不可在开头和结尾使用空格或缩格</p>
-<span style="color: red"><%= @user.errors.on(:login) %></span>
+<div>
+<%= form_for @user, :html => {:class => 'form-horizontal well'} do |f| -%>
+  <fieldset>
+    <legend>注册新用户</legend>
+    <div class="control-group">
+    <label class="control-label" for="login">您想要注册的用户名：</label>
+    <div class="controls">
+    <%= f.text_field :login %>
+    <div id="insertlogin"></div>
+    <p class="help-block">不可加入@、&amp;、‘、&lt;、或&gt;符号，不可在开头和结尾使用空格或缩格</p>
+    <span style="color: red"><%= @user.errors[:login].join(" ") %></span>
+      </div>
+    </div>
 
-<label for="email">您的电子邮箱：</label>
-<%= f.text_field :email %>
-<div id="insertemail"></div>
-<p class="help-block">仅用来确认您的身份, 绝不公开</p>
-<span style="color: red"><%= @user.errors.on(:email) %></span>
+    <div class="control-group">
+      <label class="control-label" for="email">您的电子邮箱：</label>
+      <div class="controls">
+        <%= f.text_field :email %>
+        <div id="insertemail"></div>
+        <p class="help-block">仅用来确认您的身份, 绝不公开</p>
+        <span style="color: red"><%= @user.errors[:email].join(" ") %></span>
+      </div>
+    </div>
 
-<label for="password">密码：</label>
-<%= f.password_field :password %>
-<p class="help-block">登录的时候需要用到</p>
+    <div class="control-group">
+      <label class="control-label" for="password">密码：</label>
+      <div class="controls">
+        <%= f.password_field :password %>
+        <p class="help-block">登录的时候需要用到</p>
+      </div>
+    </div>
 
-<label for="password_confirmation">重复一次密码：</label>
-<%= f.password_field :password_confirmation %>
-<span style="color: red"><%= @user.errors.on(:password) %></span>
-
-<!--
-<label>邀请码：(<a href="http://blog.moumentei.com/2010/04/code.htm">如何获取？</a>)</label>
-<%#= text_field_tag :invitation_code,nil,:size=>20 %>
-<%if params[:invitation_code]%>
-<%= text_field_tag :invitation_code,params[:invitation_code],:size=>20 %>
-<div id="insertinvitation_code"></div>
-<%else%>
-<%= text_field_tag :invitation_code,nil,:size=>20 %>
-<div id="insertinvitation_code"></div>
-<%end%>
-<span class="tips">不区分大小写，无视空格，请使用半角</span>-->
-
-<%= submit_tag '同意以下协议并注册', :disable_with => "正在注册...", :class => 'btn btn-primary' %>
+    <div class="control-group">
+      <label class="control-label" for="password_confirmation">重复一次密码：</label>
+      <div class="controls">
+        <%= f.password_field :password_confirmation %>
+        <span style="color: red"><%= @user.errors[:password].join(" ") %></span>
+      </div>
+    </div>
+    <!--
+    <label>邀请码：(<a href="http://blog.moumentei.com/2010/04/code.htm">如何获取？</a>)</label>
+    <%#= text_field_tag :invitation_code,nil,:size=>20 %>
+    <%if params[:invitation_code]%>
+    <%= text_field_tag :invitation_code,params[:invitation_code],:size=>20 %>
+    <div id="insertinvitation_code"></div>
+    <%else%>
+    <%= text_field_tag :invitation_code,nil,:size=>20 %>
+    <div id="insertinvitation_code"></div>
+    <%end%>
+    <span class="tips">不区分大小写，无视空格，请使用半角</span>-->
+    <div class="form-actions">
+      <%= submit_tag '注册新用户', :disable_with => "正在注册...", :class => 'btn btn-primary' %>
+    </div>
+  </fieldset>
 <% end -%>
 </div>
 
-<textarea readonly="readonly" width="100%" rows="10">
-注册协议
-
-一、 会员注册
-1. 注册网站用户名需遵循如下原则：
-    严禁注册以党和国家领导人或其他名人的真实姓名、字号、艺名、笔名做为网站注册用户名及使用其照片作头像；
-    严禁注册以国家机构或其他机构、站点名称做为网站注册用户名；
-    严禁注册带有广告嫌疑的笔名做为网站注册用户名；
-    严禁注册和其他网友之名相近相仿的名字并恶意混淆视听的笔名作为网站注册用户名；
-    严禁注册不文明、不健康的笔名做为网站注册用户名；
-    严禁注册易产生歧义、引起他人误解的笔名做为网站注册用户名；
-2. 对于违反上述注册网站用户名原则的会员，网站有随时取消不合格会员网站用户名的权利。
-3. Email项请填写有效的电子邮件地址。
-4. 注册会员发表的言论不得违反国家的法律法规以及网站的各项规定。如有触犯国家法律、法规的，一切后果自行负责。
-5. 注册会员应妥善保管自己的网站用户名和密码，如有遗失密码，请使用网站找回密码功能找回。
-
-二、 网站会员使用规则
-1. 本网站会员人人平等。
-2. 本网站会员的个人隐私受到本网站保护，不接受任何个人或单位的查询，但以下情况除外：
-    会员本人授权同意网站透露这些信息；相关的法律及程序要求网站提供会员的个人资料；法律法规规定的其他情况。
-3. 会员享有在网站发表言论的权利，若网站各版面中有特殊规定，或因受到处罚而关闭权限则例外。
-4. 会员的任何言论行为应遵守国家法律、法规和本网站各项规章制度。
-
-三、 言论规则
-会员对其自行发表的内容负全部责任，所有会员不得在本网站任何页面发布、转载、传送含有下列内容之一的信息，否则本网站有权自行处理并不通知会员：
-不得利用本网站危害国家安全、泄露国家秘密，不得侵犯国家社会集体的和公民的合法权益，不得利用本网站制作、复制和传播下列信息：
-1. 煽动抗拒、破坏宪法和法律、行政法规实施的。
-2. 煽动颠覆国家政权，推翻社会主义制度的。
-3. 煽动分裂国家、破坏国家统一的。
-4. 煽动民族仇恨、民族歧视，破坏民族团结的。
-5. 捏造或者歪曲事实，散布谣言，扰乱社会秩序的。
-6. 宣扬封建迷信、淫 秽、色情、赌博、暴力、凶杀、恐怖、教唆犯罪的。
-7. 侮辱或者诽谤他人，侵害他人合法权益。
-8. 未经网站允许发布广告内容。
-9. 其他违反宪法和法律，违反行政法规的内容。
-如会员在使用网络服务时违反上述任何规定，本网站有权要求会员改正或直接采取一切必要的措施(包括但不限于删除会员张贴的内容、暂停或终止会员使用网络服务的权利)以减轻会员不当行为而造成的影响。
-
-四、 版权声明
-1、除因站务管理需要并已获得网站授权、由网站管理人员发布的公告类帖文外，一切留言之言论只代表留言者个人意见，与官方无关。本网站以即时发帖的方式运作，均实行会员发言后果自负原则。 
-2、除我们另有明确说明或者中国法律有强制性规定外，本网站会员原创的作品，版权为本网站及作者共同所有。本网站有权将在本网站内发表的作品用于其他用途，包括媒体宣传、合作网站、电子杂志等，作品有特殊声明者除外。
-3、任何转载、引用发表于本网站的原创文章须符合以下规范：
-    用于非商业、非盈利、非广告性目的时需注明作者姓名、文章出处。
-    用于商业、盈利、广告性目的时需征得文章或图片原作者和本网站的书面授权，并注明文章的作者姓名、原作出处等相关内容。未经作者同意而剽窃、引用本网站的作品，本网站将保留依据相关法律程序追究侵权责任的权利。
-    任何文章或图片的修改或删除均应保持作者原意并征求原作者同意。
-
-五、 关于本协议的修改
-网站享有随时修改此协议权的权利。协议修改之后，如果不同意所改动的内容，可以主动向本网站提交取消其会员资格而停止使用服务，如果继续使用本服务，则视为同意修改后的协议。
-</textarea>

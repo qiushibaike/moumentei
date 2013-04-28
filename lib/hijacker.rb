@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Hijacker class
 #
 # This class is used by RoleRequirementTestHelper to temporarily hijack a controller action for testing

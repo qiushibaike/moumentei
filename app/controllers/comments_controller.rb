@@ -1,13 +1,12 @@
-# encoding: utf-8
-class CommentsController < ApplicationController
+# -*- encoding : utf-8 -*-
+class CommentsController < InheritedResources::Base
   cache_sweeper :comment_sweeper, :only => [ :create ]
   before_filter :find_article, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:article_id)}
   before_filter :find_post, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:post_id)}
-  before_filter :oauthenticate, :only => [:create]
-  before_filter :login_required, :except => [:index, :count, :create, :up, :dn,:report]
-  after_filter :must_revalidate, :only => [:index, :count]
-  after_filter :proxy_revalidate, :only => [:index, :count]
-  # super_caches_page :index
+  #before_filter :oauthenticate, :only => [:create]
+  before_filter :login_required, :except => [:index, :show, :count, :create, :up, :dn,:report]
+  super_caches_page :index
+
   # GET /comments
   # GET /comments.xml
   def index
@@ -15,7 +14,7 @@ class CommentsController < ApplicationController
     opt = {}
     opt[:public] = true unless is_mobile_device?
     opt[:last_modified] = @article.updated_at.utc
-    opt[:etag] = [@article, @article.score.public_comments_count, request.format]
+    opt[:etag] = [@article, @article.public_comments_count, request.format]
     
     if stale?(opt)
       cond = ''
@@ -25,12 +24,11 @@ class CommentsController < ApplicationController
       elsif @article
         @comments = @article.comments.paginate :conditions => cond, :page => params[:page],:order => 'id asc', :include => :user
       end
-      @cache_subject = [@article, @comments]
       respond_to do |format|
         format.html {
           render :layout => false
         }
-        format.mobile{
+        format.mobile {
           render :layout => false if request.xhr?
         }
         format.any(:json, :js) do
@@ -63,6 +61,17 @@ class CommentsController < ApplicationController
             :pubDate => @article.updated_at
         end
       end
+    end
+  end
+
+  def show
+    @comment = @article.comments.public.find_by_floor(params[:id])
+    return show_404 unless @comment
+    @cache_subject = @comment
+    respond_to do |format|
+      format.html{
+        render :partial => @comment
+      }
     end
   end
 
@@ -202,7 +211,7 @@ class CommentsController < ApplicationController
     if params[:article_id]
       @article = Article.find(params[:article_id])
       @group = @article.group
-      if request.host != 'localhost' and RAILS_ENV != 'development'
+      if request.host != 'localhost' and Rails.env.production?
         select_domain @group
         #if not @group.is_or_is_ancestor_of?(@article.group)
         #  render :template => 'articles/not_found', :status => 404

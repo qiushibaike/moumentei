@@ -3,12 +3,11 @@
 <% content_for :title do  %>
 帖子#<%=@article.id%> <%= m.size > 20 ? "#{m[0, 20]}..." : m%>
 <% end %>
-<% url=URI::encode("http://#{request.domain}#{request.request_uri}")%>
+<% url=URI::encode("http://#{request.domain}#{request.fullpath}")%>
 <% if ( @msg || flash[:notice] ) %><div id="notice"> <%= ( @msg || flash[:notice] ) %></div> <% end %>
 
 <% if @article %>
   <%= render(:partial => @article ) %>
-  <%= render(:partial => 'comments/index') %>
   <% if @article.public_references.count > 0 %>
       <%= link_to_unless_current("#{@article.public_references.count}个相关帖子", :controller => :articles, :action => :ref, :id => @article.id) do
           "<span style='color: #96dd99'>以下是链接到该帖子的相关帖子</span>"

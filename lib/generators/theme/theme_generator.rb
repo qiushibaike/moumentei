@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ThemeGenerator < Rails::Generator::NamedBase
      
    def manifest

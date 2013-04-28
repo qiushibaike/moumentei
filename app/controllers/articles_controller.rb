@@ -1,9 +1,9 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class ArticlesController < ApplicationController
   #before_filter :oauthenticate, :only => [:create]
   before_filter :find_article, :except => [:index, :new, :create, :scores]
   after_filter :store_location, :except => [:up, :dn, :score, :scores]
-  #after_filter :cache_except_mobile, :only => :show
   #super_caches_page :show
   cache_sweeper :article_sweeper, :only => [ :create ]
 
@@ -22,11 +22,11 @@ class ArticlesController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find params[:user_id]
-      @articles = @user.articles.public.created_at_lt(Time.now).paginate :page => params[:page], :conditions => {:anonymous => false}, :order => 'id desc'
+      @articles = @user.articles.public.where{created_at<Time.now}.paginate :page => params[:page], :conditions => {:anonymous => false}, :order => 'id desc'
     else
       find_group
       g =  @group.self_and_children_ids
-      @articles = Article.paginate_latest_by_group(params[:page], g)
+      @articles = Article.by_group(g).public.latest.paginate(:page => params[:page])
       if @articles.size == 0 && @articles.total_pages < @articles.current_page
         params[:page] = @articles.total_pages
         return redirect_to(params)
@@ -133,35 +133,6 @@ class ArticlesController < ApplicationController
     #Article.push_consult @article.id if params[:counseling] == '1'
   end
 
-  def draw
-    @article = Article.find params[:id]
-
-    if params[:text]
-      params[:pos] = params[:pos].downcase
-      unless ['north', 'center', 'south'].include?(params[:pos])
-        params[:pos] = 'center'
-      end
-      @picture = @article.ensure_picture
-      params.delete(:color) unless params[:color] =~ /[0-9a-fA-F]{6}/
-      @new_article = @picture.draw(params[:text], params[:pos], params[:color]) do |f|
-        if params[:preview]
-	  File.open(f.path, 'rb') do |i|
-          send_data i.read(f.size), :type => 'image/jpeg', :disposition => 'inline'
-          end
-          return
-        end
-        Article.create :user_id => logged_in? ? current_user.id : 0,
-          :title => params[:text],
-          :picture => f,
-          :group_id => @article.group_id,
-          :picture_id => @picture.id,
-          #:status => logged_in? ? 'publish' : 'pending'
-          :status => 'pending'
-      end
-      flash[:notice] = '您发表的文章正在等待审核'
-    end
-  end
-
   def score
     s = Score.find_by_article_id params[:id]
     respond_to do |format|
@@ -172,7 +143,7 @@ class ArticlesController < ApplicationController
   # Please Refer to ScoreMetal
   def scores
     ids = params[:ids].split(/ /).collect{|i|i.to_i}
-    s = Article.find :all, :conditions => {:id =>  ids}
+    s = Article.find_all_by_id(ids)
     if logged_in?
       rated= current_user.has_rated?(ids)
       watched = current_user.has_favorite?(ids)
@@ -334,17 +305,11 @@ class ArticlesController < ApplicationController
   protected
   # find correct article according to "id" get params
   def find_article
-    _id = params[:id].to_i
-    @article = Article.get_cache(_id)
+    @article = Article.find(params[:id])
     @group = @article.group
-    if !@group.domain.blank? && request.host != 'localhost' && RAILS_ENV != 'development'
+    if !@group.domain.blank? && request.host != 'localhost' && Rails.env.production?
       select_domain @group
-#if not @group.is_or_is_ancestor_of?(@article.group)
-#        render :template => 'articles/not_found', :status => 404
-#        return false
-#      end
     end
-    #preload
     if @article && logged_in?
       current_user.has_rated? @article
       current_user.has_favorite? @article

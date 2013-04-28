@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class CommentSweeper < ActionController::Caching::Sweeper
   observe Comment
@@ -11,7 +12,6 @@ class CommentSweeper < ActionController::Caching::Sweeper
   end
   
   def expire_comment(comment)
-    comment.article.clear_related_caches
-    ScoreWorker.async_update(comment.article_id)
+    #ScoreWorker.async_update(comment.article_id)
   end
 end

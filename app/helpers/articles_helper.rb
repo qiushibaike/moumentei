@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 module ArticlesHelper
   def navigator
     
@@ -25,12 +25,9 @@ module ArticlesHelper
 
   # TODO: optimize out the regexp match
   def rated? article
-    if logged_in?
-      current_user.has_rated? article
-    else
-      cookies['rating_histories'] =~ Regexp.new("\\b" + (article.is_a?(Article)? article.id : article).to_s + "\\b")
-    end
+    logged_in? ? current_user.has_rated?(article) : AnonymousRating.has_rated?(request.remote_ip, article)
   end
+
   def format_content(article, group, watermark=false)
     prefix = group.name.mb_chars[0,2]
     
@@ -43,7 +40,7 @@ module ArticlesHelper
       gsub(/ /, '&nbsp;').
       gsub(r){ link_to "#{prefix}\#" + $2, article_path($2)}
     #content = add_watermark(content) if watermark
-    content
+    content.html_safe
       #gsub(r){ "<a href=\"http://#{group.inherited(:domain)}/articles/#{$2}.htm\">#{prefix}\##{$2}</a>"}
   end
 

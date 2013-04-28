@@ -14,7 +14,7 @@
   <span class='check_comment right' id='entity_text<%= comment.id -%>' 
     style="<%= 'text-decoration: line-through;' if comment.status == 'private' -%>">
     <%= comment.floor %>
-    <% link_to admin_user_path(comment.user) do%>
+    <%= link_to admin_user_path(comment.user) do%>
       <%= content_tag :span, comment.user.login, :style => !comment.anonymous? && 'background: yellow' %>
     <% end if comment.user %>
     <%= format_content comment, comment.article.group %>

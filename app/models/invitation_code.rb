@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'digest/md5'
 class InvitationCode < ActiveRecord::Base
   belongs_to :applicant, :class_name => 'User'

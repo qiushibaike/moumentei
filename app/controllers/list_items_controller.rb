@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ListItemsController < ApplicationController
   before_filter :find_list
   before_filter :find_item, :except => [:index, :new, :create]

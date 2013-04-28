@@ -1,3 +1,5 @@
+# -*- encoding : utf-8 -*-
+__END__
 require File.dirname(__FILE__) + '/../spec_helper'
 require File.dirname(__FILE__) + '/oauth_controller_spec_helper'
 require 'oauth/client/action_controller_request'
@@ -10,31 +12,31 @@ describe OauthController, "getting a request token" do
     @client_application.stub!(:create_request_token).and_return(@request_token)
     @client_application.stub!(:token_callback_url=)
   end
-  
+
   def do_get
     get :request_token
   end
-  
+
   it "should be successful" do
     do_get
     response.should be_success
   end
-  
+
   it "should query for client_application" do
     ClientApplication.should_receive(:find_by_key).with('key').and_return(@client_application)
     do_get
   end
-  
+
   it "should request token from client_application" do
     @client_application.should_receive(:create_request_token).and_return(@request_token)
     do_get
   end
-  
+
   it "should return token string" do
     do_get
     response.body.should==@request_token_string
   end
-  
+
   it "should not set token_callback_url" do
     @client_application.should_not_receive(:token_callback_url=).with(nil)
     do_get
@@ -49,31 +51,31 @@ describe OauthController, "getting a request token passing a oauth_callback url"
     @client_application.stub!(:create_request_token).and_return(@request_token)
     @client_application.stub!(:token_callback_url=)
   end
-  
+
   def do_get
     get :request_token
   end
-  
+
   it "should be successful" do
     do_get
     response.should be_success
   end
-  
+
   it "should query for client_application" do
     ClientApplication.should_receive(:find_by_key).with('key').and_return(@client_application)
     do_get
   end
-  
+
   it "should request token from client_application" do
     @client_application.should_receive(:create_request_token).and_return(@request_token)
     do_get
   end
-  
+
   it "should return token string" do
     do_get
     response.body.should==@request_token_string
   end
-  
+
   it "should set token_callback_url with received oauth_callback" do
     @client_application.should_receive(:token_callback_url=).with("http://test.com/alternative_callback")
     do_get
@@ -87,9 +89,9 @@ describe OauthController, "token authorization" do
     login
     setup_oauth
     RequestToken.stub!(:find_by_token).and_return(@request_token)
-    
+
   end
-  
+
   def do_get
     get :authorize, :oauth_token => @request_token.token
   end
@@ -114,27 +116,27 @@ describe OauthController, "token authorization" do
     @client_application.stub!(:callback_url).and_return(nil)
     post :authorize, :oauth_token => @request_token.token, :authorize => "1"
   end
-  
+
   it "should be successful" do
     do_get
     response.should be_success
   end
-  
+
   it "should query for client_application" do
     RequestToken.should_receive(:find_by_token).and_return(@request_token)
     do_get
   end
-  
+
   it "should assign token" do
     do_get
     assigns[:token].should equal(@request_token)
   end
-  
+
   it "should render authorize template" do
     do_get
     response.should render_template('authorize')
   end
-  
+
   it "should redirect to default callback" do
     do_post
     response.should be_redirect
@@ -178,7 +180,7 @@ describe OauthController, "token authorization" do
     do_post_with_no_application_callback
     response.should render_template('authorize_success')
   end
-  
+
   it "should render failure screen on user invalidation" do
     do_post_without_user_authorization
     response.should render_template('authorize_failure')
@@ -190,7 +192,7 @@ describe OauthController, "token authorization" do
     do_get
     response.should render_template('authorize_failure')
   end
-  
+
 
 end
 
@@ -202,26 +204,26 @@ describe OauthController, "getting an access token" do
     sign_request_with_oauth @request_token
     @request_token.stub!(:exchange!).and_return(@access_token)
   end
-  
+
   def do_get
     get :access_token
   end
-  
+
   it "should be successful" do
     do_get
     response.should be_success
   end
-  
+
   it "should query for client_application" do
     ClientApplication.should_receive(:find_token).with(@request_token.token).and_return(@request_token)
     do_get
   end
-  
+
   it "should request token from client_application" do
     @request_token.should_receive(:exchange!).and_return(@access_token)
     do_get
   end
-  
+
   it "should return token string" do
     do_get
     response.body.should == @access_token_string
@@ -232,23 +234,23 @@ class OauthorizedController<ApplicationController
   before_filter :login_or_oauth_required, :only => :both
   before_filter :login_required, :only => :interactive
   before_filter :oauth_required, :only => :token_only
-  
+
   def interactive
   end
-  
+
   def token_only
   end
-  
+
   def both
   end
 end
 
 describe OauthorizedController, " access control" do
   include OAuthControllerSpecHelper
-  
+
   before(:each) do
   end
-  
+
   it "should have access_token set up correctly" do
     setup_to_authorize_request
     @access_token.is_a?(AccessToken).should == true
@@ -257,7 +259,7 @@ describe OauthorizedController, " access control" do
     @access_token.user.should == @user
     @access_token.client_application.should == @client_application
   end
-  
+
   it "should return false for oauth? by default" do
     controller.send(:oauth?).should == false
   end
@@ -265,14 +267,14 @@ describe OauthorizedController, " access control" do
   it "should return nil for current_token  by default" do
     controller.send(:current_token).should be_nil
   end
-  
+
   it "should allow oauth when using login_or_oauth_required" do
     setup_to_authorize_request
     sign_request_with_oauth(@access_token)
     ClientApplication.should_receive(:find_token).with(@access_token.token).and_return(@access_token)
     get :both
     controller.send(:current_token).should == @access_token
-    controller.send(:current_token).is_a?(AccessToken).should == true 
+    controller.send(:current_token).is_a?(AccessToken).should == true
     controller.send(:current_user).should == @user
     controller.send(:current_client_application).should == @client_application
     response.code.should == '200'
@@ -287,7 +289,7 @@ describe OauthorizedController, " access control" do
     controller.send(:current_token).should be_nil
   end
 
-  
+
   it "should allow oauth when using oauth_required" do
     setup_to_authorize_request
     sign_request_with_oauth(@access_token)
@@ -295,9 +297,9 @@ describe OauthorizedController, " access control" do
     get :token_only
     controller.send(:current_token).should == @access_token
     controller.send(:current_client_application).should == @client_application
-    controller.send(:current_user).should == @user 
-    response.code.should == '200' 
-    response.should be_success 
+    controller.send(:current_user).should == @user
+    response.code.should == '200'
+    response.should be_success
   end
 
   it "should disallow oauth using RequestToken when using oauth_required" do
@@ -312,7 +314,7 @@ describe OauthorizedController, " access control" do
     login
     get :token_only
     response.code.should == '401'
-    
+
     controller.send(:current_user).should == @user
     controller.send(:current_token).should be_nil
   end
@@ -342,26 +344,26 @@ describe OauthController, "revoke" do
     setup_oauth_for_user
     @request_token.stub!(:invalidate!)
   end
-  
+
   def do_post
     post :revoke, :token => "TOKEN STRING"
   end
-  
+
   it "should redirect to index" do
     do_post
     response.should be_redirect
     response.should redirect_to('http://test.host/oauth_clients')
   end
-  
+
   it "should query current_users tokens" do
     @tokens.should_receive(:find_by_token).and_return(@request_token)
     do_post
   end
-  
+
   it "should call invalidate on token" do
     @request_token.should_receive(:invalidate!)
     do_post
   end
-  
+
 end
 

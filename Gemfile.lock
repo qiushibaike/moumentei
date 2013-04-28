@@ -1,132 +1,350 @@
 GIT
-  remote: git://github.com/collectiveidea/delayed_job.git
-  revision: a22aa725cb7085bf2715592f0b5ae54c681afe95
-  branch: v2.0
+  remote: https://github.com/ShiningRay/acts_as_favorite.git
+  revision: 51185c43c64e4477243943098005bf0d7487d837
   specs:
-    delayed_job (2.0.7)
-      activesupport (~> 2.0)
-      daemons (= 1.0.10)
+    acts_as_favorite (0.0.1)
 
 GIT
-  remote: git://github.com/rails/exception_notification.git
-  revision: f9865f54b415e4f87e582f6256a811d5c5f54d7b
-  branch: 2-3-stable
+  remote: https://github.com/ShiningRay/acts_as_taggable_on_steroids.git
+  revision: d197733dea2b14d7bff85bdd73ab0d17f2f64e34
   specs:
-    exception_notification (2.3.3.0)
+    acts_as_taggable_on_steroids (1.1)
+
+GIT
+  remote: https://github.com/ShiningRay/alias_fallback.git
+  revision: bd47796de2a9e6a8e3bccff10e012a924716c30d
+  specs:
+    alias_fallback (0.0.1)
 
 GEM
   remote: http://ruby.taobao.org/
   specs:
     SystemTimer (1.2.3)
-    aasm (3.0.2)
-      activerecord
-    actionmailer (2.3.14)
-      actionpack (= 2.3.14)
-    actionpack (2.3.14)
-      activesupport (= 2.3.14)
-      rack (~> 1.1.0)
-    activerecord (2.3.14)
-      activesupport (= 2.3.14)
-    activerecord-jdbc-adapter (1.2.2)
-    activerecord-jdbcmysql-adapter (1.2.2)
-      activerecord-jdbc-adapter (~> 1.2.2)
+    aasm (3.0.16)
+    actionmailer (3.2.13)
+      actionpack (= 3.2.13)
+      mail (~> 2.5.3)
+    actionpack (3.2.13)
+      activemodel (= 3.2.13)
+      activesupport (= 3.2.13)
+      builder (~> 3.0.0)
+      erubis (~> 2.7.0)
+      journey (~> 1.0.4)
+      rack (~> 1.4.5)
+      rack-cache (~> 1.2)
+      rack-test (~> 0.6.1)
+      sprockets (~> 2.2.1)
+    activemodel (3.2.13)
+      activesupport (= 3.2.13)
+      builder (~> 3.0.0)
+    activerecord (3.2.13)
+      activemodel (= 3.2.13)
+      activesupport (= 3.2.13)
+      arel (~> 3.0.2)
+      tzinfo (~> 0.3.29)
+    activerecord-jdbc-adapter (1.2.8)
+    activerecord-jdbcmysql-adapter (1.2.7)
+      activerecord-jdbc-adapter (~> 1.2.7)
       jdbc-mysql (~> 5.1.0)
-    activeresource (2.3.14)
-      activesupport (= 2.3.14)
-    activesupport (2.3.14)
-    after_commit (1.0.10)
-      activerecord (>= 1.15.6, < 3.0.0)
-    bouncy-castle-java (1.5.0146.1)
-    capistrano (2.9.0)
+    activerecord-jdbcsqlite3-adapter (1.2.7)
+      activerecord-jdbc-adapter (~> 1.2.7)
+      jdbc-sqlite3 (~> 3.7.2)
+    activeresource (3.2.13)
+      activemodel (= 3.2.13)
+      activesupport (= 3.2.13)
+    activesupport (3.2.13)
+      i18n (= 0.6.1)
+      multi_json (~> 1.0)
+    acts_as_list (0.1.9)
+    addressable (2.3.3)
+    arel (3.0.2)
+    awesome_nested_set (2.1.6)
+      activerecord (>= 3.0.0)
+    better_errors (0.7.2)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    bouncy-castle-java (1.5.0147)
+    builder (3.0.4)
+    calendar_helper (0.2.5)
+      open4
+    capistrano (2.14.2)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
-    cgi_multipart_eof_fix (2.5.0)
-    chronic (0.6.7)
-    chunky_png (1.2.5)
-    cocaine (0.2.1)
-    compass (0.11.7)
+    capybara (2.0.2)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 1.0.0)
+    childprocess (0.3.9)
+      ffi (~> 1.0, >= 1.0.11)
+    chunky_png (1.2.7)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.1)
+      climate_control (>= 0.0.3, < 1.0)
+    coderay (1.0.9)
+    compass (0.12.2)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-    daemons (1.0.10)
-    data_fabric (1.3.3)
-    fastthread (1.0.7)
-    fssm (0.2.8.1)
-    gem_plugin (0.2.3)
-    highline (1.6.11)
-    httparty (0.8.1)
-      multi_json
-      multi_xml
-    jdbc-mysql (5.1.13)
-    jruby-openssl (0.7.6.1)
-      bouncy-castle-java (>= 1.5.0146.1)
-    json (1.6.5)
-    json (1.6.5-java)
+    cucumber (1.2.1)
+      builder (>= 2.1.2)
+      diff-lcs (>= 1.1.3)
+      gherkin (~> 2.11.0)
+      json (>= 1.4.6)
+    cucumber-rails (1.3.0)
+      capybara (>= 1.1.2)
+      cucumber (>= 1.1.8)
+      nokogiri (>= 1.5.0)
+    daemons (1.1.9)
+    database_cleaner (0.9.1)
+    delayed_job (3.0.5)
+      activesupport (~> 3.0)
+    diff-lcs (1.2.1)
+    em-websocket (0.5.0)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0.5.3)
+    erubis (2.7.0)
+    eventmachine (1.0.3)
+    eventmachine (1.0.3-java)
+    eventmachine (1.0.3-x86-mingw32)
+    factory_girl (2.6.4)
+      activesupport (>= 2.3.9)
+    factory_girl_rails (1.7.0)
+      factory_girl (~> 2.6.0)
+      railties (>= 3.0.0)
+    faraday (0.8.6)
+      multipart-post (~> 1.1)
+    ffi (1.4.0)
+    ffi (1.4.0-java)
+    ffi (1.4.0-x86-mingw32)
+    forgery (0.5.0)
+    fssm (0.2.10)
+    gherkin (2.11.6)
+      json (>= 1.7.6)
+    gherkin (2.11.6-java)
+      json (>= 1.7.6)
+    gherkin (2.11.6-x86-mingw32)
+      json (>= 1.7.6)
+    guard (1.6.2)
+      listen (>= 0.6.0)
+      lumberjack (>= 1.0.2)
+      pry (>= 0.9.10)
+      terminal-table (>= 1.4.3)
+      thor (>= 0.14.6)
+    guard-bundler (1.0.0)
+      bundler (~> 1.0)
+      guard (~> 1.1)
+    guard-cucumber (1.3.2)
+      cucumber (>= 1.2.0)
+      guard (>= 1.1.0)
+    guard-jruby-rspec (0.1.5)
+      guard (>= 0.10.0)
+      guard-rspec (>= 0.7.3)
+    guard-livereload (1.1.3)
+      em-websocket (>= 0.2.0)
+      guard (>= 1.5.0)
+      multi_json (~> 1.0)
+    guard-rspec (2.5.1)
+      guard (>= 1.1)
+      rspec (~> 2.11)
+    has_scope (0.5.1)
+    highline (1.6.16)
+    hike (1.2.1)
+    http_parser.rb (0.5.3)
+    http_parser.rb (0.5.3-java)
+    http_parser.rb (0.5.3-x86-mingw32)
+    httpauth (0.2.0)
+    i18n (0.6.1)
+    inherited_resources (1.3.0)
+      has_scope (~> 0.5.0)
+      responders (~> 0.6.0)
+    jdbc-mysql (5.1.24)
+    jdbc-sqlite3 (3.7.2.1)
+    journey (1.0.4)
+    jruby-openssl (0.8.6)
+      bouncy-castle-java (>= 1.5.0147)
+    jruby-pageant (1.1.1)
+    jruby-pageant (1.1.1-java)
+    jruby-rack (1.1.13.1)
+    json (1.7.7)
+    json (1.7.7-java)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
+    launchy (2.2.0)
+      addressable (~> 2.3)
+    launchy (2.2.0-java)
+      addressable (~> 2.3)
+      spoon (~> 0.0.1)
+    listen (0.7.3)
+    lumberjack (1.0.2)
+    mail (2.5.3)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
     memcache-client (1.8.5)
-    mime-types (1.17.2)
-    mini_magick (3.4)
-      subexec (~> 0.2.1)
-    mongrel (1.1.5)
-      cgi_multipart_eof_fix (>= 2.4)
-      daemons (>= 1.0.3)
-      fastthread (>= 1.0.1)
-      gem_plugin (>= 0.2.3)
-    mongrel (1.1.5-java)
-      gem_plugin (>= 0.2.3)
-    mongrel (1.1.5-x86-mingw32)
-      cgi_multipart_eof_fix (>= 2.4)
-      gem_plugin (>= 0.2.3)
-    multi_json (1.0.4)
-    multi_xml (0.4.1)
-    mysql (2.8.1)
-    mysql (2.8.1-x86-mingw32)
-    net-scp (1.0.4)
-      net-ssh (>= 1.99.1)
-    net-sftp (2.0.5)
-      net-ssh (>= 2.0.9)
-    net-ssh (2.3.0)
-    net-ssh-gateway (1.1.0)
-      net-ssh (>= 1.99.1)
-    newrelic_rpm (3.3.2.1)
-    oauth (0.4.5)
-    oauth-plugin (0.3.14)
-      oauth (>= 0.3.5)
-    paperclip (2.6.0)
+    method_source (0.8.1)
+    mime-types (1.21)
+    mobile-fu (1.1.1)
+      rack-mobile-detect
+      rails
+    multi_json (1.7.1)
+    multi_xml (0.5.3)
+    multipart-post (1.2.0)
+    mysql2 (0.3.11)
+    mysql2 (0.3.11-x86-mingw32)
+    net-scp (1.1.0)
+      net-ssh (>= 2.6.5)
+    net-sftp (2.1.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.6.6)
+    net-ssh-gateway (1.2.0)
+      net-ssh (>= 2.6.5)
+    nokogiri (1.5.7)
+    nokogiri (1.5.7-java)
+    nokogiri (1.5.7-x86-mingw32)
+    oauth (0.4.7)
+    oauth-plugin (0.4.1)
+      multi_json
+      oauth (~> 0.4.4)
+      oauth2 (>= 0.5.0)
+      rack
+    oauth2 (0.9.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      multi_xml (~> 0.5)
+      rack (~> 1.2)
+    open4 (1.3.0)
+    paperclip (2.8.0)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
-    rack (1.1.3)
-    rack-cache (1.1)
+    polyamorous (0.5.0)
+      activerecord (~> 3.0)
+    polyglot (0.3.3)
+    pry (0.9.12)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pry (0.9.12-java)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+      spoon (~> 0.0)
+    pry (0.9.12-x86-mingw32)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+      win32console (~> 1.3)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
+    rack (1.4.5)
+    rack-cache (1.2)
       rack (>= 0.4)
-    rails (2.3.14)
-      actionmailer (= 2.3.14)
-      actionpack (= 2.3.14)
-      activerecord (= 2.3.14)
-      activeresource (= 2.3.14)
-      activesupport (= 2.3.14)
-      rake (>= 0.8.3)
-    rake (0.9.2.2)
-    rdoc (3.12)
+    rack-livereload (0.3.12)
+      rack
+    rack-mobile-detect (0.4.0)
+      rack
+    rack-ssl (1.3.3)
+      rack
+    rack-test (0.6.2)
+      rack (>= 1.0)
+    rails (3.2.13)
+      actionmailer (= 3.2.13)
+      actionpack (= 3.2.13)
+      activerecord (= 3.2.13)
+      activeresource (= 3.2.13)
+      activesupport (= 3.2.13)
+      bundler (~> 1.0)
+      railties (= 3.2.13)
+    rails_autolink (1.0.9)
+      rails (~> 3.1)
+    railties (3.2.13)
+      actionpack (= 3.2.13)
+      activesupport (= 3.2.13)
+      rack-ssl (~> 1.3.2)
+      rake (>= 0.8.7)
+      rdoc (~> 3.4)
+      thor (>= 0.14.6, < 2.0)
+    rake (10.0.3)
+    rb-fchange (0.0.6)
+      ffi
+    rb-fsevent (0.9.3)
+    rb-inotify (0.9.0)
+      ffi (>= 0.5.0)
+    rdoc (3.12.2)
       json (~> 1.4)
-    riddle (1.5.1)
-    sass (3.1.15)
-    searchlogic (2.5.8)
-      activerecord (~> 2.3.12)
-      activerecord (~> 2.3.12)
-    subexec (0.2.1)
-    thinking-sphinx (1.4.11)
-      activerecord (>= 1.15.6, < 3.0.0)
-      after_commit (>= 1.0.7)
-      riddle (>= 1.5.0)
-    whenever (0.7.3)
-      activesupport (>= 2.3.4)
-      chronic (~> 0.6.3)
-    will_paginate (2.3.16)
+    responders (0.6.5)
+    rolify (3.2.0)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.0)
+    rspec-rails (2.13.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    ruby_gntp (0.3.4)
+    rubyzip (0.9.9)
+    rufus-scheduler (2.0.18)
+      tzinfo (>= 0.3.23)
+    sass (3.2.7)
+    selenium-webdriver (2.31.0)
+      childprocess (>= 0.2.5)
+      multi_json (~> 1.0)
+      rubyzip
+      websocket (~> 1.0.4)
+    slop (3.4.4)
+    spoon (0.0.1)
+    sprockets (2.2.2)
+      hike (~> 1.2)
+      multi_json (~> 1.0)
+      rack (~> 1.0)
+      tilt (~> 1.1, != 1.3.0)
+    sqlite3 (1.3.7)
+    sqlite3 (1.3.7-x86-mingw32)
+    squeel (1.0.18)
+      activerecord (~> 3.0)
+      activesupport (~> 3.0)
+      polyamorous (~> 0.5.0)
+    super_cache (0.0.2)
+    terminal-table (1.4.5)
+    themes_for_rails (0.5.1)
+      rails (>= 3.0.0)
+    thin (1.5.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+    thor (0.17.0)
+    tilt (1.3.6)
+    treetop (1.4.12)
+      polyglot
+      polyglot (>= 0.3.1)
+    trinidad (1.4.4)
+      jruby-rack (>= 1.1.10)
+      trinidad_jars (>= 1.1.0)
+    trinidad_jars (1.2.2)
+    tzinfo (0.3.37)
+    websocket (1.0.7)
+    will_paginate (3.0.4)
     win32console (1.3.2-x86-mingw32)
+    xpath (1.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   java
@@ -137,26 +355,56 @@ DEPENDENCIES
   SystemTimer
   aasm
   activerecord-jdbcmysql-adapter
+  activerecord-jdbcsqlite3-adapter
+  acts_as_favorite!
+  acts_as_list
+  acts_as_taggable_on_steroids!
+  alias_fallback!
+  awesome_nested_set
+  better_errors
+  calendar_helper
   capistrano
+  capybara
   compass
-  data_fabric
-  delayed_job (~> 2.0.4)!
-  exception_notification!
-  httparty
+  cucumber-rails
+  database_cleaner
+  delayed_job
+  eventmachine
+  factory_girl_rails (= 1.7.0)
+  forgery
+  guard
+  guard-bundler
+  guard-cucumber
+  guard-jruby-rspec
+  guard-livereload
+  guard-rspec
+  inherited_resources
   jruby-openssl
+  jruby-pageant
+  launchy
   memcache-client
-  mini_magick
-  mongrel
-  mysql
-  newrelic_rpm
+  mobile-fu
+  mysql2
   oauth
   oauth-plugin
-  paperclip
+  paperclip (~> 2.0)
+  quiet_assets
   rack-cache
-  rails (~> 2.3.5)
-  rdoc
-  searchlogic
-  thinking-sphinx (~> 1.4.10)
-  whenever
-  will_paginate (~> 2.3.2)
+  rack-livereload
+  rails (~> 3.2.1)
+  rails_autolink
+  rb-fchange
+  rb-fsevent (~> 0.9.1)
+  rb-inotify
+  rolify (~> 3.1)
+  rspec-rails (~> 2.0)
+  ruby_gntp
+  rufus-scheduler
+  sqlite3
+  squeel
+  super_cache
+  themes_for_rails
+  thin
+  trinidad
+  will_paginate
   win32console (~> 1.3.2)

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module User::RatingAspect
   module ClassMethods
     
@@ -7,27 +8,25 @@ module User::RatingAspect
     # user rate specific article 
     def rate article, score
       article = Article.find article if article.is_a?(Integer)
-      connection.execute <<sql
-      INSERT /*DELAYED*/ IGNORE INTO ratings
-      (article_id, user_id, score, created_at)VALUES(#{article.id},#{id},#{score.to_i}, NOW())
-sql
+      r = ratings.new :article_id => article.id
       if score > 0
         article.pos += score
         article.score += score
-        #ScoreWorker.async_update(article)
+        r.score = score
       elsif score < 0
         article.neg += score
         article.score += score
-        #connection.execute "UPDATE scores SET neg=neg-1 WHERE article_id=#{article}"
-        #ScoreWorker.async_update(article)
+        r.score = score
       end
-      article.save
+      r.save!
+      article.calc_alt_score
     end
     
     def has_rated? article
       @rated ||= {}
       case article
-      when Array
+      when Array, ActiveRecord::Relation
+        article = article.to_a
         if article.size > 0
           if article[0].is_a? Article
             ids = article.collect{|o|o.id}

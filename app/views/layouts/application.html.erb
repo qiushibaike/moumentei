@@ -1,31 +1,22 @@
 <%- content_for :topbar_items do -%>
+  <%= active_li_link '近期热点', group_recent_hot_path(@group)%>
+  <%= active_li_link '最新', group_latest_path(@group) %>
   <li class="dropdown">
-    <% link_to({:controller =>:groups, :action =>:hottest, :id => (@group.id), :limit => 'day', :page => nil}, {:class => "dropdown-toggle", 'data-toggle'=>"dropdown", 'data-target' => '#hottest_menu'})do %>
+  <%= link_to({:controller =>:groups, :action =>:hottest, :id => @group.id, :limit => 'day', :page => nil}, {:class => "dropdown-toggle", :id => 'hottest_menu_toggle', 'data-toggle'=>"dropdown", 'data-target' => '#'}) do %>
       最热
       <b class="caret"></b>
     <% end %>
-    <ul class="dropdown-menu" id="hottest_menu">
-      <li>
-        <%= link_to '24小时内最热', group_hottest_path(@group, :limit => 'day') %>
-      </li>
+    <ul class="dropdown-menu" id="hottest_menu" role="menu" aria-labelledby="hottest_menu_toggle">
+      <li><%= link_to '24小时内最热', group_hottest_path(@group, :limit => 'day') %></li>
       <li><%= link_to '一周内', group_hottest_path(@group, :limit => 'week') %></li>
       <li><%= link_to '一月内', group_hottest_path(@group, :limit => 'month') %></li>
       <li><%= link_to '一年内', group_hottest_path(@group, :limit => 'year') %></li>
       <li><%= link_to '有史以来', group_hottest_path(@group, :limit => 'all') %></li>
     </ul>
   </li>
-  <li>
-    <%= link_to '最新', group_latest_path(@group) %>
-  </li>
-  <li>
-    <%= link_to '历史', group_archives_path(@group) %>
-  </li>
-  <li>
-    <%= link_to '标签', [@group, :tags] %>
-  </li>
-  <li>
-    <%= link_to '发表', [:new, @group, :article] %>
-  </li>
+  <%= active_li_link '历史', group_archives_path(@group) %>
+  <%# active_li_link '标签', [@group, :tags] %>
+  <%= active_li_link '发表', [:new, @group, :article] %>
 <%- end if @group -%>
 <%-
 

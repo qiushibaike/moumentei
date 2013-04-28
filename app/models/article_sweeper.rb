@@ -1,18 +1,15 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class ArticleSweeper < ActionController::Caching::Sweeper
   observe Article
 
   def after_save(article)
-    article.clear_related_caches
     expire_fragment [article.group, 'counts']
     expire_fragment 'groups_count'
   end
 
   def before_destroy(article)
-    
     on_delete(article)
-    article.clear_related_caches
-    #Notification.delete_all :key => "new_comment.#{r.id}"
   end
 
   def on_delete(r)

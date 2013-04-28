@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class GroupsController < ApplicationController
   before_filter :find_group, :except => [:index]
@@ -14,14 +15,13 @@ class GroupsController < ApplicationController
     'year' => 1.year
   }
 
-  super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
+  #super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
   before_filter :date_range_detect, :only => [:hottest,:hottestpage, :most_replied]
 
   def index
     if Setting.default_group
       find_group
       show
-      #render :action => 'show'
     else
       @groups = Group.roots
     end
@@ -29,8 +29,20 @@ class GroupsController < ApplicationController
 
   # test
   def show
-    params[:action] = 'latest'
-    latest
+    frontpage = @group.inherited_option(:frontpage)
+    if frontpage.blank? or frontpage == 'latest'
+      params[:action] = 'latest'
+      latest
+    elsif frontpage == 'recent_hot'
+      params[:action] = 'recent_hot'
+      params[:group_id] = params[:id]
+      recent_hot
+    else
+      params[:action] = 'hottest'
+      params[:limit] = frontpage
+      date_range_detect
+      hottest
+    end
   end
 
   def search
@@ -63,8 +75,8 @@ class GroupsController < ApplicationController
   end
 
   def recent_hot
-    @articles = Article.recent_hot(params[:page])
-    generic_response(:hottest)
+    @articles = @group.public_articles.recent_hot(params[:page])
+    generic_response(:archives)
   end
 
   # test
@@ -72,7 +84,7 @@ class GroupsController < ApplicationController
     per_page = @group.inherited_option(:per_page)
     per_page = 20 if per_page.blank?
     g = @group.options[:show_articles_in_children] ? @group.self_and_descendants.collect{|i|i.id} : [@group.id]
-    @articles = Article.hottest.public.published_at_gte(@date).by_group(g).paginate :page => params[:page], :per_page => per_page, :include => :user
+    @articles = Article.hottest.public.published_after(@date).by_group(g).paginate :page => params[:page], :per_page => per_page, :include => :user
 
     if not @articles || @articles.size == 0 && params[:limit] != 'all'
       return redirect_to(group_hottest_path(@group, :limit => keys[keys.index(params[:limit])+1]))
@@ -208,8 +220,10 @@ class GroupsController < ApplicationController
   end
 
   def favicon
-    if @group
-      path = "#{Theme.path_to_theme(@group.inherited_option(:theme))}/images/favicon.ico"
+    if @group and
+      (theme = @group.inherited_option(:theme)) and
+      File.directory?(theme_path = Theme.path_to_theme(theme))
+      path = "#{theme_path}/images/favicon.ico"
       return render :text => 'Not Found', :status => 404 unless File.exists?(path)
       expires_in 1.day, :public => true
       if stale?(:last_modified => File.mtime(path), :public => true)
@@ -221,19 +235,9 @@ class GroupsController < ApplicationController
     end
   end
 
-  def render(*args)
-    if @articles && ! @articles.empty? && logged_in?
-      current_user.has_rated? @articles
-      current_user.has_favorite? @articles
-      current_user.roles
-     # Article.send(:preload_associations, @articles, ['score'])
-    end
-    super(*args)
-  end
-
   protected
   def generic_response(action=nil)
-  
+
     s = true
     expires_in [60 * (params[:page].to_i / 10 + 1), 3600].min if params[:page]
     @expires_in = [60 * (params[:page].to_i * 5 + 1), 3600].min if params[:page]
@@ -243,21 +247,21 @@ class GroupsController < ApplicationController
       s = true
     else
       s = stale?(:last_modified => @articles.first.created_at.utc, :etag => [current_theme, @articles, logged_in? ? current_user.id : ''])
-     
+
     end
     if s
       @cache_subject = @articles
 
       respond_to do |format|
-        format.html {render :action => action if action}
-        format.mobile {render :action => action if action}
+        format.html {render :action => action if action && !performed?}
+        format.mobile {render :action => action if action && !performed?}
         format.any :js, :json do
-         
+
           render :json => {
-         
+
             :articles => @articles,
             :total_pages => @articles.total_pages
-            
+
           }
         end
       end

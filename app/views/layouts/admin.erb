@@ -16,7 +16,7 @@
     <link rel="apple-touch-icon" href="<%= yield :apple_touch_icon or '/images/apple-touch-icon.png' %>">
     <link rel="apple-touch-icon" sizes="72x72" href="<%= yield :apple_touch_icon_72 or '/images/apple-touch-icon-72x72.png' %>">
     <link rel="apple-touch-icon" sizes="114x114" href="<%= yield :apple_touch_icon_114 or '/images/apple-touch-icon-114x114.png' %>">
-    <%= csrf_meta_tag %>
+    <%= csrf_meta_tags %>
     <%= javascript_include_tag '/js/modernizr.min.js'%>
     <%= stylesheet_link_tag '/css/bootstrap', 'style' %>
     <%= stylesheet_link_tag @group.options[:stylesheet] if @group and @group.options[:stylesheet] %>
@@ -26,7 +26,7 @@
     <style><%= yield :styles %></style>
     <%= yield :head %>
   </head>
-  <%- content_tag :body, :id => (yield(:body_id) || "#{controller_name}-#{action_name}"),
+  <%= content_tag :body, :id => (yield(:body_id) || "#{controller_name}-#{action_name}"),
   'data-spy' => "scroll",
   'data-target' => ".subnav",
   'data-offset' => "50" do -%>
@@ -81,7 +81,7 @@
             </div>
           <%- end if flash -%>
           <%= yield(:before_content) -%>
-          <%= yield(:content) or yield -%>
+          <%= yield -%>
           <%= yield :after_content -%>
         </div>
         <div class="sidebar span3">
@@ -91,7 +91,7 @@
           <%- groups = Group.find(:all) -%>
           <%- groups.each do |g| -%>
             <li>
-              <% link_to admin_articles_path(:group_id => g.id) do%>
+              <%= link_to admin_articles_path(:group_id => g.id) do%>
               <%= g.name %>
               <% cache [g, 'counts'] do  %>
               <%= g.articles.pending.count %>/<%= g.articles.count %>
@@ -130,7 +130,7 @@
      
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery-1.7.1.min.js">\x3C/script>')</script>
-    <%= javascript_include_tag '/js/bootstrap.min.js', 'application', 'csrf_protect' %>
+    <%= javascript_include_tag '/js/bootstrap.min.js', 'application' %>
     <%= javascript_include_tag 'admin' %>
     <%= yield :javascripts %>
     <%= yield :bottom -%>

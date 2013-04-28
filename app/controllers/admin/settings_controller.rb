@@ -1,6 +1,8 @@
+# -*- encoding : utf-8 -*-
 class Admin::SettingsController < Admin::BaseController
   def edit
-
+    Setting.replacelist = {} unless Setting.replacelist.is_a?(Hash)
+    Setting.blacklist = [] unless Setting.blacklist.is_a?(Array)
   end
 
   def update

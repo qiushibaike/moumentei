@@ -1,28 +1,25 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
-  #acts_as_archive
-  CacheOption = {:raw => true }.freeze
   include AntiSpam
   harmonize :content
   include SequenceAspect
-  # belongs_to :post ,:foreign_key => 'article_id'
   belongs_to :article, :touch => true
   belongs_to :user
   has_many :ratings, :class_name => 'CommentRating', :dependent => :delete_all
   has_many :reports ,:as => :target
-  named_scope :today, lambda {{:conditions => {:created_at => Date.today}}}
-  named_scope :public, :conditions => {:status => ['publish', 'private']}
-  named_scope :anonymous, :conditions => {:anonymous => true}
-  named_scope :signed, :conditions => {:anonymous => false}
-  named_scope :by_status, lambda {|status| {:conditions => {:status => status}}}
+  scope :today, lambda {{:conditions => {:created_at => Date.today}}}
+  scope :public, :conditions => {:status => ['publish', 'private']}
+  scope :anonymous, :conditions => {:anonymous => true}
+  scope :signed, :conditions => {:anonymous => false}
+  scope :by_status, lambda {|status| {:conditions => {:status => status}}}
   attr_protected :user_id, :status
   after_save :create_notification
   #validates_length_of :content, :minimum => 1
   #after_save :update_score
   after_create :comment_notify
 
-  #before_update :update_score
-  STATUSES = ['publish', 'pending', 'spam', 'private', 'deleted']
+  STATUSES = %w(publish pending spam private deleted)
 
   #the number of new comments in the day given
   def self.all_number(date)

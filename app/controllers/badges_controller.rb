@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class BadgesController < ApplicationController
   # GET /badges
   # GET /badges.xml

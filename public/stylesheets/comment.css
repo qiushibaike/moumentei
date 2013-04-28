@@ -1,4 +1,7 @@
-
+.comments-template .comments {
+    padding: 10px;
+    margin-top: 20px;
+}
 .comments .comments-header {
     padding-bottom: 6px;
     color: #999;    
@@ -36,10 +39,19 @@
 .comment-content {
     margin-left: 40px; 
 }
-#respond form textarea {
-    width: 670px; 
+.respond form textarea {
+    width:98%;
 }
-#respond #comment_submit {
+.respond form {
+    margin-bottom: 0;
+}
+.respond label span {
+    display: inline-block;
+    word-break: keep-all;
+    word-wrap: normal;
+    width: 30px;
+}
+.respond #comment_submit {
     margin-left: 10px;
 }
 .comment .floorlink {

@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="<%= yield :apple_touch_icon or '/images/apple-touch-icon.png' %>">
   <link rel="apple-touch-icon" sizes="72x72" href="<%= yield :apple_touch_icon_72 or '/images/apple-touch-icon-72x72.png' %>">
   <link rel="apple-touch-icon" sizes="114x114" href="<%= yield :apple_touch_icon_114 or '/images/apple-touch-icon-114x114.png' %>">
-  <%= render :partial => 'common/csrf' %>
   <%= render :partial => 'skeleton/stylesheets' %>
+  <%= csrf_meta_tags %>
   <%= yield :head %>
 </head>

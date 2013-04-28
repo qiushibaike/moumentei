@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class User
   module CharmAspect
     def total_comments_score
@@ -9,11 +10,11 @@ class User
     end
 
     def total_articles_score
-      Article.sum :score, :conditions => {:article_id => article_ids}
+      Article.sum :score, :conditions => {:user_id => article_ids}
     end
 
     def average_articles_score
-      Article.average :score, :conditions => {:article_id => article_ids}
+      Article.average :score, :conditions => {:user_id => article_ids}
     end
 
     def total_articles_comments_count

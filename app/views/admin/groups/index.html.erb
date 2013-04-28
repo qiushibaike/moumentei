@@ -9,11 +9,9 @@
     </td>
     <td>
       <%= link_to t('activerecord.models.article'), admin_articles_path(:group_id => i.id) %>
-      <%= link_to t('activerecord.models.comment'), admin_comments_path(:group_id => i.id) %>
     </td>
   </tr>
   <% end %>
 <% end %>
 </table>
-
 <%= link_to 'New', new_admin_group_path %>

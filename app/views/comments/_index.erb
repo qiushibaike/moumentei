@@ -1,33 +1,14 @@
 <% group = @group || @article.group %>
-<div id="comments-template">
+<div class="comments-template" id="article_comments_<%=@article.id%>">
   <div class="comments-wrap">
-    <div id="comments" class="box">
-      <h3 id="comments-number" class="comments-header"><%= @comments.size%>条留言</h3>
+    <div class="comments">
       <% if @comments and @comments.size > 0 %>
-        <% @offset ||= 0 %>
-        <ol class="comment-list">
-        <%= render :partial => @comments %>
-        </ol>
+          <% @offset ||= 0 %>
+          <ol class="comment-list">
+            <%= render :partial => @comments %>
+          </ol>
       <% end %>
     </div>
-    <div id="respond" class="box row">
-      <% if group.only_member_can_reply? and not logged_in? %>
-      必须<%= link_to '登录', login_path%>后才能留言
-      <% else %>
-      <% if @article.comment_status != 'closed' and @article.status == 'publish' %>
-      <h3 id="reply-title">留个言吧</h3>
-      <% form_for [@article, @article.comments.new] do |f| %>
-          <%= f.label :content, '回复正文' %>
-          <%= f.text_area :content, :rows => 5 %>
-      <div class="control-group pull-right">
-          <label class="checkbox inline">
-          <%= f.check_box :anonymous %>
-          匿名</label>
-          <%= f.submit '发表回复', :class => 'btn btn-primary span2' %>
-      </div>
-      <% end %>
-      <% end %>
-      <% end %>
-    </div>
+    <%= render :partial => 'comments/form' %>
   </div>
 </div>

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'paperclip_processors/watermark'
 module Article::PictureAspect
 	module ClassMethods
@@ -5,19 +6,6 @@ module Article::PictureAspect
 	end
 	
 	module InstanceMethods
-    def is_original?
-     picture_id.nil? || original_picture.original_id == id
-    end
-
-    def ensure_picture
-      return original_picture if picture_id
-      p = Picture.new :original_id => id,:user_id => user_id,:group_id => group_id
-      p.attachment = self.picture
-      p.save
-      self.original_picture = p
-      self.save
-      original_picture
-    end		
 	end
 	
 	def self.included(receiver)

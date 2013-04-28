@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::GroupsController < Admin::BaseController
   # GET /keywords
   # GET /keywords.xml
@@ -78,13 +79,13 @@ class Admin::GroupsController < Admin::BaseController
         @group.move_to_child_of Group.find(parent_id.to_i)
       rescue
         flash[:error] = 'Cannot move into that group'
-        return render(:template => 'admin/categories/edit')
+        return render(:template => 'admin/groups/edit')
       end
     end
     if @group.update_attributes params[:group]
       redirect_to admin_groups_path
     else
-      render :template => 'admin/categories/edit'
+      render :template => 'admin/groups/edit'
     end
   end
 

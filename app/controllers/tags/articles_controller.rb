@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Tags::ArticlesController < ArticlesController
   before_filter :find_group
   before_filter :find_tag

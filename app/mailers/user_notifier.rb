@@ -1,12 +1,16 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 class UserNotifier < ActionMailer::Base
   def signup_notification(user)
-    setup_email(user, '请激活您的帐号')
-    @body[:url]  = url_for :controller=>'users',
+    @user = user
+    @url = url_for :controller=>'users',
       :action => 'activate',
       :activation_code => user.activation_code,
       :only_path => false,
-      :host => default_domain
+      :host => default_domain    
+    mail :to => user.email, 
+         :from => Setting.site_email||'admin@test.com', 
+         :subject => "[#{Setting.site_name}] 请激活您的帐号"
   end
 
   def activation(user)
@@ -66,13 +70,13 @@ SQL
         comments[id] = @comments[id]
       end
 #      m = UserNotifier.create_digest_notification(user, articles, Hash[*article_ids.zip(@comments.values_at(*article_ids)).to_a.flatten(1)])
-      UserNotifier.deliver_digest_notification(user, articles, comments)
+      UserNotifier.digest_notification(user, articles, comments).deliver
     end
   end
 
   def self.resend_password
     User.paginated_each(:conditions => ["state=? and created_at >= ?", 'pending', 30.days.ago]) do |user|
-      UserNotifier.deliver_fetchpasswd(User.reset_password(:login => user.login, :email => user.email),3) rescue print 'failed:'
+      UserNotifier.fetchpasswd(User.reset_password(:login => user.login, :email => user.email),3).deliver rescue print 'failed:'
       puts user.login
     end
   end

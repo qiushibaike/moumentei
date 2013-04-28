@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ListsController < ApplicationController
   before_filter :find_list, :except => [:index, :new, :create]
   before_filter :login_required, :except => [:index, :show]

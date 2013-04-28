@@ -1,6 +1,6 @@
 <%=h current_user.login %>
 <p>reply to #<%=@article.id%> <%=h @article.title %></p>
-<% form_for( ['admin', @article, @comment] )do |f|%>
+<%= form_for( ['admin', @article, @comment] )do |f|%>
 
   <p><%= f.label :content %><br/>
   <%= f.text_area :content %>

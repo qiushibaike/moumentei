@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- encoding : utf-8 -*-
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
   def how_long_ago_or_date( time )
@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def skeleton name
-    render :partial => "skeleton/#{name}"
+    render "skeleton/#{name}"
   end
 
   def csrf_meta_tag
@@ -22,6 +22,11 @@ module ApplicationHelper
     render :partial => 'common/pagination'
   end
 
+  def active_li_link(title, link, link_options={}, li_options={})
+    link = url_for(link)
+    content_tag :li, link_to(title, link, link_options), li_options.merge({:class => current_page?(link) && 'active'})
+  end
+
   def content_for?(name)
     instance_variable_defined?("@content_for_#{name}")
   end
@@ -31,7 +36,7 @@ module ApplicationHelper
   end
   
   def render_skeleton
-    render :file => 'layouts/skeleton'
+    render :template => 'layouts/skeleton'
   end
   
   def encrypt(content)

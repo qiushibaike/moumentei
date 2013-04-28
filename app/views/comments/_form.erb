@@ -1,17 +1,25 @@
-<% form_for [@article, @comment || @article.comments.new] do |form| %>
-<input type="hidden" value="<%=@article.id%>" name="comment[article_id]" id="comment_article_id"/>
-<% unless logged_in? -%>
-  <p><label for="login">用户名或邮箱：<br/><%= text_field_tag 'user[login]', nil, :tabindex => 1 %></label></p>
-  <p><label for="password">密码：<br/><%= password_field_tag 'user[password]', nil, :tabindex => 2 %></label></p>
-<% end %>
-  
-  <p style="zoom:1"><label>评论</label><br/>
-  <%= form.text_area :content, :class=>"comment_input", :rows => '5'   %></p>
-  <p><input type="submit" value="发表评论" name="commit" class="comment_submit" title="Ctrl + Enter可以快捷发表" />  
-  <input type="hidden" value="0" name="comment[anonymous]"/>
-  <label><input type="checkbox" value="1" name="comment[anonymous]"/>发表匿名评论</label></p>
-  <% if logged_in? and not current_user.has_rated?(@article) %>
-  <label><input type="radio" name="vote" value="1"/>顶</label>
-  <label><input type="radio" name="vote" value="-1"/>拍</label>
+<div class="respond">
+  <% if @group.only_member_can_reply? and not logged_in? %>
+      必须<%= link_to '登录', login_path %>后才能留言
+  <% else %>
+      <% if @article.comment_status != 'closed' and @article.status == 'publish' %>
+          <%= form_for [@article, @article.comments.new] do |f| %>
+              <fieldset>
+                <div class="control-group">
+                  <%= f.label :content, '回复正文', :class => 'control-label' %>
+                  <div class="controls">
+                    <%= f.text_area :content, :rows => 5 %>
+                  </div>
+                </div>
+                <div class="control-group pull-right">
+                  <label class="checkbox inline">
+                    <%= f.check_box :anonymous %>
+                    <span>匿名</span></label>
+                  <%= f.submit '发表回复', :class => 'btn btn-primary span2' %>
+                </div>
+
+              </fieldset>
+          <% end %>
+      <% end %>
   <% end %>
-<% end %>
+</div>

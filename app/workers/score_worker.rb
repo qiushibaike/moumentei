@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #!/usr/bin/env ruby
 # coding: utf-8
 class ScoreWorker < BaseWorker
@@ -11,13 +12,11 @@ class ScoreWorker < BaseWorker
     when :down
       query = "UPDATE scores SET neg=neg-1 WHERE article_id=#{id}"
     end
-    Score.connection.execute query
     update id
   end
 
   def update_comments_count(id, count=nil)
     count ||= Comment.count :conditions => {:article_id => id, :status => 'publish'}
-    Score.update_all({:public_comments_count => count}, {:article_id => id})
   end
 
   def update(id)
@@ -27,12 +26,6 @@ class ScoreWorker < BaseWorker
     al = 'pos+neg' if al.blank?
     sql = "update articles set score=(#{al}) where id = #{article.id}"
     Article.connection.execute sql
-    #@ids ||= {}
-    #@ids[gid] ||= Set.new
-    #@ids[gid] << id
-    #@timer ||= EM.add_timer 5*60, method(:bulkupdate)
-    #puts @ids.inspect
-    #bulkupdate if @ids[gid].size >= 7
   end
 
   def bulkupdate

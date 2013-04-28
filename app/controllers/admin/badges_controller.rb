@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::BadgesController < Admin::BaseController
   # GET /badges
   # GET /badges.xml

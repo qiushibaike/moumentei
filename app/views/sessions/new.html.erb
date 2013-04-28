@@ -1,19 +1,35 @@
 <% content_for :title, '登录' %>
 <%= show_flash %>
 <div class="box">
-<h1>登录</h1>
-<% form_tag session_path do %>
-  <label for="login">用户名或邮箱：(<%= link_to "还没注册？", signup_path %>)</label>
-  <%= text_field_tag 'login', @login, :tabindex => 1 %><br />
-  <label for="password">密码：(<%= link_to "忘记密码？", '/fetchpass' %>)</label>
-  <%= password_field_tag 'password', nil, :tabindex => 2 %>
+  <%= form_tag session_path, :class => 'well form-horizontal' do %>
+    <fieldset>
+      <legend>登录</legend>
+      <div class="control-group">
+        <label class="control-label"  for="login">用户名或邮箱：</label>
+        <div class="controls">
+          <%= text_field_tag 'login', @login, :tabindex => 1 %>
+          <span class="help-block"><%= link_to "还没注册？", signup_path %></span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label"  for="password">密码：</label>
+        <div class="controls">
+          <%= password_field_tag 'password', nil, :tabindex => 2 %>
+          <span class="help-block"><%= link_to "忘记密码？", '/fetchpass' %></span>
+        </div>
+      </div>
 
-  <% if ( @msg || flash[:notice] ) %><span style="color: red"><%= ( @msg || flash[:notice] ) %></span><% end %>
-  
-  <label for="remember_me" class="checkbox"><%= check_box_tag 'remember_me', '1', @remember_me %>记住我</label>
-  <div class='form-actions'>
-    <input name="commit" onclick="this.disabled=true;this.value='正在登录...';$(this.form).submit();" type="submit" value="登录" tabindex="3" class='btn btn-primary' />
-  </div>
-<% end %>
+      <% if ( @msg || flash[:notice] ) %><span style="color: red"><%= ( @msg || flash[:notice] ) %></span><% end %>
+    
+      <div class="control-group">
+        <div class="controls">
+          <label for="remember_me" class="checkbox"><%= check_box_tag 'remember_me', '1', @remember_me %>记住我</label>
+        </div>
+      </div>
+      <div class='form-actions'>
+        <input name="commit" onclick="this.disabled=true;this.value='正在登录...';$(this.form).submit();" type="submit" value="登录" tabindex="3" class='btn btn-primary' />
+      </div>
+    </fieldset>
+  <% end %>
 </div>
 

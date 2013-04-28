@@ -6,7 +6,7 @@
 .article {
     border: 1px solid #ddd;
     margin: 0 0 17px;
-    padding: 18px 20px;
+    padding: 0 16px 16px 16px;
 }
 
 .article .picture {
@@ -15,48 +15,21 @@
 
 .article .entry-meta {
     clear: both;
+    margin-top: 20px;
+}
+.article .entry-meta .byline {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 10px;
 }
 .article .entry-meta a{
     text-decoration: none;
 }
 
 .article .entry-meta .score {
-    float: right;
-    border: 1px;
-}
-
-/*
-.article .entry-meta .score .up {
-    padding-left: 20px;
-    background-image: url(icons/like.png);
-    background-repeat: no-repeat;
-}
-*/
-.article .entry-meta .score .up:before {
-    content: url(icons/like.png);
-}
-
-.article .entry-meta .score a {
-    cursor: pointer;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-}
-.article .entry-meta .score a:hover {
-    border: 1px solid #666;
-}
-.article .entry-meta .comment_head {
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    float: right;
+    float: left;
 }
 .article .entry-meta .comments {
-    border: 1px solid #ccc;
-    padding: 5px 10px;
     float: right;
-}
-.article .entry-meta .comments:hover {
-    border-color: #666;
-}
-.article:after {
-/*    content: "<div class='shadow'></div>";*/
 }

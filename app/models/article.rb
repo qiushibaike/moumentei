@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 # The article model
 class Article < ActiveRecord::Base
@@ -10,29 +11,14 @@ class Article < ActiveRecord::Base
   include PictureAspect
   include Navigation
   include MetadataAspect
-  include CacheMetaInfo
-  meta_field :original_url
+  include PublishCallbacksAspect
+  #meta_field :original_url
   acts_as_taggable
   acts_as_favorite
   
   before_save do |rec|
     rec.tag_list = rec.tag_line if rec.tag_line_changed?
     rec.status = 'future' if rec.status == 'publish' and rec.created_at and rec.created_at_changed? and rec.created_at > Time.now + 5.minutes
-  end
-  
-  define_callbacks :before_publish, :after_publish
-
-  before_save :check_publishing
-  def check_publishing 
-    if status_changed? && status_was != 'publish' and status == 'publish'
-      @publishing = true
-      run_callbacks :before_publish
-    end
-  end
-
-  after_save :check_after_publishing
-  def check_after_publishing
-    run_callbacks :after_publish if @publishing
   end
 
   before_publish do |rec|
@@ -51,29 +37,20 @@ class Article < ActiveRecord::Base
   validates_presence_of :group
   belongs_to :user
   validates_presence_of :user, :unless => :anonymous
-  named_scope :by_status, lambda {|status| {:conditions => {:status => status}}}
-  named_scope :by_period, lambda {|s, e| {:conditions => ['articles.created_at >= ? and articles.created_at < ?', s, e]}}
-  named_scope :by_group, lambda {|group_id| {:conditions => {:group_id => group_id}}}
-  named_scope :public, :conditions => {:status => 'publish'}
-  named_scope :anonymous, :conditions => {:anonymous => true}
-  named_scope :signed, :conditions => {:anonymous => false}
-  named_scope :pending, :conditions => {:status => 'pending'}
-  named_scope :hottest, :order => 'score desc'
-  named_scope :latest, :order => 'published_at desc'
+  scope :by_status, lambda {|status| {:conditions => {:status => status}}}
+  scope :by_period, lambda {|s, e| {:conditions => ['articles.created_at >= ? and articles.created_at < ?', s, e]}}
+  scope :by_group, lambda {|group_id| {:conditions => {:group_id => group_id}}}
+  scope :public, :conditions => {:status => 'publish'}
+  scope :anonymous, :conditions => {:anonymous => true}
+  scope :signed, :conditions => {:anonymous => false}
+  scope :pending, :conditions => {:status => 'pending'}
+  scope :hottest, :order => 'score desc'
+  scope :latest, :order => 'published_at desc'
+  scope :published_after, lambda{|time| where{published_at >= time} }
   attr_protected :user_id, :status
 
   cattr_accessor :per_page
   @@per_page = 20
-
-  unless RUBY_PLATFORM =~ /win32|mingw|java/
-  define_index do
-    indexes content
-    indexes tag_line
-#    indexes user(:login), :as => :author, :sortable => true, :facet => true
-    indexes [group_id, status], :as => :group_status
-    has user_id, created_at
-  end
-  end
 
   def anonymous?
     anonymous or user_id == 0 or !user_id or user.blank?
@@ -124,53 +101,22 @@ class Article < ActiveRecord::Base
                     :order    => 'count DESC').sort_by{rand}
       end
       if c.size == 0
-      Rails.cache.delete 'tag_clouds'
-      Rails.cache.delete "views/tag_cloud"
-      Rails.cache.delete 'views/tag_cloud_homepage'
+        Rails.cache.delete 'tag_clouds'
+        Rails.cache.delete "views/tag_cloud"
+        Rails.cache.delete 'views/tag_cloud_homepage'
       end
       c
     end
 
-    def recent_new(options)
-      ids     = options[:exclude] || []
-      group   = options[:group]
-      art_ids = Rails.cache.fetch("Articles.recent_ids.#{group.id}", :expires_in => 1.day) do
-        ids2 = group.articles.ids_in(3.days) - ids
-        if ids2.empty? and (ids2 = group.articles.ids_in(10.days) - ids ).empty?
-            ids2 = Article.find_by_sql(
-              "SELECT id FROM articles WHERE status='publish' AND group_id = '#{group.id}' LIMIT 30"
-            ).collect { |t| t.id } - ids
-        end
-        ids2
-      end
-
-      ## no article which is newest but not hottest
-      unless art_ids.empty?
-        r = find( art_ids[ rand(art_ids.size) ] )
-        preload_associations(r, ['score'])
-        r
-      end
+    def recent_hot(page)
+      where{alt_score > 0}.paginate :page => page, :order => 'alt_score desc',:include => [:user]
     end
 
     def pictures(group_id, page)
       with_scope do
-      s = Score.paginate(:page => page, :conditions=>{:has_picture=>1, :group_id => group_id},:order => 'created_at desc')
-      scores_to_articles(s)
+        s = Score.paginate(:page => page, :conditions=>{:has_picture=>1, :group_id => group_id},:order => 'created_at desc')
+        scores_to_articles(s)
       end
-    end
-
-    # get multiple records from cache
-    def get_caches(ids)
-      if ids.size > 0
-        find_all_by_id(ids, :order => "FIELD(id,#{ids.join(',')})")
-      else
-        []
-      end
-    end
-
-    # get single record from cache
-    def get_cache(id)
-      find id
     end
 
     protected

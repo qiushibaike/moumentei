@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ArchivesController < ApplicationController
   after_filter :store_location, :except => [:index, :show]
   super_caches_page :index, :show
@@ -32,7 +33,6 @@ class ArchivesController < ApplicationController
     if @year < @start_year or @year > @end_year
       return show_404
     end
-    #fresh_when :last_modif @current_year ==
     render :action => 'year'
   end
 
@@ -65,7 +65,7 @@ class ArchivesController < ApplicationController
     @first = @group.public_articles.find(:first, :conditions => 'created_at is not null', :order => 'id asc', :select => 'articles.created_at')
     @last = @group.public_articles.find(:first, :conditions => 'created_at is not null', :order => 'id desc', :select => 'articles.created_at')
     if @first.blank? or @last.blank?
-      return show_404
+      return show_404('存档')
     end
     @first = @first.created_at.to_date
     @last = @last.created_at.to_date

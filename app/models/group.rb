@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 
 class Group < ActiveRecord::Base
@@ -10,10 +11,7 @@ class Group < ActiveRecord::Base
   validates_format_of :domain, :with => /(\w+\.)+\w+/, :message => "mael format",
     :allow_nil => true,
     :allow_blank => true
-#  include IdentityMap
-#  preference :force_anonymous, :default => false
-#  preference :force_comments_anonymous, :default => false
-#  preference
+  attr_accessible :options, :domain, :name, :description, :parent_id, :alias
   def after_initialize
     self.options ||= {}
   end

@@ -1,16 +1,24 @@
 <% if logged_in? %>
-  <li class="avatar"><%= link_to image_tag(current_user.avatar(:thumb),:alt=>''), edit_user_path(current_user) %></li>
-  <li><%= link_to current_user.login, current_user %></li>
-  <li><%= link_to '喜欢', :controller => :my, :action => :favorites %></li>
-  <li><%= link_to '专辑', user_lists_path(current_user) %></li>
-  <li><%= link_to '说说', posts_path %></li>
-  <% if current_user.unread_messages_count > 0 %>
-    <li>(<%= link_to "#{current_user.unread_messages_count}条未读消息", inbox_messages_path %>)</li>
-  <% end %>
-  <% if current_user.is_admin? %>
-  <li><%= link_to '管理后台', '/admin' %></li>
-  <% end %>
-  <li><%= link_to '退出', logout_path %></li>
+  <li class="avatar dropdown" xmlns="http://www.w3.org/1999/html">
+    <%= link_to edit_user_path(current_user), {:class => "dropdown-toggle", :id => 'user_menu_toggle', 'data-toggle'=>"dropdown", 'data-target' => '#'} do %>
+        <%= image_tag(current_user.avatar(:thumb),:alt=>'') %>
+        <%= current_user.login %>
+        <b class="caret"></b>
+    <% end %>
+    <ul class="dropdown-menu" id="user_menu">
+        <li><%= link_to '设置', edit_user_path(current_user) %></li>
+        <li><%= link_to '喜欢', :controller => :my, :action => :favorites %></li>
+        <li><%= link_to '专辑', user_lists_path(current_user) %></li>
+        <li><%= link_to '说说', posts_path %></li>
+        <% if current_user.unread_messages_count > 0 %>
+            <li>(<%= link_to "#{current_user.unread_messages_count}条未读消息", inbox_messages_path %>)</li>
+        <% end %>
+        <% if current_user.is_admin? %>
+            <li><%= link_to '管理后台', '/admin' %></li>
+        <% end %>
+        <li><%= link_to '退出', logout_path %></li>
+    </ul>
+  </li>
 <% else %>
   <li><%= link_to "登录", login_path, :class => 'need-login' %></li>
   <li><%= link_to("注册", signup_path) %></li>

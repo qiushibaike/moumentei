@@ -1,6 +1,6 @@
+# -*- encoding : utf-8 -*-
 class OauthClientsController < ApplicationController
   before_filter :login_required
-  require_role 'admin'
   before_filter :get_client_application, :only => [:show, :edit, :update, :destroy]
   
   def index

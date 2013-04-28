@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+# -*- encoding : utf-8 -*-
+require 'spec_helper'
 
 describe Admin::GroupsController do
 

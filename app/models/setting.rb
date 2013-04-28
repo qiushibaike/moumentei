@@ -1,7 +1,9 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 # This model stores the global configuration of the website
 class Setting < ActiveRecord::Base
   serialize :value
+  attr_accessible :key, :value
   class << self
     attr_accessor :replacelist_pattern, :blacklist_pattern
     def [] index
@@ -13,16 +15,16 @@ class Setting < ActiveRecord::Base
     end
    
     def []= index, value
-      find_or_create_by_key(:key => index).update_attribute(:value, value)
+      find_or_initialize_by_key(:key => index.to_s).update_attribute(:value, value)
       Rails.cache.write("Setting.#{index}", value)
     end
     
     def replacelist_pattern
-      @replacelist_pattern ||= Regexp.union(*Setting.replacelist.keys) if Setting.replacelist
+      @replacelist_pattern ||= Regexp.union(*Setting.replacelist.keys) unless Setting.replacelist.blank?
     end
 
     def blacklist_pattern
-      @blacklist_pattern ||= Regexp.union(*Setting.blacklist) if Setting.blacklist
+      @blacklist_pattern ||= Regexp.union(*Setting.blacklist) unless Setting.blacklist.blank?
     end
     
     def method_missing(selector, *args, &block)

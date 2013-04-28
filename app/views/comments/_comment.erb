@@ -1,15 +1,19 @@
 <% f = comment.floor  %>
 <% user = comment.user  %>
 <% anon = comment.anonymous or comment.user_id == 0 or (not user) or user.deleted? %>
+
 <li class="comment <%=cycle('even', 'odd')%> thread-<%=cycle('even', 'odd')%> <%=cycle('', 'alt')%> depth-1 comment reader" id="comment-<%=comment.id%>">
   <% if comment.status == 'private' %>
   该评论已被删除
   <% else %>
     <div class="comment-wrap">
-      
+      <% unless anon %>
       <a title="<%=comment.user.login%>" rel="external nofollow" href="<%= user_path(comment.user) %>" class="avatar-block pull-left">
         <%= image_tag anon ? '/images/anonymous.png' : user.avatar.url("thumb"), :alt => anon || user.login, :class => 'avatar photo', :alt=>user.login %>
       </a>
+      <% else %>
+      游客
+      <% end %>
       <div class="comment-meta">
         <div class="comment-author vcard">
           <% if anon %>

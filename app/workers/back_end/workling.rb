@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Workling
   module ClassMethods    
     def inherited(subclass)

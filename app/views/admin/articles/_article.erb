@@ -5,14 +5,13 @@
     <%= check_box_tag('id[]', article.id.to_s, false, :id => 'id' + article.id.to_s, :class => 'entry-id') if defined?(checkbox)%>
     <%= article.group.name %>
     #<%= link_to article.id, article %>
-    <% link_to edit_admin_article_path(article) do %>
+    <%= link_to edit_admin_article_path(article) do %>
       <i class="icon-edit"></i>编辑
     <% end %>
     <% if article.status == 'publish' %>
       <%= article.pos_score %>   /  <%= article.neg_score %>
     <% end %>  
-    
-    <%= link_to '+', article.source, :target => '_blank' if article.source and not article.source.blank? %>
+
     <% if article.user_id and article.user_id > 0 %>
       <%= '<u>' unless article.anonymous %>
       (<%= article.user_id%> <%= article.user.try(:login) %>)
@@ -59,7 +58,7 @@
   <div style="color:#006600;padding-top:8px"><i class="icon-tags"></i><b>标签：<span id='entity_rtags<%= article.id -%>' style="color:#009966"><%= article.tag_line -%></span></b></div>
   
   <% if article.comments.count > 0 and article.status != 'pending' %>
-    <% link_to [:admin, article, :comments], :class => 'btn comments-toggle' do %>
+    <%= link_to [:admin, article, :comments], :class => 'btn comments-toggle' do %>
       <%= article.comments.public.count %>/<%= article.comments.count %>条评论
     <% end %>
   <% end %>

@@ -6,7 +6,7 @@
 <% else %>
 <%= image_tag @article.original_picture.attachment.url(:medium), :id => 'picture' %>
 <% end %>
-<% form_tag draw_article_path(@article) do  %>
+<%= form_tag draw_article_path(@article) do  %>
 <p><label><%= radio_button_tag :pos, 'north' %>顶部</label>
 <label><%= radio_button_tag :pos, 'center', true %>中部</label>
 <label><%= radio_button_tag :pos, 'south' %>底部</label></p>

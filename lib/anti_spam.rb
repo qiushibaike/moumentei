@@ -1,9 +1,6 @@
+# -*- encoding : utf-8 -*-
 module AntiSpam
   def self.included(base)
-    #base.class_eval do
-      #before_validation :filter_keywords
-      #before_validation :check_spam
-    #end
     base.extend(ClassMethods)
   end
   module ClassMethods
@@ -23,13 +20,10 @@ module AntiSpam
         end
       end
     end
-    def filter_keywords(content)
-      content.gsub(Setting.replacelist_pattern) do
-        Setting.replacelist[$&] 
-      end if Setting.replacelist_pattern
-    end
   end
-  #def check_spam
-  #  self.status = 'spam' if new_record? and Setting.blacklist_pattern and self.content =~ Setting.blacklist_pattern
-  #end
+  def filter_keywords(content)
+    content.gsub(Setting.replacelist_pattern) do
+      Setting.replacelist[$&] 
+    end if Setting.replacelist_pattern
+  end  
 end

@@ -3,24 +3,24 @@
 <!--[if IE 7]>    <html lang="en-us" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>    <html lang="en-us" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html lang="en-us" class="no-js"> <!--<![endif]-->
-  <%= render :partial => 'skeleton/head' %>
-  <% content_tag :body, body_attributes do %>
-    <%= render :partial => "skeleton/navbar" %>
+  <%= skeleton :head %>
+  <%= content_tag :body, body_attributes do %>
+    <%= skeleton :navbar %>
     <div class="container">
-      <%= render :partial => 'skeleton/header' %>
+      <%= skeleton :header %>
       <div class="row">
         <div class="content span9">
           <%= yield(:before_content) %>
-          <%= yield(:content) or yield %>
+          <%= content_for?(:main) ? (yield :main) : yield %>
           <%= yield :after_content %>
         </div>
         <div class="sidebar span3">
           <%= yield :sidebar %>
         </div>
       </div>
-      <%= render :partial => 'skeleton/footer' %>
+      <%= skeleton :footer %>
     </div>
-    <%= render :partial => 'skeleton/javascripts' %>
+    <%= skeleton :javascripts %>
     <%= yield :bottom %>
   <% end %>
 </html>

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::UsersController < Admin::BaseController
   before_filter :find_user, :except => [:index, :new, :create]
 

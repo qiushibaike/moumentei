@@ -1,189 +1,225 @@
-ActionController::Routing::Routes.draw do |map|
-  map.theme_support
+# -*- encoding : utf-8 -*-
+Moumentei::Application.routes.draw do
+  themes_for_rails
 
-  map.resources :pictures, :member => {:draw => :post}
-  map.resources :oauth_clients
-  map.report_comment 'comments/:id/report' ,:controller=>'comments',:action=>'report'
-  map.test_request '/oauth/test_request', :controller => 'oauth', :action => 'test_request'
-  map.access_token '/oauth/access_token', :controller => 'oauth', :action => 'access_token'
-  map.request_token '/oauth/request_token', :controller => 'oauth', :action => 'request_token'
-  map.authorize '/oauth/authorize', :controller => 'oauth', :action => 'authorize'
-  map.oauth '/oauth', :controller => 'oauth', :action => 'index'
-  map.home '', :controller => "groups", :action => "latest"
-  #map.connect 'page/:page', :controller => "groups", :action => "latest"
-  # map.connect '/chat', :controller => 'my', :action => 'chat'
-  map.resources :quest_logs
-  # map.resources :profiles
-  map.resources :quests,
-    :only => [:index, :show],
-    :member => {
-      :check => :any,
-      :complete => :any
-    }
-  map.resources :lists, :has_many => :list_items, :member => {:append => :any, :sort=>:post}
-  map.connect 'my/:id/get_balance', :controller => 'my', :action => 'get_salary'
-  map.connect '/users/check_login', :controller => 'users', :action => 'check_login'
-  map.connect '/users/check_email', :controller => 'users', :action => 'check_email'
-  map.connect '/users/check_invitation_code', :controller => 'users', :action => 'check_invitation_code'
-  map.connect '/users/search', :controller => 'users', :action => 'search'
-  map.resources :posts, :member => {:reshare => :any, :reply => :post, :children => :get}
-  map.resources :invitation_codes, :only => [:index, :new, :create]
-  map.resources :badges, :only => [:index, :show]
+   root :to => "groups#index"
 
-  map.resources :messages, :only => [:new, :create, :destroy],
-    :collection => {:inbox => :get, :outbox => :get}
-  map.resources :notifications, :only => [:index, :show, :destroy], :collection => {:clear => :get , :clear_all => :get, :ignore => :post }
+   match '/oauth/test_request'  => "oauth#test_request",  :as  => :test_request
+   match '/oauth/access_token'  => "oauth#access_token",  :as  => :access_token
+   match '/oauth/request_token' => "oauth#request_token", :as  => :request_token
+   match '/oauth/authorize'     => "oauth#authorize",     :as  => :authorize
+   match '/oauth'               => "oauth#index",         :as  => :oauth
 
-  map.resources :articles,
-    :shallow => true,
-      :member => {
-      :move => :post,
-      :draw => :any,
-      :up => :any,
-      :dn => :any,
-      :report => :post,
-      :score=>:get,
-      :tickets_stats=> :get} do |article|
-    article.resources :comments,
-      :only => [:index, :create],
-      :member => {:up => :any, :dn => :any},
-      :collection => {:count => :get}
-    article.connect 'comments/after/:after.:format', :controller => 'comments', :action => 'index'
+   match 'scores' => "articles#scores"
+   match 'votes'  => "articles#votes"
 
-    article.resources :tickets, :only => [:index, :new, :create], :collection => {:stats => :get}
-    article.resources :metadatas
-  end
+   match '/logout'   => "sessions#destroy", :as  => :logout
+   match '/login'    => "sessions#new",     :as  => :login
+   match '/register' => "users#create",     :as  => :register
+   match '/signup'   => "users#new",        :as  => :signup
+   match '/activate/:activation_code' => 'users#activate',:as => :activate
 
-  #map.article_comments 'articles/:article_id/comments/:page.:format', :controller => 'comments', :action => 'index'
-  map.connect 'scores', :controller => 'articles', :action => 'scores'
-  map.connect 'votes', :controller => 'articles', :action => 'votes'
+   match '/fetchpass' => "users#fetchpass"
+   match '/editpass'  => "users#editpass"
 
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.register '/register', :controller => 'users', :action => 'create'
-  map.signup '/signup', :controller => 'users', :action => 'new'
-  map.connect '/fetchpass', :controller => 'users', :action => 'fetchpass'
-  map.connect '/editpass', :controller => 'users', :action => 'editpass'
-  map.active '/activate/:activation_code', :controller => 'users', :action => 'activate'
-  map.resources :users, :member => {
-    :followings => :get,
-    :followers => :get,
-    :follow => :post,
-    :unfollow => :post,
-    :report => :post,
-    :comments => :get} do |user|
-    user.resources :articles, :controller => "users/articles", :only => [:index]
-    user.connect 'articles/page/:page.:format', :controller => 'users/articles', :action => :index
-    user.resources :posts
-    user.resources :groups, :controller => 'users/articles'
-    user.resources :profiles
-    #user.resources :comments
-    #user.resources :lists
-    #user.resources :lists, :only => [:index]
-  end
+   resources :oauth_clients
+   resource :session
 
-  #map.user_comments '/users/:id/comments', :controller => 'users', :action  => 'comments'
-  map.user_lists '/users/:id/lists',:controller => 'users',:action => 'lists'
-
-  map.resource :session
-  map.favorites "/favorites", :controller => 'favorites', :action => 'index'
-
-  map.resources :groups do |group|
-    group.resources :archives
-    group.connect 'archives/:id/page/:page.:format', :controller => 'archives', :action => 'show'
-    group.resources :articles
-    group.resources :tags, :only => [:index, :show] do |tag|
-      tag.resources :articles, :controller => 'tags/articles', :only => :index
-      tag.connect 'articles/:order', :controller => 'tags/articles', :action => :index
-      tag.connect 'articles/:order/page/:page.:format', :controller => 'tags/articles', :action => :index
-    end
-    group.latest 'latest.:format', :controller => 'groups', :action => 'latest'
-    group.connect 'latest/page/:page.:format', :controller => :groups, :action => 'latest'
-    
-    group.connect 'hottest/:limit/page/:page.:format', :controller => 'groups', :action => 'hottest'
-    group.hottest 'hottest/:limit.:format',
-                  :controller => 'groups',
-                  :action => 'hottest'
-    group.picture 'pictures', :controller => 'groups', :action => 'pictures'
-    group.connect 'pictures/:limit', :controller => 'groups', :action => 'pictures'
-    group.connect 'pictures/:limit/page/:page.:format', :controller => 'groups', :action => 'pictures'
-    group.most_replied 'most_replied/:limit/page/:page.:format', :controller => 'groups', :action => 'most_replied'
-    group.resources :tickets, :only => [:index, :show, :create], :collection => {:submit => :get}
-    group.connect '*path', :controller => 'pages', :action => 'show'
-  end
-
-=begin
-  map.connect 'groups/:id/hottest/:limit.:format',
-    :controller => 'groups',
-    :action => 'hottest',
-    :requirements => {:id => /\d+/}
-
-
-  map.connect 'groups/:id/most_replied/:limit.:format',
-    :controller => 'groups',
-    :action => 'most_replied',
-    :requirements => {:id => /\d+/}
-=end
-  map.connect 'favicon.ico', :controller => 'groups', :action => 'favicon'
-  map.connect 'hottest/:limit/page/:page.:format', :controller => 'groups', :action => 'hottest'
-  map.connect 'hottest/:limit.:format', :controller => 'groups', :action => 'hottest'
-  map.hottest 'hottest.:format', :controller => 'groups', :action => 'hottest'
-  map.latest  'latest/page/:page.:format', :controller => 'groups', :action => 'latest'
-  map.connect 'latest.:format', :controller => 'groups', :action => 'latest'
-  map.connect 'tags', :controller => 'groups', :action => 'tags'
-  map.connect 'tag/:tag/page/:page', :controller => 'groups', :action => 'tag'
-  map.connect 'tag/:tag', :controller => 'groups', :action => 'tag'
-  map.connect 'rss.xml', :controller => 'groups', :action => 'rss'
-  #  map.connect ':domain/archives/:year/:month/:day', :controller => 'groups', :action => 'archives', :requirements => { :domain => /[a-zA-Z0-9\-\.]+/ }
-  #  map.connect ':domain/:action', :controller => 'groups', :requirements => { :domain => /[\w\-\.]+/ }
-  map.namespace 'admin' do |admin|
-    admin.connect 'statistic',:controller=>'statistic'
-    admin.dashboard '/', :controller => 'dashboard'
-
-    admin.resources :users, 
-      :member => {:comments => :get, 
-                  :suspend => :post, 
-                  :unsuspend => :post,
-                  :active => :post,
-                  :delete_avatar => :post,
-                  :delete_comments => :post,
-                  :tickets=>:get},
-      :has_many => :articles
-    admin.resources :articles, #:has_many => [:comments],
-      :member => {:move => :post, 
-                  :track=>:post, 
-                  :set_status => :post, 
-                  :tickets=>:get, 
-                  :clear_cache => :post},
-      :collection => {:move => :post,:track=>:post, :batch_set_status => :post} do |article|
-        article.comments 'comments', :controller => 'articles', :action => 'comments'
+   #match 'page/:page'=> "groups#latest"
+   # match '/chat'=> "my#chat"
+   resources :lists do
+      resources :list_items
+      member do
+         get :append
+         post :sort
       end
-    
-    admin.resources :comments, :member => {:set_status => :post}, :collection => {:batch_set_status => :post}
-    admin.resources :groups, :member => {:moveup=>:get, :movedown=>:get}
-    admin.resources :themes
-    admin.resources :ticket_types
-    admin.resources :announcements
-    admin.resources :badges
-    admin.resources :tags
-    admin.resources :invitation_codes, :collection => {:generate => :post}
-    admin.resources :reports, :member => {:ignore => :post, :remove => :post},
-      :collection => {:batch => :post}
-    admin.resource :setting, :only => [:edit, :update]
-    admin.resource :configuration, :only => [:edit, :update], :collection => {:restart => :any}
-    admin.resources :pages
-    admin.connect ':controller/:action'
-  end
+   end
+   match 'my/:id/get_balance'           => "my#get_salary"
+   match '/users/check_login'           => "users#check_login"
+   match '/users/check_email'           => "users#check_email"
+   match '/users/check_invitation_code' => "users#check_invitation_code"
+   match '/users/search'                => "users#search"
+   resources :posts do
+      member do
+         post :reshare
+         post :reply
+         get :children
+      end
+   end
+   resources :invitation_codes, :only => [:index, :new, :create]
+   resources :badges, :only => [:index, :show]
+
+   resources :messages, :only => [:new, :create, :destroy] do
+      collection do
+         get :inbox
+         get :outbox
+      end
+   end
+   resources :notifications, :only => [:index, :show, :destroy] do
+      collection do
+         get :clear
+         get :clear_all
+         post :ignore
+      end
+   end
+
+   resources :articles, :shallow => true do
+      member do
+         post :move
+         post :draw
+         post :up
+         post :dn
+         post :report
+         get :score
+         get :tickets_stats
+      end
+      resources :comments, :only => [:index, :create] do
+         member do
+            post :up
+            post :dn
+         end
+
+         collection do
+            get :count
+         end
+      end
+      match 'comments/after/:after(.:format)'=> "comments#index"
+
+      resources :tickets, :only => [:index, :new, :create] do
+         collection do
+            get :stats
+         end
+      end
+      resources :metadatas
+   end
+
+   resources :users do
+      member do
+         get :followings
+         get :followers
+         post :follow
+         post :unfollow
+         post :report
+         get :comments
+      end
+      resources :articles, :only => [:index]
+      match 'articles(/page/:page)(.:format)', :action => :index
+      resources :posts
+      resources :groups
+      resources :profiles
+   end
+
+   #user_comments '/users/:id/comments'=> "users#comments"
+   match '/users/:id/lists'=> "users#lists", :as => :user_lists
 
 
-  #map.connect ':controller/:action/:id/page/:page', :requirements =>{ :page => /\d+/} #, :page => nil
-  #map.connect ':controller/:action/page/:page', :requirements =>{ :page => /\d+/} #, :page => nil
-  # Install the default route as the lowest priority.
-  #map.connect ':controller/:action/:id.:format'
-  #map.connect ':controller/:action/:id'
-  
-  map.connect 'my/:action/:id', :controller => 'my'
-  map.connect 'my/:action',:controller => 'my'
-  map.connect '*path', :controller => 'pages', :action => 'show'
-  #  map.connect ':controller/service.wsdl', :action => 'wsdl'
+   match "/favorites"=> "favorites#index", :as => :favorites
+   resources :archives
+   resources :groups do
+      resources :archives
+      match 'archives/:id(/page/:page)(.:format)'=> "archives#show"
+      resources :articles
+      resources :tags, :only => [:index, :show] do
+         resources :articles, :only => :index
+         match 'articles/:order(/page/:page)(.:format)' => 'tags/articles#index'
+      end
+      match 'latest(/page/:page)(.:format)'                => 'groups#latest',       :as  => :latest
+      match 'recent_hot(/page/:page)(.:format)'            => "groups#recent_hot",   :as  => :recent_hot
+      match 'hottest(/:limit(/page/:page))(.:format)'      => "groups#hottest",      :as  => :hottest
+      match 'pictures(/:limit(/page/:page))(.:format)'     => "groups#pictures",     :as  => :picture
+      match 'most_replied(/:limit(/page/:page))(.:format)' => "groups#most_replied", :as  => :most_replied
+      resources :tickets, :only => [:index, :show, :create] do
+         collection do
+            get :submit
+         end
+      end
+      match 'pages/*path'=> "pages#show"
+   end
+
+   match 'favicon.ico'=> "groups#favicon"
+   match 'hottest(/:limit(/page/:page))(.:format)'=> "groups#hottest", :as => :hottest
+   match 'latest(/page/:page)(.:format)'=> "groups#latest", :as => :latest
+   match 'tags'=> "groups#tags"
+   match 'tag/:tag(/page/:page)'=> "groups#tag"
+   match 'rss.xml'=> "groups#rss"
+   #  match ':domain/archives/:year/:month/:day'=> "groups#archives", :requirements => { :domain => /[a-zA-Z0-9\-\.]+/ }
+   #  match ':domain/:action', :controller => 'groups', :requirements => { :domain => /[\w\-\.]+/ }
+   namespace 'admin' do
+      match 'statistic/:action' => 'statistic'
+      match '/' => 'dashboard#index', :as => :dashboard
+
+      resources :users do
+         member do
+            get :comments
+            post :suspend
+            post :unsuspend
+            get :activate
+            post :delete_avatar
+            post :delete_comments
+            get :tickets
+         end
+         resources :articles
+      end
+      resources :articles do
+         member do
+            post :move
+            post :track
+            post :set_status
+            get :tickets
+            post :clear_cache
+         end
+         collection do
+            post :move
+            post :track
+            post :batch_set_status
+         end
+         resources :comments do
+            member do
+               post :set_status
+            end
+            collection do
+               post :batch_set_status
+            end
+         end
+      end
+      resources :groups do
+         member do
+            get :moveup
+            get :movedown
+         end
+      end
+      resources :themes
+      resources :ticket_types
+      resources :announcements
+      resources :badges
+      resources :tags
+      resources :invitation_codes do
+         collection do
+            post :generate
+         end
+      end
+      #resources :reports, member do
+      #:ignore => :post, :remove => :post
+      #end,
+      #  collection do
+      #:batch => :post
+      #end
+      resource :setting, :only => [:edit, :update]
+      #resource :configuration, :only => [:edit, :update], collection do
+      #:restart => :post
+      #end
+      resources :pages
+      #match ':controller/:action'
+   end
+
+
+   #match ':controller/:action/:id/page/:page', :requirements =>{ :page => /\d+/} #, :page => nil
+   #match ':controller/:action/page/:page', :requirements =>{ :page => /\d+/} #, :page => nil
+   # Install the default route as the lowest priority.
+   #match ':controller/:action/:id(.:format)'
+   #match ':controller/:action/:id'
+   match 'pages/*path' => "pages#show"
+   match 'my/:action/:id' => 'my'
+   match 'my/:action' => 'my'
+   #  match ':controller/service.wsdl', :action => 'wsdl'
 end

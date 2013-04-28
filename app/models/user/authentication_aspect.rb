@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module User::AuthenticationAspect
   module ClassMethods
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -51,7 +52,7 @@ module User::AuthenticationAspect
     def forget_me
       self.remember_token_expires_at = ''
       self.remember_token            = ''
-      save(false)
+      save(:validate => false)
     end
 
 
@@ -82,7 +83,7 @@ module User::AuthenticationAspect
       if active? and email_changed?
         self.state = 'pending'
         self.make_activation_code
-        UserNotifier.deliver_signup_notification(self)
+        UserNotifier.signup_notification(self).deliver
       end
     end
 

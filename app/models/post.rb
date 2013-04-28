@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 #
 #
 class Post < ActiveRecord::Base
@@ -18,5 +18,5 @@ class Post < ActiveRecord::Base
     end
   end
   
-  #named_scope :time
+  #scope :time
 end

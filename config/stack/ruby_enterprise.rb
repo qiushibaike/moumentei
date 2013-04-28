@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 package :ruby_enterprise do
   description 'Ruby Enterprise Edition'
   version '1.8.7-2012.01'

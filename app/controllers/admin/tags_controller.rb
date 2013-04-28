@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Admin::TagsController < Admin::BaseController
   before_filter :find_tag, :except => [:index]
   def index

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Statistics < ActiveRecord::Base
   serialize :article_ids
   serialize :score
@@ -70,10 +71,10 @@ class Statistics < ActiveRecord::Base
       unless @table[c.id]
         if c.email
           @invitation_code = InvitationCode.generate 1, 1
-          UserNotifier.deliver_invitation_code_anonymous(c.email,@invitation_code[0].code,c.id)
+          UserNotifier.invitation_code_anonymous(c.email,@invitation_code[0].code,c.id).deliver
         elsif c.user
           @invititation_code=InvitationCode.generate c.user.id, 1
-          UserNotifier.deliver_invitation_code_anonymous(c.user.email,@invititation_code[0].code,c.id)
+          UserNotifier.invitation_code_anonymous(c.user.email,@invititation_code[0].code,c.id).deliver
         end
         @table[c.id]=1
       end

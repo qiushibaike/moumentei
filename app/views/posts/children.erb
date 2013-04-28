@@ -11,7 +11,7 @@
 </p>
 <% end %>
 <div class="replyform">
-<% form_for(Post.new(:parent_id => @post.id), :html => {:id=>nil})do |f| %>
+<%= form_for(Post.new(:parent_id => @post.id), :html => {:id=>nil})do |f| %>
 <%= f.hidden_field :parent_id, :id => nil %>
 <%= f.text_area :content, :id => nil %>
 <p><%= f.submit 'Reply', :id => nil %></p>

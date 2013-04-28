@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # -*- coding: utf-8 -*-
 # This controller handles the login/logout function of the site.  
 class SessionsController < ApplicationController
@@ -67,10 +68,10 @@ class SessionsController < ApplicationController
       respond_to do |format|
         format.any(:html, :mobile){
           flash[:error] = "错误的用户名/密码组合"
-          render :action => 'new'
+          render :action => 'new', :status => :forbidden
         }
         format.js {
-          render :json => {:error => "错误的用户名/密码组合"}
+          render :json => {:error => "错误的用户名/密码组合"}, :status => :forbidden
         }
       end
     end

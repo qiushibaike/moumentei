@@ -1,3 +1,5 @@
+# -*- encoding : utf-8 -*-
+__END__
 module OAuthControllerSpecHelper
   def login
     controller.stub!(:local_request?).and_return(true)
@@ -8,12 +10,12 @@ module OAuthControllerSpecHelper
     @user.stub!(:tokens).and_return(@tokens)
     User.stub!(:find_by_id).and_return(@user)
   end
-  
+
   def login_as_application_owner
     login
     @client_application = mock_model(ClientApplication)
     @client_applications = [@client_application]
-    
+
     @user.stub!(:client_applications).and_return(@client_applications)
     @client_applications.stub!(:find).and_return(@client_application)
   end

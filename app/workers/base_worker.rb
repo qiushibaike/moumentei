@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class BaseWorker
   def self.method_missing(selector, *args, &block)
     if selector.to_s =~ /^asynch?_(\w+)/ and method_defined? $1

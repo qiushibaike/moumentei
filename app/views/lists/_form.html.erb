@@ -1,6 +1,6 @@
 <h1><%= @list.new_record? ? '新建' : '编辑' %>清单</h1>
 
-<% form_for(@list) do |f| %>
+<%= form_for(@list) do |f| %>
   <%= f.error_messages %>
 
   <p>

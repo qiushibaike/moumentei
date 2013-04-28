@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AuditLogger < Logger
   class << self
     def logger

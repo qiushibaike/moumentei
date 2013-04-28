@@ -1,6 +1,7 @@
+# -*- encoding : utf-8 -*-
 module PostLock
   def self.included(base)
-    if RAILS_ENV != 'development'  
+    if Rails.env.production?
       base.before_filter :check_lock_post
       base.after_filter :release_lock_post
     end

@@ -1,15 +1,15 @@
 <div class="tabbable">
   <ul class="nav nav-tabs">
-    <% content_tag :li, :class => params[:state].nil? ? 'active' : '' do%>
-      <% link_to :state => nil do %>
+    <%= content_tag :li, :class => params[:state].nil? ? 'active' : '' do%>
+      <%= link_to :state => nil do %>
       all
       <%= content_tag :span, User.count, :class => 'badge' %>
       <% end %>
     <% end %>
     <% %w(active pending suspended passive deleted).each do |s| %>
-      <% c = User.state_eq(s).count %>
-      <% content_tag :li, :class => params[:state] == s ? 'active' : '' do %>
-        <% link_to :state => s do %>
+      <% c = User.where(:state => s).count %>
+      <%= content_tag :li, :class => params[:state] == s ? 'active' : '' do %>
+        <%= link_to :state => s do %>
           <%= s %>
           <%= content_tag :span, c, :class => 'badge' if c > 0 %>
         <% end %>

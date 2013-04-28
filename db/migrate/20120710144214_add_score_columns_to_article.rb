@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddScoreColumnsToArticle < ActiveRecord::Migration
   def self.up
     add_column :articles, :score, :integer, :default => 0

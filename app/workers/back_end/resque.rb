@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module BackEnd::Resque
   def self.included(base)
     base.extend(ClassMethods)

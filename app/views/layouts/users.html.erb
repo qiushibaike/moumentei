@@ -1,6 +1,6 @@
 <%- content_for :topbar_items do -%>
   <li class="dropdown">
-    <% link_to({:controller =>:groups, :action =>:hottest, :id => (@group.id), :limit => 'day', :page => nil}, {:class => "dropdown-toggle", 'data-toggle'=>"dropdown", 'data-target' => '#hottest_menu'})do %>
+    <%= link_to({:controller =>:groups, :action =>:hottest, :id => (@group.id), :limit => 'day', :page => nil}, {:class => "dropdown-toggle", 'data-toggle'=>"dropdown", 'data-target' => '#hottest_menu'}) do %>
       最热
       <b class="caret"></b>
     <% end %>

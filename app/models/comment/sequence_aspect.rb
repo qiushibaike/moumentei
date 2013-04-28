@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Comment::SequenceAspect
   module Noop
     def next_id(article_id)
@@ -66,7 +67,6 @@ module Comment::SequenceAspect
       end
     end
     self.floor = f
-    ScoreWorker.async_update_comments_count(article_id, f)
   end
 	def self.included(receiver)
 		receiver.extend         ClassMethods

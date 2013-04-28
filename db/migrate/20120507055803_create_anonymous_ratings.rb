@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateAnonymousRatings < ActiveRecord::Migration
   def self.up
     create_table :anonymous_ratings do |t|

@@ -1,3 +1,5 @@
+.rbx
+.idea
 .hg
 .yardoc/
 doc/
@@ -59,3 +61,5 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
+**.swp
+**.swo

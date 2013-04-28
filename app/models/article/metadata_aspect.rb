@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Article::MetadataAspect
 	module ClassMethods
 		def meta_field(key)
@@ -28,7 +29,7 @@ module Article::MetadataAspect
 	
 	module InstanceMethods
 		def get_metadata(key)
-      metadatas.find_by_key(key).try(:value)
+      metadatas.find_by_key(key.to_s).try(:value)
     end
     
     def get_metadatas(*keys)
@@ -37,7 +38,7 @@ module Article::MetadataAspect
     end
     
     def set_metadata(key, value)
-      m = metadatas.find_or_initialize_by_key(key)
+      m = metadatas.find_or_initialize_by_key(key.to_s)
       m.lock!
       m.value = value
       m.save

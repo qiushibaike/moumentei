@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddSpecialInfoForTags < ActiveRecord::Migration
   def self.up
     add_column :tags, :description, :string
