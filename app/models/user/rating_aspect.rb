@@ -1,27 +1,55 @@
 # -*- encoding : utf-8 -*-
 module User::RatingAspect
   module ClassMethods
-    
+
   end
 
   module InstanceMethods
-    # user rate specific article 
-    def rate article, score
+    # user rate specific article
+    def rate(article, score)
+      user = self
       article = Article.find article if article.is_a?(Integer)
-      r = ratings.new :article_id => article.id
-      if score > 0
-        article.pos += score
-        article.score += score
-        r.score = score
-      elsif score < 0
-        article.neg += score
-        article.score += score
-        r.score = score
+      post = article
+      user_id = user.id
+      return false if post[:user_id] == user_id
+
+      transaction do
+        post.lock!
+        r = post.ratings.find_by_user_id user_id, :lock => true
+
+        if r
+          if r.score != score
+            if r.score > 0
+              post.decrement :pos
+            else
+              post.decrement :neg
+            end
+            post.decrement :score, r.score
+            r.score = score
+            r.save!
+          else
+            return false
+          end
+        else
+          Rating.create :article_id => post.id,
+                 :user_id => user_id,
+                 :score => score
+        end
+
+        if score > 0
+          post.increment :pos
+          post.increment :score
+        else
+          post.increment :neg
+          post.decrement :score
+        end
+        post.save!
       end
-      r.save!
       article.calc_alt_score
+    rescue ActiveRecord::RecordNotUnique
+      return false
     end
-    
+
     def has_rated? article
       @rated ||= {}
       case article
