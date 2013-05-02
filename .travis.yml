@@ -5,15 +5,14 @@ rvm:
   - jruby-19mode # JRuby in 1.9 mode
   - rbx-18mode
   - rbx-19mode
-  - 1.8.7
   - ree
 env:
   - DB=sqlite
   #- DB=mysql
-script:
-  - RAILS_ENV=test bundle exec rake --trace db:setup test
+#script:
+  #- RAILS_ENV=test bundle exec rake --trace db:setup test
   #- bundle exec rake db:test:prepare
-  - bundle exec rake
+  #- bundle exec rake
 before_script:
   - cp config/database.travis.yml config/database.yml
   #- mysql -e 'create database moumentei_test'
