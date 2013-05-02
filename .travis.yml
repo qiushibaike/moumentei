@@ -9,12 +9,11 @@ rvm:
   - ree
 env:
   - DB=sqlite
-  - DB=mysql
+  #- DB=mysql
 script:
-  - RAILS_ENV=test bundle exec rake --trace db:migrate test
-  - bundle exec rake db:test:prepare
+  - RAILS_ENV=test bundle exec rake --trace db:setup test
+  #- bundle exec rake db:test:prepare
   - bundle exec rake
 before_script:
   - cp config/database.travis.yml config/database.yml
-  - mysql -e 'create database moumentei_test'
-  - psql -c 'create database moumentei_test' -U postgres
+  #- mysql -e 'create database moumentei_test'
