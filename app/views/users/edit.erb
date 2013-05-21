@@ -12,7 +12,7 @@
 
 <p><%=f.label :email %><br/>
 <%= f.text_field :email%><%= @user.pending? ? '未激活' : '<span style="color:green">已激活</span>' %><br/>
-<span style="color: red"><%= @user.errors.on(:email) %></span>
+<span style="color: red"><%= @user.errors[:email] %></span>
 </p>
 <p><%= f.submit '修改' %></p>
 <% end %>
