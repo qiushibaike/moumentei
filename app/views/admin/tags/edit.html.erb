@@ -3,9 +3,9 @@
 <%= form_for [:admin, @tag], :html => {:multipart => true} do |f| %>
   <%= f.label :name %>
   <%= f.text_field(:name) %>
-  <%= f.label :icon %>
-  <%= f.file_field :icon %>
-  <%= image_tag @tag.icon.url(:thumb) if @tag.icon.file? %>
+  <%#= f.label :icon %>
+  <%#= f.file_field :icon %>
+  <%#= image_tag @tag.icon.url(:thumb) if @tag.icon.file? %>
 <div class="form-actions">
   <%= f.submit 'update', :class => 'btn btn-primary' %>
 </div>

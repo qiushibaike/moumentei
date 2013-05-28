@@ -7,7 +7,7 @@ class Admin::TagsController < Admin::BaseController
 
   def edit
   end
-  
+
   def update
     if @tag.update_attributes(params[:tag])
       flash[:success] = 'tag updated'
@@ -19,6 +19,6 @@ class Admin::TagsController < Admin::BaseController
 
   protected
   def find_tag
-    @tag = Tag.find_by_name params[:id]
+    @tag = Tag.find params[:id]
   end
 end
