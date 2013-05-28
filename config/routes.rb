@@ -145,6 +145,7 @@ Moumentei::Application.routes.draw do
    #  match ':domain/archives/:year/:month/:day'=> "groups#archives", :requirements => { :domain => /[a-zA-Z0-9\-\.]+/ }
    #  match ':domain/:action', :controller => 'groups', :requirements => { :domain => /[\w\-\.]+/ }
    namespace 'admin' do
+      match 'statistic' => 'statistic#index'
       match 'statistic/:action' => 'statistic'
       match '/' => 'dashboard#index', :as => :dashboard
 
@@ -195,6 +196,7 @@ Moumentei::Application.routes.draw do
       resources :tags
       resources :invitation_codes do
          collection do
+            get :generate
             post :generate
          end
       end

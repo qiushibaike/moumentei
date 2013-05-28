@@ -8,6 +8,7 @@ nbproject/project.properties
 nbproject/project.xml
 db/sphinx
 db/*.tch
+db/*.db
 config/database.yml
 log/*
 tmp/cache/*

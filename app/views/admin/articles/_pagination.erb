@@ -1,4 +1,4 @@
 <%= will_paginate(@articles, :class => 'pagination', :inner_window => 3, :outer_window => 2,
-                :renderer => BootstrapLinkRenderer,
+                :renderer => 'BootstrapLinkRenderer',
                 :previous_label => '&laquo;'.html_safe,
                 :next_label => '&raquo;'.html_safe) %>

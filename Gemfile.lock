@@ -106,6 +106,7 @@ GEM
     delayed_job (3.0.5)
       activesupport (~> 3.0)
     diff-lcs (1.2.1)
+    dynamic_form (1.1.4)
     em-websocket (0.5.0)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
@@ -169,7 +170,6 @@ GEM
     journey (1.0.4)
     jruby-openssl (0.8.6)
       bouncy-castle-java (>= 1.5.0147)
-    jruby-pageant (1.1.1)
     jruby-pageant (1.1.1-java)
     jruby-rack (1.1.13.1)
     json (1.7.7)
@@ -369,6 +369,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   delayed_job
+  dynamic_form
   eventmachine
   factory_girl_rails (= 1.7.0)
   forgery
