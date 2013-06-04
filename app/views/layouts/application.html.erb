@@ -18,7 +18,6 @@
   <%# active_li_link '标签', [@group, :tags] %>
   <%= active_li_link '发表', [:new, @group, :article] %>
 <%- end if @group -%>
-<a href="/groups/1/tags/test" rel="tag">test</a>
 <%-
 
 render_to :after_footer, 'common/analytics'
