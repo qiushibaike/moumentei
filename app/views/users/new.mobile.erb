@@ -1,10 +1,10 @@
 <section id="page1" data-role="page">
   <header data-role="header"  data-theme="b" >
-    <h1>moumentei登录</h1>
-    <%= link_to '注册', signup_path(:format => :mobile), 'data-rel' => 'dialog', 'data-role' => 'button', :class => 'ui-btn-right' %>
+    <h1>moumentei注册</h1>
+    <%= link_to '登录', signup_path(:format => :mobile), 'data-rel' => 'dialog', 'data-role' => 'button', :class => 'ui-btn-right' %>
   </header>
   <div data-role="content" class="content">
-    <p style="backg"><font color="#2EB1E8" >登录</font></p>
+    <p style="backg"><font color="#2EB1E8" >注册</font></p>
       <%= form_tag(session_path, :style => "padding:0 16px;")  do -%>
         <label for="login">Login</label><br />
         <%= text_field_tag '用户名', @login, :tabindex => 1 %><br />

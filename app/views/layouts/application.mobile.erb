@@ -3,11 +3,10 @@
   <head> 
     <title><%= yield :title %></title> 
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <link rel="stylesheet" href="//code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
   </head>
   <body>
     <div data-role="page">
-      <div data-role="header">
+      <div data-role="header" data-position="fixed" data-tap-toggle="false">
         <%= render :partial => "skeleton/header" %>
         <%= yield :header %>
       </div><!-- /header -->          
@@ -15,12 +14,23 @@
       <div data-role="content">
         <%= yield %>	
       </div><!-- /content -->
-      <div data-role="footer">
+      <div data-role="footer" data-position="fixed" data-tap-toggle="false">
         <%= render :partial => "skeleton/footer" %>
         <%= yield :footer %>
-      </div><!-- /header -->          
+      </div><!-- /header --> 
+      <div data-role="panel" id="more" data-theme="a">
+        <ul data-role="listview">
+          <%= active_li_link '首页', root_path(:format => :mobile), 'data-icon' => 'home' %>
+          <li data-role="list-divider"></li>
+          <%= active_li_link '近期热点', group_recent_hot_path(@group, :format => :mobile)%>
+          <%= active_li_link '最新', group_latest_path(@group, :format => :mobile) %> 
+          <li data-role="list-divider"></li>
+        <%= active_li_link '发表', new_group_article_path(@group, :format => :mobile) %>    
+        </ul>
+      </div>        
     </div><!-- /page -->
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.6.4.min.js"></script>
-    <script src="//code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
   </body>
 </html>

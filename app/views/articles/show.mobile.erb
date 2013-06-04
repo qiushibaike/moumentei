@@ -10,8 +10,9 @@
   <%= render(:partial => 'comments/index') %>
 <center>
   <br />
-  <%= @article.prev_in_group.nil? ? "&lt;<span class='ad'> </span>上一帖子" : link_to("&lt;<span class='ad'> </span>上一帖子", article_path(@article.prev_in_group)) %>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <%= @article.next_in_group.nil? ? "下一帖子<span class='ad'> </span>&gt;" : link_to("下一帖子<span class='ad'> </span>&gt;", article_path(@article.next_in_group)) %>
+  <div data-role="controlgroup" data-type="horizontal">
+  	<%= @article.prev_in_group.nil? ? "" : link_to("上一帖子", article_path(@article.prev_in_group), {'data-role' => 'button', 'data-icon' => 'arrow-l'}) %>
+  	<%= @article.next_in_group.nil? ? "" : link_to("下一帖子", article_path(@article.next_in_group), {'data-role'=>'button', 'data-icon'=>"arrow-r", "data-iconpos" =>"right"}) %>
+  </div>	
 </center>
 <% end %>

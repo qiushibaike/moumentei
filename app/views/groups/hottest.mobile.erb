@@ -1,0 +1,9 @@
+<% content_for :title, case params[:action] 
+    when 'latest'
+      "尼玛们刚刚发表的帖子 - 暴走漫画::因为你而存在的原创搞笑漫画网::暴漫"
+    when 'tag'
+      "关于#{@current_tag}的帖子"
+    end
+%>
+<%= render(:partial => @articles) %>
+<%= render :partial => 'common/pagination.mobile.erb' %>

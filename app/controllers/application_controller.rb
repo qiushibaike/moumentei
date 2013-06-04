@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   #theme_support
   alias_method :current_theme, :theme_name
   theme :select_theme
-  has_mobile_fu
+  has_mobile_fu(true)
   attr_accessor :show_login
 
   protected

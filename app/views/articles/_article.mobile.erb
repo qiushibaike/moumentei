@@ -1,29 +1,35 @@
-<%= div_for article do %>
-<% cache ["phone", article] do %>
-<% unless article.title.blank? %>
-<h4><%= link_to article.title, article, :rel => 'permalink' %></h4>
-<% end %>
-<%= format_content article, article.group %>
-<p><%= link_to image_tag(article.picture(:small)), article.picture(:medium) if article.picture.file? %></p>
-<% unless article.tag_line.blank? %>
-<p>标签：<%= show_tags(article, @current_tag) %></p>
-<% end %>
-<% if not article.anonymous? and article.user %>
-<p>BY: <%= link_to article.user.login, article.user %> </p>
-<% end %>
-<% end %>
-<div>
-<% if rated?(article)%>
-<%= article.pos_score %>人喜欢 
-<% else %>
-<%= link_to up_article_path(article) do %>
-<%= image_tag('flower-2.png', :class => 'voteicon')%><%=  article.pos_score %>
-<% end %>
-<% end %>
-&nbsp;| &nbsp;
-<% if article.comment_status == 'closed' %>
-  <span class="comments-link">禁止评论</span>
-<% else %>
-  <%= link_to article.public_comments_count > 0 ? "#{article.public_comments_count}条评论" : "暂无评论", article_path(article, :anchor => "comments-list") %>
-<% end %>
+<%= div_for article, 'data-article_id' => article.id do %>
+  <% cache ["iphone", article], :expires_in => 1.hour do %>
+    <% unless article.title.blank? %>
+      <h4><%= h article.title %></h4>
+    <% end %>
+    <%#= format_content article, article.group %>
+    <%= image_tag(article.picture.url(:original), :class => 'picture', :style => 'width: 100%;') if article.picture.file? %>
+    <% unless article.tag_line.blank? %>
+      <p >标签：<% article.tags.collect do |t| %>
+        <%= link_to t.name, group_tag_path(@group, t.name), {:rel => 'tag'}%>
+        <% end %></p>
+    <% end %>
+  <% end %>
+  <% if not article.anonymous? and article.user %>
+    <p>BY: <%= link_to article.user.login, article.user %> </p>
+  <% end %>
+  <div class='ui-grid-b'>
+  <% rated = rated?(article) %>
+    <div class='ui-block-a'> 
+    <%= link_to up_article_path(article, :format => :mobile), {'data-icon' => 'plus', 'data-role' => 'button', 'data-mini' => 'true', 'data-inline'=>"true", 'data-action' => 'up', :class => "vote #{ rated && 'ui-disabled' }"} do %>
+      <%=  article.pos_score %>
+    <% end %></div>
+  <div class='ui-block-b'> 
+    <%= link_to dn_article_path(article, :format => :mobile), {'data-icon' => 'minus', 'data-role' => 'button', 'data-mini' => 'true', 'data-inline'=>"true", 'data-action' => 'dn', :class => "vote #{ rated && 'ui-disabled' }"} do -%>
+      <%=  article.neg_score %>
+    <%- end -%>
+  </div>
+  <div class='ui-block-c'> 
+  <% if article.comment_status == 'closed' %>
+  <% else %>
+    <%= link_to article.public_comments_count, article_path(article, :format => :mobile), 'data-role' => 'button', 'data-inline' => 'true', 'data-mini' => 'true', 'data-icon' => 'grid' %> 
+  <% end %>
+    </div>
+  </div>
 <% end %>

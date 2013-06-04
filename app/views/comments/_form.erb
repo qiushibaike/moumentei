@@ -12,9 +12,12 @@
                   </div>
                 </div>
                 <div class="control-group pull-right">
-                  <label class="checkbox inline">
-                    <%= f.check_box :anonymous %>
-                    <span>匿名</span></label>
+                  <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                      <%= f.check_box :anonymous, :name=>"checkbox-1", :id=>"checkbox-1", :class=>"custom" %>
+                      <label for="checkbox-1">匿名</label>
+                    </fieldset>
+                  </div>
                   <%= f.submit '发表回复', :class => 'btn btn-primary span2' %>
                 </div>
 

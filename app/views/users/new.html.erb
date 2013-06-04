@@ -1,0 +1,58 @@
+<% content_for :title do%>注册<% end %>
+<div>
+<%= form_for @user, :html => {:class => 'form-horizontal well'} do |f| -%>
+  <fieldset>
+    <legend>注册新用户</legend>
+    <div class="control-group">
+    <label class="control-label" for="login">您想要注册的用户名：</label>
+    <div class="controls">
+    <%= f.text_field :login %>
+    <div id="insertlogin"></div>
+    <p class="help-block">不可加入@、&amp;、‘、&lt;、或&gt;符号，不可在开头和结尾使用空格或缩格</p>
+    <span style="color: red"><%= @user.errors[:login].join(" ") %></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="email">您的电子邮箱：</label>
+      <div class="controls">
+        <%= f.text_field :email %>
+        <div id="insertemail"></div>
+        <p class="help-block">仅用来确认您的身份, 绝不公开</p>
+        <span style="color: red"><%= @user.errors[:email].join(" ") %></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="password">密码：</label>
+      <div class="controls">
+        <%= f.password_field :password %>
+        <p class="help-block">登录的时候需要用到</p>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="password_confirmation">重复一次密码：</label>
+      <div class="controls">
+        <%= f.password_field :password_confirmation %>
+        <span style="color: red"><%= @user.errors[:password].join(" ") %></span>
+      </div>
+    </div>
+    <!--
+    <label>邀请码：(<a href="http://blog.moumentei.com/2010/04/code.htm">如何获取？</a>)</label>
+    <%#= text_field_tag :invitation_code,nil,:size=>20 %>
+    <%if params[:invitation_code]%>
+    <%= text_field_tag :invitation_code,params[:invitation_code],:size=>20 %>
+    <div id="insertinvitation_code"></div>
+    <%else%>
+    <%= text_field_tag :invitation_code,nil,:size=>20 %>
+    <div id="insertinvitation_code"></div>
+    <%end%>
+    <span class="tips">不区分大小写，无视空格，请使用半角</span>-->
+    <div class="form-actions">
+      <%= submit_tag '注册新用户', :disable_with => "正在注册...", :class => 'btn btn-primary' %>
+    </div>
+  </fieldset>
+<% end -%>
+</div>
+

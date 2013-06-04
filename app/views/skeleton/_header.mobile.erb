@@ -1,1 +1,9 @@
-<h1><%= yield :title %></h1>
+<h1>
+	<a href="#more" data-role="button" data-icon="bars" class="ui-btn-left">more</a>
+	<%unless logged_in? %>
+  <%= link_to '登录', login_path(:format => :mobile), 'data-rel' => 'dialog', 'data-role' => 'button', :class => 'ui-btn-right' %>
+<!--  | <%= link_to '注册', signup_path(:format => :mobile), 'data-rel' => 'dialog'%> -->
+<%else%>
+  <%=link_to current_user.login,user_articles_path(current_user)%>
+<%end%>
+</h1>

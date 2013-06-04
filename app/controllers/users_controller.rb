@@ -109,7 +109,11 @@ class UsersController < ApplicationController
   def new
     #session[:return_to] = request.referer
     @user = User.new
-    render :layout => 'register'
+    respond_to do |format|
+      format.html { render :layout => 'register' }
+      format.mobile { render :layout => false }
+    end
+    
   end
  
   def create
