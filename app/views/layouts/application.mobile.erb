@@ -1,7 +1,6 @@
 <!DOCTYPE html> 
 <html> 
-  <head> 
-    <title><%= yield :title %></title> 
+  <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
   </head>
   <body>
@@ -12,7 +11,6 @@
       </div><!-- /header -->          
 
       <div data-role="content">
-        <%= yield :title%>
         <%= yield %>	
       </div><!-- /content -->
       <div data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -21,6 +19,10 @@
       </div><!-- /header --> 
       <div data-role="panel" id="more" data-theme="a">
         <ul data-role="listview">
+          <% if logged_in?%>
+          <%= active_li_link current_user.login, user_articles_path(current_user, :format => :mobile)%>
+          <% end %>
+          <li data-role="list-divider"></li>
           <%= active_li_link '首页', root_path(:format => :mobile), 'data-icon' => 'home' %>
           <li data-role="list-divider"></li>
           <%= active_li_link '近期热点', group_recent_hot_path(@group, :format => :mobile)%>

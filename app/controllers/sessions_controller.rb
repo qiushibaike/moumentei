@@ -67,7 +67,7 @@ class SessionsController < ApplicationController
       @remember_me = params[:remember_me]
       respond_to do |format|
         format.any(:html, :mobile){
-          flash[:error] = "错误的用户名/密码组合"
+          flash[:error] = "错误的用户名/密码组合" 
           render :action => 'new', :status => :forbidden
         }
         format.js {

@@ -1,15 +1,15 @@
 <section id="page1" data-role="page">
-  <header data-role="header"  data-theme="b" >
+  <header data-role="header"  data-theme="a" >
     <h1>moumentei登录</h1>
     <%= link_to '注册', signup_path(:format => :mobile), 'data-rel' => 'dialog', 'data-role' => 'button', :class => 'ui-btn-right' %>
   </header>
   <div data-role="content" class="content">
     <p style="backg"><font color="#2EB1E8" >登录</font></p>
       <%= form_tag(session_path, :style => "padding:0 16px;")  do -%>
-        <label for="login">Login</label><br />
-        <%= text_field_tag '用户名', @login, :tabindex => 1 %><br />
+        <label for="login">用户名或邮箱：</label><br />
+        <%= text_field_tag 'login', @login, :tabindex => 1 %><br />
         <br />
-        <label for="密码">Password:</label><br />
+        <label for="password">密码：</label><br />
         <%= password_field_tag 'password', nil, :tabindex => 2 %><br />
         <% if ( @msg || flash[:notice] ) %><span style="color: red"><%= ( @msg || flash[:notice] ) %></span><br /><% end %>
         <input type="hidden" value="1" name="remember_me" id="remember_me"/>

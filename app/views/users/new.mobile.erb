@@ -1,20 +1,21 @@
 <section id="page1" data-role="page">
-  <header data-role="header"  data-theme="b" >
+  <header data-role="header"  data-theme="a" >
     <h1>moumentei注册</h1>
-    <%= link_to '登录', signup_path(:format => :mobile), 'data-rel' => 'dialog', 'data-role' => 'button', :class => 'ui-btn-right' %>
+    <%= link_to '登录', login_path(:format => :mobile), 'data-rel' => 'dialog', 'data-role' => 'button', :class => 'ui-btn-right' %>
   </header>
   <div data-role="content" class="content">
     <p style="backg"><font color="#2EB1E8" >注册</font></p>
-      <%= form_tag(session_path, :style => "padding:0 16px;")  do -%>
-        <label for="login">Login</label><br />
-        <%= text_field_tag '用户名', @login, :tabindex => 1 %><br />
-        <br />
-        <label for="密码">Password:</label><br />
-        <%= password_field_tag 'password', nil, :tabindex => 2 %><br />
+      <%= form_for @user do |f| -%>
+        <label for="login">您想要注册的用户名：</label>
+        <%= f.text_field 'login' %>
+        <label for="email">您的电子邮箱：</label>
+        <%= f.text_field 'email'%>
+        <label for="password">密码：</label>
+        <%= f.password_field 'password' %>
+        <label for="password_confirmation">重复一次密码：</label>
+        <%= f.password_field :password_confirmation %>
         <% if ( @msg || flash[:notice] ) %><span style="color: red"><%= ( @msg || flash[:notice] ) %></span><br /><% end %>
-        <input type="hidden" value="1" name="remember_me" id="remember_me"/>
-        <br />
-        <input name="commit" onclick="this.disabled=true;this.value='正在登录...';this.form.submit();" type="submit" value="登录" tabindex="3" />
+        <%= submit_tag '注册新用户', :disable_with => "正在注册...", :class => 'btn btn-primary' %>
       <% end -%>
   </div>
   <footer data-role="footer" ><h1>moumentei</h1></footer>
