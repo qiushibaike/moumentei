@@ -1,5 +1,13 @@
-<%= will_paginate @articles,
-      :previous_label => "&lt;",
-      :next_label => "下一页 &gt;",
-      :inner_window => 2 %>
+<div id="pagination" data-role="controlgroup" data-type="horizontal">
+  <div class="ui-block-a">
+  <% if @articles.previous_page %>
+  <%= link_to '上一页', params.merge(:page => @articles.previous_page) %>
+  <% end %>
+  </div>
+  <div class="ui-block-b">
+  <% if @articles.next_page %>
+  <%= link_to '下一页', params.merge(:page => @articles.next_page) %>
+  <% end %>
+  </div>
+</div>
   

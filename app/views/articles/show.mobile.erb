@@ -11,8 +11,8 @@
 <center>
   <br />
   <div data-role="controlgroup" data-type="horizontal">
-  	<%= @article.prev_in_group.nil? ? "" : link_to("上一帖子", article_path(@article.prev_in_group), {'data-role' => 'button', 'data-icon' => 'arrow-l'}) %>
-  	<%= @article.next_in_group.nil? ? "" : link_to("下一帖子", article_path(@article.next_in_group), {'data-role'=>'button', 'data-icon'=>"arrow-r", "data-iconpos" =>"right"}) %>
+  	<%= @article.prev_in_group.nil? ? "" : link_to("上一帖子", article_path(@article.prev_in_group, :format => :mobile), {'data-role' => 'button', 'data-icon' => 'arrow-l'}) %>
+  	<%= @article.next_in_group.nil? ? "" : link_to("下一帖子", article_path(@article.next_in_group, :format => :mobile), {'data-role'=>'button', 'data-icon'=>"arrow-r", "data-iconpos" =>"right"}) %>
   </div>	
 </center>
 <% end %>
