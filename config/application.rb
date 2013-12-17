@@ -65,6 +65,7 @@ module Moumentei
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.threadsafe!
     config.i18n.default_locale = :zh
     config.after_initialize do
         config.active_record.observers = [:user_observer]

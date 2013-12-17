@@ -11,14 +11,15 @@ platforms :jruby do
   gem 'jruby-openssl'
   gem 'activerecord-jdbcmysql-adapter', :require => false
   # use sqlite3
-  gem 'activerecord-jdbcsqlite3-adapter'
+  gem 'activerecord-jdbcsqlite3-adapter', :require => false
   #gem 'jruby-ehcache', :require => 'ehcache'
   gem 'trinidad', :require => false, :groups => 'production'
+  gem 'warbler'
 end
 
 gem 'will_paginate'
 gem "aasm"
-gem 'paperclip', '~> 2.0'
+gem 'paperclip'
 gem 'compass'
 gem 'SystemTimer', :platforms => :ruby_18
 gem 'memcache-client'
@@ -26,7 +27,7 @@ gem "oauth"
 gem "oauth-plugin"
 gem 'delayed_job'
 gem 'super_cache'
-gem 'eventmachine'
+gem 'eventmachine', :platforms => :ruby
 gem 'rufus-scheduler'
 
 gem 'acts_as_list'
@@ -63,7 +64,7 @@ group :test, :development do
 end
 
 group :test do
-  gem "factory_girl_rails", "1.7.0"
+  gem "factory_girl_rails"
   gem 'guard'
   gem 'guard-rspec'
   gem 'rb-inotify', :require => false

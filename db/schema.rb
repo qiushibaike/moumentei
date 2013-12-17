@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -42,12 +43,12 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
 
   create_table "articles", :force => true do |t|
     t.string   "tag_line"
-    t.integer  "group_id",                           :default => 0,           :null => false
-    t.integer  "user_id",                            :default => 0,           :null => false
+    t.integer  "group_id",                           :default => 0,         :null => false
+    t.integer  "user_id",                            :default => 0,         :null => false
     t.string   "title"
     t.string   "status",               :limit => 20, :default => "pending", :null => false
     t.string   "comment_status",       :limit => 20, :default => "open",    :null => false
-    t.boolean  "anonymous",                          :default => false,       :null => false
+    t.boolean  "anonymous",                          :default => false,     :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "picture_file_name"
@@ -69,8 +70,8 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
   add_index "articles", ["group_id", "status", "published_at", "score"], :name => "index_articles_on_group_id_and_status_and_published_at_and_score"
   add_index "articles", ["group_id", "status", "updated_at"], :name => "index_articles_on_group_id_and_status_and_updated_at"
   add_index "articles", ["group_id", "status"], :name => "index_articles_on_group_id_and_status"
-  add_index "articles", ["id", "status"], :name => "index_articles_on_id_and_status"
-  add_index "articles", ["status", "group_id", "id"], :name => "status"
+  add_index "articles", ["status", "group_id"], :name => "status"
+  add_index "articles", ["status"], :name => "index_articles_on_id_and_status"
 
   create_table "badges", :force => true do |t|
     t.string   "name",              :null => false
@@ -433,7 +434,7 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
     t.boolean  "hide"
   end
 
-  add_index "tags", ["id", "name"], :name => "id"
+  add_index "tags", ["name"], :name => "id"
   add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
 
   create_table "ticket_types", :force => true do |t|
@@ -479,13 +480,13 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                                                             :null => false
+    t.string   "login",                                                           :null => false
     t.string   "name",                      :limit => 100
-    t.string   "email",                                                             :null => false
-    t.string   "crypted_password",                                                  :null => false
-    t.string   "salt",                                                              :null => false
-    t.string   "created_at",                                                        :null => false
-    t.string   "updated_at",                                                        :null => false
+    t.string   "email",                                                           :null => false
+    t.string   "crypted_password",                                                :null => false
+    t.string   "salt",                                                            :null => false
+    t.string   "created_at",                                                      :null => false
+    t.string   "updated_at",                                                      :null => false
     t.string   "remember_token",                           :default => "",        :null => false
     t.datetime "remember_token_expires_at"
     t.string   "activation_code"
