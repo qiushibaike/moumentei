@@ -1,5 +1,5 @@
 source 'http://ruby.taobao.org'
-gem "rails", "~> 3.2.1"
+gem "rails", "~> 4.0.0"
 platforms :ruby, :mingw do
   # use mysql
   gem 'mysql2'
@@ -18,23 +18,23 @@ platforms :jruby do
 end
 
 gem 'puma', :platforms => [:jruby, :ruby]
-
+gem 'rails-observers'
+gem 'protected_attributes'
 gem 'will_paginate'
 gem "aasm"
 gem 'paperclip'
 gem 'compass'
-gem 'SystemTimer', :platforms => :ruby_18
-gem 'memcache-client'
+gem 'dalli'
 gem "oauth"
 gem "oauth-plugin"
 gem 'delayed_job'
+gem 'delayed_job_active_record'
+#gem "delayed_job_web"
 gem 'super_cache'
-gem 'eventmachine', :platforms => :ruby
 gem 'rufus-scheduler'
-
 gem 'acts_as_list'
 gem 'awesome_nested_set'
-gem 'themes_for_rails'
+gem 'themes_for_rails', github: 'tkriplean/themes_for_rails'
 gem 'inherited_resources'
 gem 'squeel'
 gem 'mobile-fu'
@@ -46,19 +46,18 @@ gem 'acts_as_taggable_on_steroids', :git => 'https://github.com/ShiningRay/acts_
 gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
 gem "rolify", '~> 3.1'
 gem 'dynamic_form'
-gem 'thin', :platforms => :ruby
 
 group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
   gem 'jruby-pageant', :require => false, :platforms => :jruby
   gem 'better_errors', :platforms => [:mingw_19, :ruby_19]
-  
+
 end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
-  gem 'guard-livereload' 
+  gem 'guard-livereload'
   gem 'guard-cucumber'
   gem 'guard-bundler'
   gem 'rack-livereload'
