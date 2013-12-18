@@ -87,7 +87,7 @@ Warbler::Config.new do |config|
   # When using the 'compiled' feature and specified, only these Ruby
   # files will be compiled. Default is to compile all \.rb files in
   # the application.
-  config.compiled_ruby_files = FileList['app/**/*.rb']
+  config.compiled_ruby_files = FileList['app/**/*.rb', 'lib/**/*.rb', 'vendor/**/*.rb']
 
   # When set to true, Warbler will override the value of ENV['GEM_HOME'] even it
   # has already been set. When set to false it will use any existing value of

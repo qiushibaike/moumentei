@@ -9,7 +9,7 @@ namespace :moumentei do
       end
     end
   end
-  task :package => [:obtain_jruby] do
+  task :package => [:bundle, :compile] do
     mkdir_p Rails.root.join('vendor/src')
     cp 'vendor'
   end

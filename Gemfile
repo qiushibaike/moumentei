@@ -13,9 +13,11 @@ platforms :jruby do
   # use sqlite3
   gem 'activerecord-jdbcsqlite3-adapter', :require => false
   #gem 'jruby-ehcache', :require => 'ehcache'
-  gem 'trinidad', :require => false, :groups => 'production'
+  #gem 'trinidad', :require => false, :groups => 'production'
   gem 'warbler'
 end
+
+gem 'puma', :platforms => [:jruby, :ruby]
 
 gem 'will_paginate'
 gem "aasm"
