@@ -21,3 +21,4 @@
 * 微博  http://weibo.com/shiningray
 * twitter http://twitter.com/shiningray
 * 博客 http://shiningray.cn
+* 讨论组 http://www.bling0.com/moumentei
