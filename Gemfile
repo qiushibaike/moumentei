@@ -47,6 +47,16 @@ gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
 gem "rolify", '~> 3.1'
 gem 'dynamic_form'
 
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  gem 'therubyracer', :platforms => :ruby
+  gem 'therubyrhino', :platforms => :jruby
+  gem 'uglifier', '>= 1.0.3'
+  #gem 'turbo-sprockets-rails3'
+end
+
 group :development do
   gem 'capistrano'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw

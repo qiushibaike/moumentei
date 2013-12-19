@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 Moumentei::Application.routes.draw do
-  themes_for_rails
+   themes_for_rails
 
    root :to => "groups#index"
 
