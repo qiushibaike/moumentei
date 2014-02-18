@@ -90,7 +90,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.xml
   def create
-    message = params[:message]
+    message = message_params
     
     message[:sender_id] = message[:owner_id] = current_user.id
     @out_message = Message.new(message)
@@ -146,5 +146,11 @@ class MessagesController < ApplicationController
       end
       format.xml  { head :ok }
     end
+  end
+
+
+  private
+  def message_params
+    params.require(:message).permit(:content, :recipient_id)
   end
 end

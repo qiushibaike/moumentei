@@ -111,7 +111,7 @@ class CommentsController < InheritedResources::Base
     if @article #when creating article's comments
       #    @article = Article.find params[:comment] unless @article
       group = @article.group
-      @comment = comment = Comment.new(params[:comment])
+      @comment = comment = Comment.new(comment_params)
       if not logged_in? and params[:user]
         logout_keeping_session!
         user = User.authenticate(params[:user][:login], params[:user][:password])
@@ -233,5 +233,9 @@ class CommentsController < InheritedResources::Base
     else
       show_404
     end
+  end
+  private
+  def comment_params
+    params.require(:comment).permit(:content, :anonymous)
   end
 end
