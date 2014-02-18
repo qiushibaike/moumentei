@@ -11,6 +11,7 @@ nbproject/project.xml
 db/sphinx
 db/*.tch
 db/*.db
+db/*.sqlite
 config/database.yml
 log/*
 tmp/cache/*
