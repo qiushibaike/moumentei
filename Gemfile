@@ -18,8 +18,12 @@ platforms :jruby do
 end
 
 gem 'puma', :platforms => [:jruby, :ruby]
+
+# rails 3 compatible
 gem 'rails-observers'
 gem 'protected_attributes'
+gem 'rails_autolink'
+#
 gem 'will_paginate'
 gem "aasm"
 gem 'paperclip'
@@ -40,7 +44,6 @@ gem 'squeel'
 gem 'mobile-fu'
 gem "calendar_helper"
 #gem "rinku", :require => 'rails_rinku', :platforms
-gem 'rails_autolink'
 gem 'acts_as_favorite', :git => 'https://github.com/ShiningRay/acts_as_favorite.git'
 gem 'acts_as_taggable_on_steroids', :git => 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git', :require => 'acts_as_taggable'
 gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
@@ -55,6 +58,19 @@ group :assets do
   gem 'therubyrhino', :platforms => :jruby
   gem 'uglifier', '>= 1.0.3'
   #gem 'turbo-sprockets-rails3'
+  # Use jquery as the JavaScript library
+  gem 'jquery-rails'
+  gem 'jquery-ui-rails'
+
+  # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+  gem 'turbolinks'
+  gem 'jquery-turbolinks'
+  gem 'turbolinks-redirect'
+end
+
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', require: false
 end
 
 group :development do
