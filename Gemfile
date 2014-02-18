@@ -59,26 +59,29 @@ end
 
 group :development do
   gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'  
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
   gem 'jruby-pageant', :require => false, :platforms => :jruby
 end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
+  gem 'guard'
   gem 'guard-livereload'
+  gem 'rack-livereload'
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
   gem 'guard-cucumber'
   gem 'guard-bundler'
-  gem 'rack-livereload'
   gem 'guard-jruby-rspec', :platforms => :jruby
 end
 
 group :test do
   gem "factory_girl_rails"
-  gem 'guard'
   gem 'guard-rspec'
-  gem 'rb-inotify', :require => false
-  gem 'rb-fsevent', '~> 0.9.1', :require => false
-  gem 'rb-fchange', :require => false
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
