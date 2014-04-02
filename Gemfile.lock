@@ -1,9 +1,9 @@
 GIT
-  remote: git://github.com/tkriplean/themes_for_rails.git
-  revision: 3f6bc17fdbe3ed9e9153ec0285e1d8121b5492fb
+  remote: git://github.com/ShiningRay/themes_for_rails.git
+  revision: d1b4b9c8b480b252d2b919e08f82b3246a802713
   specs:
-    themes_for_rails (0.5.2)
-      rails (>= 3.2.0)
+    themes_for_rails (0.5.1)
+      rails (>= 3.0.0)
 
 GIT
   remote: https://github.com/ShiningRay/acts_as_favorite.git
