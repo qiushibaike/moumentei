@@ -20,12 +20,12 @@ module Article::ReferenceAspect
         :association_foreign_key => 'referer', 
         :uniq => true
       has_and_belongs_to_many :public_references, 
+        -> { where(:status => 'publish') },
         :class_name => 'Article', 
         :join_table => 'article_references', 
         :foreign_key => 'source', 
         :association_foreign_key => 'referer', 
-        :uniq => true,
-        :conditions => {:status => 'publish'}   
+        :uniq => true
       after_create :detect_reference
       include InstanceMethods
     end

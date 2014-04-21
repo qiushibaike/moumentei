@@ -1,26 +1,26 @@
 # -*- encoding : utf-8 -*-
 Moumentei::Application.routes.draw do
-  themes_for_rails
+   themes_for_rails
 
    root :to => "groups#index"
 
-   match '/oauth/test_request'  => "oauth#test_request",  :as  => :test_request
-   match '/oauth/access_token'  => "oauth#access_token",  :as  => :access_token
-   match '/oauth/request_token' => "oauth#request_token", :as  => :request_token
-   match '/oauth/authorize'     => "oauth#authorize",     :as  => :authorize
-   match '/oauth'               => "oauth#index",         :as  => :oauth
+   match '/oauth/test_request'  => "oauth#test_request",  :as  => :test_request, :via => [:get, :post]
+   match '/oauth/access_token'  => "oauth#access_token",  :as  => :access_token, :via => [:get, :post]
+   match '/oauth/request_token' => "oauth#request_token", :as  => :request_token, :via => [:get, :post]
+   match '/oauth/authorize'     => "oauth#authorize",     :as  => :authorize, :via => [:get, :post]
+   match '/oauth'               => "oauth#index",         :as  => :oauth, :via => [:get, :post]
 
-   match 'scores' => "articles#scores"
-   match 'votes'  => "articles#votes"
+   get 'scores' => "articles#scores"
+   get 'votes'  => "articles#votes"
 
-   match '/logout'   => "sessions#destroy", :as  => :logout
-   match '/login'    => "sessions#new",     :as  => :login
-   match '/register' => "users#create",     :as  => :register
-   match '/signup'   => "users#new",        :as  => :signup
-   match '/activate/:activation_code' => 'users#activate',:as => :activate
+   get '/logout'   => "sessions#destroy", :as  => :logout
+   get '/login'    => "sessions#new",     :as  => :login
+   get '/register' => "users#create",     :as  => :register
+   get '/signup'   => "users#new",        :as  => :signup
+   get '/activate/:activation_code' => 'users#activate',:as => :activate
 
-   match '/fetchpass' => "users#fetchpass"
-   match '/editpass'  => "users#editpass"
+   get '/fetchpass' => "users#fetchpass"
+   get '/editpass'  => "users#editpass"
 
    resources :oauth_clients
    resource :session
@@ -34,11 +34,11 @@ Moumentei::Application.routes.draw do
          post :sort
       end
    end
-   match 'my/:id/get_balance'           => "my#get_salary"
-   match '/users/check_login'           => "users#check_login"
-   match '/users/check_email'           => "users#check_email"
-   match '/users/check_invitation_code' => "users#check_invitation_code"
-   match '/users/search'                => "users#search"
+   get 'my/:id/get_balance'           => "my#get_salary"
+   match '/users/check_login'           => "users#check_login", :via => [:get, :post]
+   match '/users/check_email'           => "users#check_email", :via => [:get, :post]
+   match '/users/check_invitation_code' => "users#check_invitation_code", :via => [:get, :post]
+   get '/users/search'                => "users#search"
    resources :posts do
       member do
          post :reshare
@@ -83,7 +83,7 @@ Moumentei::Application.routes.draw do
             get :count
          end
       end
-      match 'comments/after/:after(.:format)'=> "comments#index"
+      get 'comments/after/:after(.:format)'=> "comments#index"
 
       resources :tickets, :only => [:index, :new, :create] do
          collection do
@@ -103,51 +103,51 @@ Moumentei::Application.routes.draw do
          get :comments
       end
       resources :articles, :only => [:index]
-      match 'articles(/page/:page)(.:format)', :action => :index
+      get 'articles(/page/:page)(.:format)', :action => :index
       resources :posts
       resources :groups
       resources :profiles
    end
 
    #user_comments '/users/:id/comments'=> "users#comments"
-   match '/users/:id/lists'=> "users#lists", :as => :user_lists
+   get '/users/:id/lists'=> "users#lists", :as => :user_lists
 
 
-   match "/favorites"=> "favorites#index", :as => :favorites
+   get "/favorites"=> "favorites#index", :as => :favorites
    resources :archives
    resources :groups do
       resources :archives
-      match 'archives/:id(/page/:page)(.:format)'=> "archives#show"
+      get 'archives/:id(/page/:page)(.:format)'=> "archives#show"
       resources :articles
       resources :tags, :only => [:index, :show] do
          resources :articles, :only => :index
-         match 'articles/:order(/page/:page)(.:format)' => 'tags/articles#index'
+         get 'articles/:order(/page/:page)(.:format)' => 'tags/articles#index'
       end
-      match 'latest(/page/:page)(.:format)'                => 'groups#latest',       :as  => :latest
-      match 'recent_hot(/page/:page)(.:format)'            => "groups#recent_hot",   :as  => :recent_hot
-      match 'hottest(/:limit(/page/:page))(.:format)'      => "groups#hottest",      :as  => :hottest
-      match 'pictures(/:limit(/page/:page))(.:format)'     => "groups#pictures",     :as  => :picture
-      match 'most_replied(/:limit(/page/:page))(.:format)' => "groups#most_replied", :as  => :most_replied
+      get 'latest(/page/:page)(.:format)'                => 'groups#latest',       :as  => :latest
+      get 'recent_hot(/page/:page)(.:format)'            => "groups#recent_hot",   :as  => :recent_hot
+      get 'hottest(/:limit(/page/:page))(.:format)'      => "groups#hottest",      :as  => :hottest
+      get 'pictures(/:limit(/page/:page))(.:format)'     => "groups#pictures",     :as  => :picture
+      get 'most_replied(/:limit(/page/:page))(.:format)' => "groups#most_replied", :as  => :most_replied
       resources :tickets, :only => [:index, :show, :create] do
          collection do
             get :submit
          end
       end
-      match 'pages/*path'=> "pages#show"
+      get 'pages/*path'=> "pages#show"
    end
 
-   match 'favicon.ico'=> "groups#favicon"
-   match 'hottest(/:limit(/page/:page))(.:format)'=> "groups#hottest", :as => :hottest
-   match 'latest(/page/:page)(.:format)'=> "groups#latest", :as => :latest
-   match 'tags'=> "groups#tags"
-   match 'tag/:tag(/page/:page)'=> "groups#tag"
-   match 'rss.xml'=> "groups#rss"
+   get 'favicon.ico'=> "groups#favicon"
+   get 'hottest(/:limit(/page/:page))(.:format)'=> "groups#hottest", :as => :hottest
+   get 'latest(/page/:page)(.:format)'=> "groups#latest", :as => :latest
+   get 'tags'=> "groups#tags"
+   get 'tag/:tag(/page/:page)'=> "groups#tag"
+   get 'rss.xml'=> "groups#rss"
    #  match ':domain/archives/:year/:month/:day'=> "groups#archives", :requirements => { :domain => /[a-zA-Z0-9\-\.]+/ }
    #  match ':domain/:action', :controller => 'groups', :requirements => { :domain => /[\w\-\.]+/ }
    namespace 'admin' do
-      match 'statistic' => 'statistic#index'
-      match 'statistic/:action' => 'statistic'
-      match '/' => 'dashboard#index', :as => :dashboard
+      get 'statistic' => 'statistic#index'
+      get 'statistic/:action' => 'statistic'
+      get '/' => 'dashboard#index', :as => :dashboard
 
       resources :users do
          member do
@@ -220,8 +220,8 @@ Moumentei::Application.routes.draw do
    # Install the default route as the lowest priority.
    #match ':controller/:action/:id(.:format)'
    #match ':controller/:action/:id'
-   match 'pages/*path' => "pages#show"
-   match 'my/:action/:id' => 'my'
-   match 'my/:action' => 'my'
+   get 'pages/*path' => "pages#show"
+   match 'my/:action/:id' => 'my', :via => [:get, :post]
+   match 'my/:action' => 'my', :via => [:get, :post]
    #  match ':controller/service.wsdl', :action => 'wsdl'
 end

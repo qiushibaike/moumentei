@@ -66,10 +66,10 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
 
   add_index "articles", ["created_at", "group_id", "status"], :name => "created_at"
   add_index "articles", ["created_at"], :name => "index_articles_on_created_at"
-  add_index "articles", ["group_id", "status", "alt_score"], :name => "index_articles_on_group_id_and_status_and_alt_score"
-  add_index "articles", ["group_id", "status", "published_at", "score"], :name => "index_articles_on_group_id_and_status_and_published_at_and_score"
-  add_index "articles", ["group_id", "status", "updated_at"], :name => "index_articles_on_group_id_and_status_and_updated_at"
-  add_index "articles", ["group_id", "status"], :name => "index_articles_on_group_id_and_status"
+  add_index "articles", ["group_id", "status", "alt_score"], :name => "index_articles1"
+  add_index "articles", ["group_id", "status", "published_at", "score"], :name => "index_articles2"
+  add_index "articles", ["group_id", "status", "updated_at"], :name => "index_articles3"
+  add_index "articles", ["group_id", "status"], :name => "index_articles4"
   add_index "articles", ["status", "group_id"], :name => "status"
   add_index "articles", ["status"], :name => "index_articles_on_id_and_status"
 
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(:version => 20130326132509) do
   end
 
   add_index "comment_ratings", ["user_id", "comment_id", "score"], :name => "full_idx"
-  add_index "comment_ratings", ["user_id", "comment_id"], :name => "index_comment_ratings_on_user_id_and_comment_id", :unique => true
+  add_index "comment_ratings", ["user_id", "comment_id"], :name => "index_comment", :unique => true
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id",                  :default => 0,         :null => false

@@ -80,13 +80,12 @@ class ArticlesController < ApplicationController
       return
     end
 
-    @article = article = Article.new( params[:article])
+    @article = article = Article.new(article_params)
     @article.group_id = @group.id if not @article.group_id or @article.group_id == 0
     if @group.only_member_can_post? and not logged_in?
       error_return.call('Only registered members can post in this group')
     end
     article.content.strip! # trim the white space in the end or beginning
-
     if article.content.mb_chars.size > 500 and not logged_in?
       error_return.call('内容太长了，请不要超过500个字')
     end
@@ -353,5 +352,10 @@ class ArticlesController < ApplicationController
         render :json => score
       end
     end
+  end
+
+  private
+  def article_params
+    params.require(:article).permit(:title, :content, :anonymous, :picture)
   end
 end

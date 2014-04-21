@@ -40,12 +40,12 @@ class Article < ActiveRecord::Base
   scope :by_status, lambda {|status| {:conditions => {:status => status}}}
   scope :by_period, lambda {|s, e| {:conditions => ['articles.created_at >= ? and articles.created_at < ?', s, e]}}
   scope :by_group, lambda {|group_id| {:conditions => {:group_id => group_id}}}
-  scope :public, :conditions => {:status => 'publish'}
-  scope :anonymous, :conditions => {:anonymous => true}
-  scope :signed, :conditions => {:anonymous => false}
-  scope :pending, :conditions => {:status => 'pending'}
-  scope :hottest, :order => 'score desc'
-  scope :latest, :order => 'published_at desc'
+  scope :public, -> { where(:status => 'publish') }
+  scope :anonymous, -> { where(:anonymous => true) }
+  scope :signed, -> { where(:anonymous => false) }
+  scope :pending, -> { where(:status => 'pending') }
+  scope :hottest, -> { order('score desc') }
+  scope :latest, -> { order('published_at desc') }
   scope :published_after, lambda{|time| where{published_at >= time} }
   attr_protected :user_id, :status
 
