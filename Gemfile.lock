@@ -443,7 +443,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-unicorn (>= 0.3.0)!
   capybara
-  coffee-rails
+  coffee-rails (~> 4.0.0)
   compass
   cucumber-rails
   dalli
@@ -486,7 +486,7 @@ DEPENDENCIES
   rspec-rails (~> 2.0)
   ruby_gntp
   rufus-scheduler
-  sass-rails
+  sass-rails (~> 4.0.0)
   sdoc
   sqlite3
   squeel

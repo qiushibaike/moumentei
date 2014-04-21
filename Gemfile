@@ -51,8 +51,8 @@ gem "rolify", '~> 3.1'
 gem 'dynamic_form'
 
 group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
+  gem 'sass-rails', '~> 4.0.0'
+  gem 'coffee-rails', '~> 4.0.0'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
   gem 'therubyrhino', :platforms => :jruby
