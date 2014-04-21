@@ -7,7 +7,7 @@ set :repo_url, 'root@106.186.125.95:/srv/repos/tearoom.git/'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
-set :branch, 'default'
+set :branch, 'master'
 
 # Default deploy_to directory is /var/www/my_app
 set :deploy_to, "/srv/#{fetch(:application)}"
