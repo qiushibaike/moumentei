@@ -2,15 +2,15 @@
 # config valid only for Capistrano 3.1
 lock '3.1.0'
 
-set :application, 'youwenti'
-set :repo_url, 'https://github.com/qiushibaike/moumentei'
+set :application, 'tearoom'
+set :repo_url, 'root@106.186.125.95:/srv/repos/tearoom.git/'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 set :branch, 'default'
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, "/u/apps/#{fetch(:application)}"
+set :deploy_to, "/srv/#{fetch(:application)}"
 
 # Default value for :scm is :git
 set :scm, :git

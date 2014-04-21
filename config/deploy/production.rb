@@ -1,5 +1,5 @@
 set :rvm_type, :system                     # Defaults to: :auto
-set :rvm_ruby_version, '2.0.0-p353'      # Defaults to: 'default'
+set :rvm_ruby_version, '2.1.1'      # Defaults to: 'default'
 set :unicorn_bundle, "/usr/local/rvm/bin/rvm #{fetch(:rvm_ruby_version)} do bundle"
 # Simple Role Syntax
 # ==================
@@ -18,7 +18,7 @@ set :unicorn_bundle, "/usr/local/rvm/bin/rvm #{fetch(:rvm_ruby_version)} do bund
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-server "newassets.rongyi.com", user: "ubuntu", roles: %w{web app db}
+server "106.186.125.95", user: "root", roles: %w{web app db}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options

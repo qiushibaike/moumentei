@@ -6,6 +6,13 @@ GIT
       rails (>= 3.0.0)
 
 GIT
+  remote: git://github.com/wangsy/capistrano-unicorn.git
+  revision: bf75a238fde0cb8362c905e70103794d23ad5190
+  specs:
+    capistrano-unicorn (0.3.2)
+      capistrano (~> 3.1.0)
+
+GIT
   remote: https://github.com/ShiningRay/acts_as_favorite.git
   revision: 51185c43c64e4477243943098005bf0d7487d837
   specs:
@@ -434,6 +441,7 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
+  capistrano-unicorn (>= 0.3.0)!
   capybara
   coffee-rails
   compass

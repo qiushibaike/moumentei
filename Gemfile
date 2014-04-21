@@ -78,6 +78,7 @@ group :development do
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'  
+  gem 'capistrano-unicorn', '>= 0.3.0', github: 'wangsy/capistrano-unicorn'  
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
   gem 'jruby-pageant', :require => false, :platforms => :jruby
 end
