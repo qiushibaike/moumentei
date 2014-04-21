@@ -1,6 +1,7 @@
 # coding: utf-8
 # Set your full path to application.
-app_path = File.expand_path('../', __FILE__)
+app_path = File.expand_path('../../', __FILE__)
+puts app_path
 
 # Set unicorn options
 worker_processes 3
