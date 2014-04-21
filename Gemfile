@@ -110,5 +110,6 @@ end
 
 group :production do
   gem 'rack-cache'
+  gem 'unicorn'
 end
 
