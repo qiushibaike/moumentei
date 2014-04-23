@@ -1,6 +1,5 @@
 set :rvm_type, :system                     # Defaults to: :auto
 set :rvm_ruby_version, '2.1.1'      # Defaults to: 'default'
-set :unicorn_bundle, "/usr/local/rvm/bin/rvm #{fetch(:rvm_ruby_version)} do bundle"
 # Simple Role Syntax
 # ==================
 # Supports bulk-adding hosts to roles, the primary
