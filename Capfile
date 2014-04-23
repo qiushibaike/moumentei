@@ -20,7 +20,10 @@ require 'capistrano/rvm'
 # require 'capistrano/chruby'
 require 'capistrano/bundler'
 require 'capistrano/rails'
-require 'puma/capistrano'
+require 'capistrano/puma'
+require 'capistrano/puma/workers' #if you want to control the workers (in cluster mode)
+    
+#require 'puma/capistrano'
 #require 'capistrano/rails/assets'
 #require 'capistrano/rails/migrations'
 # require 'capistrano/unicorn'

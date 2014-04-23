@@ -40,4 +40,4 @@ server "106.186.125.95", user: "root", roles: %w{web app db}
 #     # password: 'please use keys'
 #   }
 # setting per server overrides global ssh_options
-after 'deploy:restart', 'unicorn:duplicate'
+#after 'deploy:restart', 'unicorn:duplicate'

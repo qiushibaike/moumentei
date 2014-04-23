@@ -6,6 +6,13 @@ GIT
       rails (>= 3.0.0)
 
 GIT
+  remote: git://github.com/seuros/capistrano-puma.git
+  revision: c214347523509ed5729b1bbf78ffecf5edbd1648
+  specs:
+    capistrano3-puma (0.4.2)
+      capistrano (~> 3.0)
+
+GIT
   remote: https://github.com/ShiningRay/acts_as_favorite.git
   revision: 51185c43c64e4477243943098005bf0d7487d837
   specs:
@@ -434,6 +441,7 @@ DEPENDENCIES
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
+  capistrano3-puma!
   capybara
   coffee-rails (~> 4.0.0)
   compass
