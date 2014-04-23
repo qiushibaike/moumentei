@@ -21,6 +21,7 @@ Tearoom::Application.routes.draw do
 
    get '/fetchpass' => "users#fetchpass"
    get '/editpass'  => "users#editpass"
+   post '/editpass'  => "users#editpass"
 
    resources :oauth_clients
    resource :session
