@@ -26,10 +26,6 @@ public/javascripts/closure
 public/cache
 public/groups
 public/archives
-public/qiushi/log
-public/qiushi/log/*
-public/www.qiushibaike.com
-public/secret.moumentei.com/
 public/system
 public/stylesheets/compiled
 themes

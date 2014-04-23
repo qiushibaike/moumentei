@@ -3,8 +3,6 @@ gem "rails", "~> 4.0.0"
 platforms :ruby, :mingw do
   # use mysql
   gem 'mysql2'
-  # use sqlite3
-  gem 'sqlite3'
 end
 
 platforms :jruby do
@@ -77,8 +75,8 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
-  gem 'capistrano-bundler'  
-  gem 'capistrano-unicorn', '>= 0.3.0', github: 'wangsy/capistrano-unicorn'  
+  gem 'capistrano-bundler'
+  gem 'capistrano-unicorn', '>= 0.3.0', github: 'wangsy/capistrano-unicorn'
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
   gem 'jruby-pageant', :require => false, :platforms => :jruby
 end

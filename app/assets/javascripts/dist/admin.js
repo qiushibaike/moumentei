@@ -1,6 +1,6 @@
-/**
- *
- */
+//= require jquery
+//= require jquery_ujs
+
 function select_item(sel) {
     $("input:checkbox").each(function(){
       this.checked = sel(this.checked);
@@ -48,13 +48,13 @@ $(function(){
        });
        return false;
    });
-   
+
    $('.entry a.close').live('click', function(){
        $(this).prev('.list').remove();
        $(this).remove();
        return false;
    })
-   
+
    $(".track").click(function(){
      $.get(this.href,function(text){
          alert(text)

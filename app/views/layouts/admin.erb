@@ -17,11 +17,11 @@
     <link rel="apple-touch-icon" sizes="72x72" href="<%= yield :apple_touch_icon_72 or '/images/apple-touch-icon-72x72.png' %>">
     <link rel="apple-touch-icon" sizes="114x114" href="<%= yield :apple_touch_icon_114 or '/images/apple-touch-icon-114x114.png' %>">
     <%= csrf_meta_tags %>
-    <%= javascript_include_tag '/js/modernizr.min.js'%>
-    <%= stylesheet_link_tag '/css/bootstrap', 'style' %>
+    <%= javascript_include_tag 'dist/modernizr.min'%>
+    <%= stylesheet_link_tag 'bootstrap', 'style' %>
     <%= stylesheet_link_tag @group.options[:stylesheet] if @group and @group.options[:stylesheet] %>
     <link rel="stylesheet" href="/fancybox/jquery.fancybox-1.3.1.css" type="text/css" media="screen" />
-    <%= stylesheet_link_tag "admin2.css", "jquery-ui-themeroller.css", :media =>"screen" %>    
+    <%= stylesheet_link_tag "admin2.css", "jquery-ui-themeroller.css", :media =>"screen" %>
     <%= yield :stylesheets %>
     <style><%= yield :styles %></style>
     <%= yield :head %>
@@ -45,7 +45,7 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li class="<%=current_page?(admin_badges_path) && 'active'%>"><%= link_to t('activerecord.models.badge'), admin_badges_path %></li>
-              <li class="<%=current_page?(admin_pages_path) && 'active'%>"><%= link_to t('activerecord.models.page'), admin_pages_path %></li>              
+              <li class="<%=current_page?(admin_pages_path) && 'active'%>"><%= link_to t('activerecord.models.page'), admin_pages_path %></li>
               <li class="<%=current_page?(admin_invitation_codes_path) && 'active'%>"><%= link_to t('activerecord.models.invitation_code'), admin_invitation_codes_path %></li>
               <li class="<%=current_page?(admin_groups_path) && 'active'%>"><%= link_to t('activerecord.models.group'), admin_groups_path %>  </li>
               <li class="<%=current_page?(admin_users_path) && 'active'%>"><%= link_to t('activerecord.models.user'), admin_users_path %>  </li>
@@ -127,7 +127,7 @@
       </footer>
       <%= yield :after_footer %>
     </div>
-     
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
     <script>window.jQuery || document.write('<script src="/js/jquery-1.7.1.min.js">\x3C/script>')</script>
     <%= javascript_include_tag '/js/bootstrap.min.js', 'application' %>

@@ -1,5 +1,5 @@
 # -*- encoding : utf-8 -*-
-Moumentei::Application.routes.draw do
+Tearoom::Application.routes.draw do
    themes_for_rails
 
    root :to => "groups#index"
