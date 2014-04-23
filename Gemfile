@@ -48,7 +48,7 @@ gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
 gem "rolify", '~> 3.1'
 gem 'dynamic_form'
 
-group :assets do
+# group :assets do
   gem 'sass-rails', '~> 4.0.0'
   gem 'coffee-rails', '~> 4.0.0'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -64,7 +64,7 @@ group :assets do
   gem 'turbolinks'
   gem 'jquery-turbolinks'
   gem 'turbolinks-redirect'
-end
+# end
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
