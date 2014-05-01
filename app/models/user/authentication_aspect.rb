@@ -1,9 +1,10 @@
 # -*- encoding : utf-8 -*-
 module User::AuthenticationAspect
+    extend ActiveSupport::Concern
   module ClassMethods
     # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
     #
-    # uff.  this is really an authorization, not authentication routine.  
+    # uff.  this is really an authorization, not authentication routine.
     # We really need a Dispatch Chain here or something.
     # This will also let us return a human error message.
     #
@@ -30,10 +31,9 @@ module User::AuthenticationAspect
       end
       user
     end
-      
+
   end
 
-  module InstanceMethods
 
 
     def login=(value)
@@ -43,7 +43,7 @@ module User::AuthenticationAspect
     def email=(value)
       write_attribute :email, (value ? value.downcase : nil)
     end
-    
+
     def self.password_digest(password, salt)
       Digest::SHA1.hexdigest("--#{salt}--#{password}--")
     end
@@ -87,20 +87,16 @@ module User::AuthenticationAspect
       end
     end
 
-  end
 
-  def self.included(receiver)
-    receiver.extend         ClassMethods
-    receiver.send :include, InstanceMethods
-    receiver.class_eval do 
+  included do
       validates_presence_of     :login
       validates_length_of       :login,    :within => 3..16
-      
+
       validate do |user|
         valid = if user.new_record?
           not User.find_by_login(user.login)
         else
-          not User.find :first, :conditions => ["id <> ? AND login=?", user.id, user.login], :select => 'id'
+          not User.where("id <> ? AND login=?", user.id, user.login).select('id').first
         end
         unless valid
           user.errors.add(:login, :taken, :value => user.login)
@@ -121,6 +117,5 @@ module User::AuthenticationAspect
       validates_format_of       :email,    :with => Authentication.email_regex#,
         #:message => Authentication.bad_email_message
       before_save :change_to_pending_when_email_change
-    end
   end
 end

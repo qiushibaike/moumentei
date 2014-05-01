@@ -65,7 +65,7 @@ gem 'dynamic_form'
   gem 'jquery-turbolinks'
   gem 'turbolinks-redirect'
 # end
-
+gem 'remotipart'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

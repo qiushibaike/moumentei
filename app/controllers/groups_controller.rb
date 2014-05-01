@@ -239,18 +239,17 @@ class GroupsController < ApplicationController
   def generic_response(action=nil)
 
     s = true
-    expires_in [60 * (params[:page].to_i / 10 + 1), 3600].min if params[:page]
-    @expires_in = [60 * (params[:page].to_i * 5 + 1), 3600].min if params[:page]
-    if is_mobile_device? or @articles.blank?
-      expires_now
-      response.headers['Cache-Control']='private, no-cache, no-store'
-      s = true
-    else
-      s = stale?(:last_modified => @articles.first.created_at.utc, :etag => [current_theme, @articles, logged_in? ? current_user.id : ''])
-
-    end
+    #expires_in [60 * (params[:page].to_i / 10 + 1), 3600].min if params[:page]
+    #@expires_in = [60 * (params[:page].to_i * 5 + 1), 3600].min if params[:page]
+    # if is_mobile_device? or @articles.blank?
+    #   expires_now
+    #   response.headers['Cache-Control']='private, no-cache, no-store'
+    #   s = true
+    # else
+    #   s = stale?(:last_modified => @articles.first.created_at.utc, :etag => [current_theme, @articles, logged_in? ? current_user.id : ''])
+    # end
     if s
-      @cache_subject = @articles
+      # @cache_subject = @articles
 
       respond_to do |format|
         format.html {render :action => action if action && !performed?}

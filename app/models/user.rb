@@ -24,15 +24,17 @@ class User < ActiveRecord::Base
   has_many :lists
   has_and_belongs_to_many :badges
   has_one :profile
-  has_many :reports ,:as=>:target
-  has_many :records,:class_name=>"Report"
-  
+  has_many :reports, as: :target
+  has_many :records, class_name: "Report"
+
   has_many :quest_logs
   has_many :client_applications
-  has_many :tokens, :class_name=>"OauthToken",:order=>"authorized_at desc",:include=>[:client_application]
+  has_many :tokens,
+    -> { order("authorized_at desc").includes(:client_application) },
+    class_name: "OauthToken"
 
   # attr_protected :login, :activation_code, :state
-  
+
   def role_names
     Rails.cache.fetch("roles:#{id}", :expires_in => 1.hour)do
       roles.collect{|r|r.name}.join(' ')
@@ -42,7 +44,7 @@ class User < ActiveRecord::Base
   def is_admin?
     has_role?('admin')
   end
-  
+
   def ensure_profile
     profile ? profile : create_profile
   end
@@ -52,7 +54,7 @@ class User < ActiveRecord::Base
       total_articles_score + followers.count
     }
   end
-  
+
   def stat
     return @user_stat if @user_stat
     us = UserStat.find_by_user_id id
@@ -63,11 +65,11 @@ class User < ActiveRecord::Base
     end
     @user_stat
   end
-  
+
   def clear_notification *args
     Notification.delete_all(:user_id => id, :key => args.join('.'))
   end
-    
+
   #TODO:send notifications
 
   has_attached_file :avatar,
@@ -77,7 +79,7 @@ class User < ActiveRecord::Base
                                  :medium => "200x200>",
                                  :thumb => '32x32#' }
   validates_attachment_content_type :avatar,
-    :content_type => 
+    :content_type =>
       ['image/jpeg',
        'image/gif',
        'image/png',
@@ -95,7 +97,7 @@ class User < ActiveRecord::Base
 
   has_many :articles
   has_many :comments
-  
+
   has_many :name_logs
 
   def rename new_name
@@ -120,8 +122,8 @@ class User < ActiveRecord::Base
   end
 ######}}}}}}}
   protected
-    
+
   end
 
 
-  
+

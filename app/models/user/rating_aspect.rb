@@ -61,7 +61,7 @@ module User::RatingAspect
           else
             ids = article
           end
-          ratings.find(:all, :conditions => {:article_id => ids}).each do |i|
+          ratings.where(:article_id => ids).each do |i|
             @rated[i.article_id] = true
           end
           if article[0].is_a? Article
@@ -83,7 +83,7 @@ module User::RatingAspect
         i = article.to_i
       end
       return @rated[i] if @rated.include? i
-      @rated[i] = ratings.find(:first, :conditions => {:article_id => i})
+      @rated[i] = ratings.where(:article_id => i).first
     end
 
   end

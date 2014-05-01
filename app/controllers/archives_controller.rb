@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class ArchivesController < ApplicationController
   after_filter :store_location, :except => [:index, :show]
-  super_caches_page :index, :show
+  # super_caches_page :index, :show
   def index
     @start_year = @first.year
     @end_year = @last.year
@@ -9,7 +9,7 @@ class ArchivesController < ApplicationController
   DATE_REGEXP = /\A(\d{4})-?(\d{1,2})?-?(\d{1,2})?\z/.freeze
   def show
     @date = params[:id]
-    
+
     @date.strip!
     @date.chomp!
     match = DATE_REGEXP.match(@date)
@@ -70,7 +70,7 @@ class ArchivesController < ApplicationController
     @first = @first.created_at.to_date
     @last = @last.created_at.to_date
   end
-  
+
   def per_page
     pp = @group.inherited_option(:per_page)
     pp = 20 if pp.blank?
