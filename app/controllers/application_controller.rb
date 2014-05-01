@@ -48,8 +48,8 @@ class ApplicationController < ActionController::Base
     ua = request.user_agent
     force_mobile_format if ua.blank?
     response.headers['Cache-Control'] = 'no-cache' if is_mobile_device?
-    @group ||= Group.find(Setting.default_group) if Setting.default_group
-    theme = @group.options[:theme] if not @group.blank? and not @group.options.blank? and @group.options.include?(:theme)
+    @group ||= Group.find(Setting.default_group) if Setting.default_group.present?
+    theme = @group.options[:theme] if @group.present? and @group.options.present? and @group.options.include?(:theme)
   end
 
   #  def default_url_options(options={})
