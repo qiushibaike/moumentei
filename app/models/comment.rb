@@ -4,18 +4,18 @@ class Comment < ActiveRecord::Base
   include AntiSpam
   harmonize :content
   include SequenceAspect
-  belongs_to :article, :touch => true
+  belongs_to :article, touch: true
   belongs_to :user
-  has_many :ratings, :class_name => 'CommentRating', :dependent => :delete_all
-  has_many :reports ,:as => :target
-  scope :today, lambda {{:conditions => {:created_at => Date.today}}}
-  scope :public, :conditions => {:status => ['publish', 'private']}
-  scope :anonymous, :conditions => {:anonymous => true}
-  scope :signed, :conditions => {:anonymous => false}
-  scope :by_status, lambda {|status| {:conditions => {:status => status}}}
+  has_many :ratings, class_name: 'CommentRating', dependent: :delete_all
+  has_many :reports ,as: :target
+  scope :today, -> { where( created_at: Date.today) }
+  scope :public, -> { where( status: ['publish', 'private'])}
+  scope :anonymous, -> {where( anonymous: true)}
+  scope :signed, -> { where( anonymous: false)}
+  scope :by_status, ->(status) { where(status: status )}
   attr_protected :user_id, :status
   after_save :create_notification
-  #validates_length_of :content, :minimum => 1
+  #validates_length_of :content, minimum: 1
   #after_save :update_score
   after_create :comment_notify
 
@@ -25,7 +25,7 @@ class Comment < ActiveRecord::Base
   def self.all_number(date)
     from=date.to_time
     to  =(date+1).to_time
-    comments=Comment.find :all, :conditions => ["created_at > ? and created_at < ? ",from,to ]
+    comments=Comment.find :all, conditions: ["created_at > ? and created_at < ? ",from,to ]
     number=comments.length
     number
   end
@@ -46,7 +46,7 @@ class Comment < ActiveRecord::Base
     return false if self.user_id == user_id
     transaction do
       lock!
-      r = ratings.find_by_user_id user_id, :lock => true
+      r = ratings.find_by_user_id user_id, lock: true
 
       if r
         if r.score != s
@@ -62,9 +62,9 @@ class Comment < ActiveRecord::Base
           return false
         end
       else
-        CommentRating.create :comment_id => id,
-          :user_id => user_id,
-          :score => s
+        CommentRating.create comment_id: id,
+          user_id: user_id,
+          score: s
       end
 
       if s > 0
@@ -101,7 +101,7 @@ class Comment < ActiveRecord::Base
   def rated_by? user
     uid = user.is_a?(User) ? user.id : user
     return true if uid == user_id
-    CommentRating.find :first, :conditions => {:user_id => uid, :comment_id => id}, :select => 'id'
+    CommentRating.find :first, conditions: {user_id: uid, comment_id: id}, select: 'id'
   end
 
   def ip
@@ -135,8 +135,8 @@ class Comment < ActiveRecord::Base
     user_id = user.is_a?(User) ? user.id : user
     result ={}
     CommentRating.find(:all,
-      :conditions => {:user_id => user_id, :comment_id=>comment_ids},
-      :select => [:comment_id]).each do |r|
+      conditions: {user_id: user_id, comment_id:comment_ids},
+      select: [:comment_id]).each do |r|
       result[r.comment_id] = true
     end
   end
@@ -146,7 +146,7 @@ class Comment < ActiveRecord::Base
   def as_json(opt={})
     except = [:ip]
     except << :user_id if anonymous?
-    super(:except=>except)
+    super(except:except)
   end
 
   protected

@@ -15,38 +15,38 @@ class Article < ActiveRecord::Base
   #meta_field :original_url
   acts_as_taggable
   acts_as_favorite
-  
+
   before_save do |rec|
     rec.tag_list = rec.tag_line if rec.tag_line_changed?
     rec.status = 'future' if rec.status == 'publish' and rec.created_at and rec.created_at_changed? and rec.created_at > Time.now + 5.minutes
   end
 
   before_publish do |rec|
-    rec.published_at ||= Time.now 
+    rec.published_at ||= Time.now
   end
-  
+
   #acts_as_archive unless RUBY_PLATFORM =~ /win32|mingw/
   # the status enum
   STATUSES = %w(publish private pending spam deleted future)
-  validates_inclusion_of :status,  :in => STATUSES.collect(&:to_s)
-  has_many :reports ,:as => :target
-  has_many :ratings,  :dependent => :delete_all
-  has_many :anonymous_ratings, :dependent => :delete_all
-  belongs_to :original_picture, :class_name => 'Picture', :foreign_key => 'picture_id'
+  validates_inclusion_of :status,  in: STATUSES.collect(&:to_s)
+  has_many :reports ,as: :target
+  has_many :ratings,  dependent: :delete_all
+  has_many :anonymous_ratings, dependent: :delete_all
+  belongs_to :original_picture, class_name: 'Picture', foreign_key: 'picture_id'
   belongs_to :group
   validates_presence_of :group
   belongs_to :user
-  validates_presence_of :user, :unless => :anonymous
-  scope :by_status, lambda {|status| {:conditions => {:status => status}}}
-  scope :by_period, lambda {|s, e| {:conditions => ['articles.created_at >= ? and articles.created_at < ?', s, e]}}
-  scope :by_group, lambda {|group_id| {:conditions => {:group_id => group_id}}}
-  scope :public, -> { where(:status => 'publish') }
-  scope :anonymous, -> { where(:anonymous => true) }
-  scope :signed, -> { where(:anonymous => false) }
-  scope :pending, -> { where(:status => 'pending') }
+  validates_presence_of :user, unless: :anonymous
+  scope :by_status, -> (status) { where(status: status)}
+  scope :by_period, ->(s, e) { where ['articles.created_at >= ? and articles.created_at < ?', s, e]}
+  scope :by_group, ->(group_id) { where group_id: group_id }
+  scope :public, -> { where(status: 'publish') }
+  scope :anonymous, -> { where(anonymous: true) }
+  scope :signed, -> { where(anonymous: false) }
+  scope :pending, -> { where(status: 'pending') }
   scope :hottest, -> { order('score desc') }
   scope :latest, -> { order('published_at desc') }
-  scope :published_after, lambda{|time| where{published_at >= time} }
+  scope :published_after, ->(time) { where{published_at >= time} }
   attr_protected :user_id, :status
 
   cattr_accessor :per_page
@@ -80,25 +80,25 @@ class Article < ActiveRecord::Base
       end
       cond[0] = cond[0].join(' AND ')
       find :all,
-        :conditions => sanitize_sql(cond),
-        :order => 'scores.score DESC',
-        :include => :score,
-        :limit => n
+        conditions: sanitize_sql(cond),
+        order: 'scores.score DESC',
+        include: :score,
+        limit: n
     end
 
     def ids_in(time)
       with_scope do
-        public.all(:select => 'articles.id',
-          :conditions => ["created_at > ?",( Time.now - time).to_date]).collect{|a|a.id}
+        public.all(select: 'articles.id',
+          conditions: ["created_at > ?",( Time.now - time).to_date]).collect{|a|a.id}
       end
     end
 
     def cached_tag_clouds
       Tag
-      c = Rails.cache.fetch('tag_clouds', :expires_in => 86400) do
-        tag_counts( :limit    => 100,
-                    :at_least => 5,
-                    :order    => 'count DESC').sort_by{rand}
+      c = Rails.cache.fetch('tag_clouds', expires_in: 86400) do
+        tag_counts( limit: 100,
+                    at_least: 5,
+                    order: 'count DESC').sort_by{rand}
       end
       if c.size == 0
         Rails.cache.delete 'tag_clouds'
@@ -109,12 +109,12 @@ class Article < ActiveRecord::Base
     end
 
     def recent_hot(page)
-      where{alt_score > 0}.paginate :page => page, :order => 'alt_score desc',:include => [:user]
+      where{alt_score > 0}.paginate page: page, order: 'alt_score desc',include: [:user]
     end
 
     def pictures(group_id, page)
       with_scope do
-        s = Score.paginate(:page => page, :conditions=>{:has_picture=>1, :group_id => group_id},:order => 'created_at desc')
+        s = Score.paginate(page: page, conditions:{has_picture:1, group_id: group_id},order: 'created_at desc')
         scores_to_articles(s)
       end
     end
@@ -168,9 +168,9 @@ class Article < ActiveRecord::Base
       ['user_id', 'anonymous', 'status', 'ip']
 
     j = super(
-      :except => b
+      except: b
     ).merge(
-      score.as_json(:except => ['group_id', 'created_at', 'id', 'article_id'])
+      score.as_json(except: ['group_id', 'created_at', 'id', 'article_id'])
     )
     if sign
       u = {
@@ -183,7 +183,7 @@ class Article < ActiveRecord::Base
   end
 
   def self.clear_cache
-    paginated_each(:conditions => 'updated_at >= now() - interval 5 minute', :per_page => 1000) do |article|
+    paginated_each(conditions: 'updated_at >= now() - interval 5 minute', per_page: 1000) do |article|
       group =  article.group
       domain = article.group.domain
       theme = group.inherited_option(:theme)

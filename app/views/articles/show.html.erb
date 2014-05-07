@@ -7,7 +7,7 @@
 <% if ( @msg || flash[:notice] ) %><div id="notice"> <%= ( @msg || flash[:notice] ) %></div> <% end %>
 
 <% if @article %>
-  <%= render(:partial => @article ) %>
+  <%= render @article %>
   <% if @article.public_references.count > 0 %>
       <%= link_to_unless_current("#{@article.public_references.count}个相关帖子", :controller => :articles, :action => :ref, :id => @article.id) do
           "<span style='color: #96dd99'>以下是链接到该帖子的相关帖子</span>"
@@ -21,15 +21,4 @@
     <div class="next"><%= link_to("下一帖子", article_path(@article.next_in_group), :rel => 'next') %> &raquo;</div>
     <% end %>
   </div><!-- .loop-nav -->
-<% end %>
-
-<% if @article.original_picture and @article.original_picture.articles.size > 1 %>
-  <h3>相关涂鸦</h3>
-  <ul>
-  <% @article.original_picture.articles.each do |art| %>
-  <% unless art.id == @article.id or art.status != 'publish' %>
-  <%= link_to art.title, art %>
-  <% end %>
-  <% end %>
-  </ul>
 <% end %>

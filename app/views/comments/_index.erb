@@ -1,14 +1,15 @@
 <% group = @group || @article.group %>
+
 <div class="comments-template" id="article_comments_<%=@article.id%>">
   <div class="comments-wrap">
     <div class="comments">
       <% if @comments and @comments.size > 0 %>
           <% @offset ||= 0 %>
           <ol class="comment-list">
-            <%= render :partial => @comments %>
+            <%= render @comments %>
           </ol>
       <% end %>
     </div>
-    <%= render :partial => 'comments/form' %>
+    <%= render 'comments/form' %>
   </div>
 </div>
