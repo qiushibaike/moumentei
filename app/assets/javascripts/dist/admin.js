@@ -12,11 +12,6 @@ function select_all(){select_item(function(){return true});}
 function select_none(){select_item(function(){return false});}
 function select_reverse(){select_item(function(i){return !i});}
 
-function set_status(id, status){
-    $('#status').load('/admin/set_status/' + id + '?status=' + status)
-}
-
-
 function load_comments(){
     var entry = $(this).parents('.entry');
     var id = entry.data('article_id');
@@ -27,14 +22,7 @@ function load_comments(){
 }
 
 $(function(){
-   $(".status-edit a").live('click', function(){
-       var self = $(this);
-       $.post(this.href, function(){
-         self.parents('.entry').remove();
-       });
-       return false;
-   })
-   $('.comments-toggle').live('click', load_comments);
+   $('.comments-toggle').click(load_comments);
     $(".report-edit a").click(function(){
        var self = $(this);
        $.get(this.href, function(){
@@ -42,7 +30,7 @@ $(function(){
        });
        return false;
    })
-   $('.comment-manage a').live('click', function(){
+   $('.comment-manage a').on('click', function(){
        var self = $(this);
        $.post(this.href, function(){
             self.parents('.comment').remove();
@@ -50,7 +38,7 @@ $(function(){
        return false;
    });
 
-   $('.entry a.close').live('click', function(){
+   $('.entry a.close').on('click', function(){
        $(this).prev('.list').remove();
        $(this).remove();
        return false;

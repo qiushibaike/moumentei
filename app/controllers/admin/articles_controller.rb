@@ -51,14 +51,14 @@ class Admin::ArticlesController < Admin::BaseController
       else
         params[:article].delete(:user_id)
       end
-    end    
-    
+    end
+
     @article = Article.new params[:article]
-    
+
     %w(status user_id pos_score neg_score).each do |field|
       @article.send "#{field}=", params[:article][field] unless params[:article][field].blank?
     end
-    
+
     if @article.save
       flash[:success] = 'article created'
       redirect_to [:edit, :admin, @article]
@@ -84,10 +84,10 @@ class Admin::ArticlesController < Admin::BaseController
     @article.attributes= params[:article]
     logger.debug params[:article].inspect
     %w(status user_id pos_score neg_score).each do |field|
-      logger.debug params[:article][field] 
+      logger.debug params[:article][field]
       @article.send "#{field}=", params[:article][field] unless params[:article][field].blank?
     end
-    
+
     if @article.save
       flash[:notice] = "#{@article.id} updated"
     end
@@ -132,10 +132,8 @@ class Admin::ArticlesController < Admin::BaseController
     @article.save!
     AuditLogger.log current_user, 'set article', @article.id, 'status from', orig_status, 'to', params[:status]
     TicketWorker.async_judge(:article_id => @article.id, :approval => (@article.status == 'publish'), :reason => '')
-    if request.xhr?
-      render :nothing => true
-    else
-      redirect_to :back
+    respond_to do |format|
+      format.js
     end
   end
 
