@@ -9,13 +9,12 @@
                         :class => 'picture', :id => "picture-#{id}", :title => (article.title || article.content.mb_chars[0, 10]) %>
         <% end %>
     <% end %>
+    <% if article.title.present? %>
     <h3 class="entry-title">
-      <% if article.title.blank? %>
-          <%= link_to "\##{article.id}", article, :rel => 'bookmark' %>
-      <% else %>
           <%= link_to article.title, article, :title => article.title, :rel => 'bookmark' %>
-      <% end %>
     </h3>
+    <% end %>
+
 
     <div class="entry-summary">
       <%= auto_link format_content(article, article.group) %>
