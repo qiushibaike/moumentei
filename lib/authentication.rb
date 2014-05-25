@@ -4,9 +4,9 @@ module Authentication
     :name_regex, :bad_name_message,
     :email_name_regex, :domain_head_regex, :domain_tld_regex, :email_regex, :bad_email_message
 
-  self.login_regex       = /\A\w[\w\.\-_@]+\z/                     # ASCII, strict
+  # self.login_regex       = /\A\w[\w\.\-_@]+\z/                     # ASCII, strict
   # self.login_regex       = /\A[[:alnum:]][[:alnum:]\.\-_@]+\z/     # Unicode, strict
-  # self.login_regex       = /\A[^[:cntrl:]\\<>\/&]*\z/              # Unicode, permissive
+  self.login_regex       = /\A[^[:cntrl:]\\<>\/&]*\z/              # Unicode, permissive
 
   self.bad_login_message = "use only letters, numbers, and .-_@ please.".freeze
 
