@@ -197,6 +197,10 @@ class ArticlesController < ApplicationController
             o[:except] << :user_id if @article.anonymous?
             render json: @article.as_json(o)
           }
+
+          format.json {
+            render json: article
+          }
         end
       end
     else

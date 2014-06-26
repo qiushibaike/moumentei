@@ -26,7 +26,6 @@ gem 'puma', :platforms => [:jruby, :ruby]
 gem 'rails-observers'
 gem 'protected_attributes'
 gem 'rails_autolink'
-#
 gem 'will_paginate'
 gem "aasm"
 gem 'paperclip'
@@ -120,3 +119,4 @@ end
 
 gem 'newrelic_rpm'
 gem 'draper'
+gem "active_model_serializers"

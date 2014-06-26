@@ -255,15 +255,19 @@ class GroupsController < ApplicationController
       respond_to do |format|
         format.html {render :action => action if action && !performed?}
         format.mobile {render :action => action if action && !performed?}
-        format.any :js, :json do
+        format.js do
 
           render :json => {
-
             :articles => @articles,
             :total_pages => @articles.total_pages
 
           }
         end
+        format.json do 
+          articles = ArticleDecorator.decorate_collection @articles
+          render json: articles, each_serializer: ArticleSerializer, root: 'articles', meta: {total_pages: articles.total_pages}
+        end
+
       end
     end
   end
