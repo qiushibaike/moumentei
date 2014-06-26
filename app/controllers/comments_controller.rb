@@ -6,7 +6,7 @@ class CommentsController < InheritedResources::Base
   #before_filter :oauthenticate, :only => [:create]
   before_filter :login_required, :except => [:index, :show, :count, :create, :up, :dn,:report]
   super_caches_page :index
-
+  decorates_assigned :article, :comments
   # GET /comments
   # GET /comments.xml
   def index
@@ -15,7 +15,7 @@ class CommentsController < InheritedResources::Base
     opt[:public] = true unless is_mobile_device?
     opt[:last_modified] = @article.updated_at.utc
     opt[:etag] = [@article, @article.public_comments_count, request.format]
-    
+
     if stale?(opt)
       cond = ''
       cond = ['comments.floor > ?', params[:after]] if params[:after]

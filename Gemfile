@@ -1,4 +1,9 @@
-source 'http://ruby.taobao.org'
+if ENV['USE_OFFICIAL_GEM_SOURCE']
+  source 'https://rubygems.org'
+else
+  source 'https://ruby.taobao.org'
+end
+
 gem "rails", "~> 4.0.0"
 platforms :ruby, :mingw do
   # use mysql
@@ -79,6 +84,8 @@ group :development do
   gem 'capistrano3-puma', github: "seuros/capistrano-puma"
   gem 'win32console', '~> 1.3.2', :platforms => :mingw
   gem 'jruby-pageant', :require => false, :platforms => :jruby
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test, :development do
@@ -112,4 +119,4 @@ end
 
 
 gem 'newrelic_rpm'
-
+gem 'draper'

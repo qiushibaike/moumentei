@@ -1,10 +1,10 @@
 # -*- encoding : utf-8 -*-
 class Admin::CommentsController < Admin::BaseController
   cache_sweeper :comment_sweeper, :only => [ :set_status,  :batch_set_status]
-  
+  decorates_assigned :article, :comments
   def index
     @status = params[:status] || 'pending'
-    @statuses = Comment::STATUSES 
+    @statuses = Comment::STATUSES
     sql = <<SQL
 SELECT articles . *
 FROM articles
@@ -18,13 +18,13 @@ SQL
       @comments[a.id] = a.comments.find :all, :conditions => {:status => @status}
     end
   end
-  
+
   def new
     @article = Article.find params[:article_id]
     @comment = @article.comments.new
     render :layout => false
   end
-  
+
   def create
     @article = Article.find params[:comment][:article_id]
     @comment = @article.comments.build params[:comment]
@@ -37,7 +37,7 @@ SQL
       redirect_to :back
     end
   end
-  
+
   def set_status
     @comment = Comment.find params[:id]
     @comment.status = params[:status]
@@ -46,7 +46,7 @@ SQL
 #  rescue
 #    redirect_to :back
   end
-  
+
   def batch_set_status
     params[:status] ||= 'publish'
     if params[:id]

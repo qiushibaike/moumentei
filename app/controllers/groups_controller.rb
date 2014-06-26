@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
     'month' => 1.month,
     'year' => 1.year
   }
-
+  decorates_assigned :articles
   #super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
   before_filter :date_range_detect, :only => [:hottest,:hottestpage, :most_replied]
 
@@ -114,6 +114,7 @@ class GroupsController < ApplicationController
       params[:page] = @articles.total_pages
       redirect_to(params)
     else
+      @articles = ArticleDecorator.decorate_collection(@articles)
       generic_response(:archives)
     end
   end

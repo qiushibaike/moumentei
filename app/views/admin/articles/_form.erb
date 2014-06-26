@@ -6,7 +6,7 @@
 <%# f.label :source%>
 <%# f.text_field :source %>
 <%= f.label :user_id %>
-<%= f.text_field :user_id %> <%= link_to @article.user.login, [:admin, @article.user] if @article.user %>
+<%= f.text_field :user_id %> <%= link_to @article.author_name, [:admin, @article.user] if @article.user %>
 <%= f.label :content %>
 <%= f.text_area :content, :rows => 7, :class => 'span6' %>
 <%= f.label :picture %>

@@ -8,7 +8,7 @@
   <% else %>
     <div class="comment-wrap">
       <% unless anon %>
-      <a title="<%=comment.user.login%>" rel="external nofollow" href="<%= user_path(comment.user) %>" class="avatar-block pull-left">
+      <a title="<%=comment.author_name%>" rel="external nofollow" href="<%= user_path(comment.user) %>" class="avatar-block pull-left">
         <%= image_tag anon ? '/images/anonymous.png' : user.avatar.url("thumb"), :alt => anon || user.login, :class => 'avatar photo', :alt=>user.login %>
       </a>
       <% else %>
@@ -28,7 +28,7 @@
         </div><!-- .comment-author .vcard -->
         <span class="published">
           <abbr title="" class="comment-date"><%= comment.created_at.strftime("%Y-%m-%d %H:%M:%S")%></abbr></span>
-        
+
         <a title="该评论的链接" href="<%=article_path(@article)%>#comment-<%=comment.id%>" class="permalink floorlink">#<%= f %></a>
         <!--|
         <a onclick="return addComment.moveForm(&quot;comment-93&quot;, &quot;93&quot;, &quot;respond&quot;, &quot;584&quot;)" href="/demo/prototype/?p=584&amp;replytocom=93#respond" class="comment-reply-link" rel="nofollow">Reply</a>

@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Admin::ReportsController < Admin::BaseController
+
   def index
     params[:type] ||= 'Comment'
     @reports = Report.find :all, :conditions => ["target_type= ? and operator_id IS NULL ", params[:type]]
@@ -23,13 +24,13 @@ class Admin::ReportsController < Admin::BaseController
         user.suspend
         UserNotifier.suspend(user).deliver
       when 'silence'
-        
+
       when 'noop'
       end
     end
     redirect_to :back
   end
-  
+
   def ignore
     @report = Report.find params[:id]
     @report.result = 'ignore'
@@ -38,7 +39,7 @@ class Admin::ReportsController < Admin::BaseController
     @report.save!
     redirect_to :back
   end
-  
+
   def remove
     @report = Report.find params[:id]
     @target = @report.target
@@ -53,7 +54,7 @@ class Admin::ReportsController < Admin::BaseController
     @report.save!
     redirect_to :back
   end
-  
+
   def destroy
     @report = Report.find params[:id]
     @report.destroy

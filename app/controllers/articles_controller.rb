@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   cache_sweeper :article_sweeper, only: [ :create ]
 
   include Reportable
-
+  decorates_assigned :article, :comments
   KEYS = %w(day week month year all)
 
   DateRanges = {
