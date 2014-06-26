@@ -141,7 +141,7 @@ class Comment < ActiveRecord::Base
     end
   end
   def anonymous?
-    anonymous || !user || user.deleted?
+    anonymous || user.blank? || user_id == 0 || user.deleted?
   end
   def as_json(opt={})
     except = [:ip]

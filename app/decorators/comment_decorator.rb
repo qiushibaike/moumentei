@@ -22,7 +22,15 @@ class CommentDecorator < Draper::Decorator
     end
   end
 
-  def url
-    h.url_for object.article
+  def author_path
+    if object.user.present?
+      h.user_path object.user
+    else
+      '#'
+    end
+  end
+
+  def created_date(class_names="comment-date", **attributes)
+    h.content_tag :abbr, comment.created_at.strftime("%Y-%m-%d %H:%M:%S"), title: '', class: class_names
   end
 end
