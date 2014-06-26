@@ -13,6 +13,8 @@ class ApplicationController < ActionController::Base
   has_mobile_fu
   attr_accessor :show_login
 
+  respond_to :html, :json, :js, :mobile, :wml
+
   protected
   def render_feed options = {}
     @options = options

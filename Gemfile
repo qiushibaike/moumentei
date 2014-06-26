@@ -110,3 +110,6 @@ group :production do
   gem 'rack-cache'
 end
 
+
+gem 'newrelic_rpm'
+
