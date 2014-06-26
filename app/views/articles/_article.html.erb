@@ -45,7 +45,7 @@
             | <span class="edit"><a class="post-edit-link" href="http://localhost/wordpress/wp-admin/post.php?post=761&amp;action=edit" title="Edit 文章">Edit</a></span>
             -->
         <% end %>
-        <%= article.published_at %>
+        <%= article.published_date %>
       </div>
       <div class="comments_link">
         <a href="<%= article_path(article, :anchor => "comments") %>" class="comments btn " id="c-<%= article.id %>">

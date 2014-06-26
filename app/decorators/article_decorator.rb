@@ -30,7 +30,7 @@ class ArticleDecorator < Draper::Decorator
     end
   end
 
-  def published_at(prefix="发表于")
+  def published_date(prefix="发表于")
     h.concat prefix
     h.link_to h.archive_path(object.group, :date => object.created_at) do
       h.content_tag :abbr, object.created_at.strftime("%Y-%m-%d"), class: "published", title: object.created_at.iso8601
