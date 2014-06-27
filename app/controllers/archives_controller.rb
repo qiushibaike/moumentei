@@ -2,6 +2,7 @@
 class ArchivesController < ApplicationController
   after_filter :store_location, :except => [:index, :show]
   # super_caches_page :index, :show
+  decorates_assigned :articles
   def index
     @start_year = @first.year
     @end_year = @last.year
