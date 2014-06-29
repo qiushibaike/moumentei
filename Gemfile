@@ -49,8 +49,10 @@ gem "calendar_helper"
 gem 'acts_as_favorite', :git => 'https://github.com/ShiningRay/acts_as_favorite.git'
 gem 'acts_as_taggable_on_steroids', :git => 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git', :require => 'acts_as_taggable'
 gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
-gem "rolify", '~> 3.1'
-gem 'dynamic_form'
+gem 'pundit'
+gem 'rolify'
+gem 'simple_form'
+
 
 # group :assets do
   gem 'sass-rails', '~> 4.0.0'
@@ -88,6 +90,7 @@ group :development do
 end
 
 group :test, :development do
+  gem 'spring-commands-rspec'
   gem "rspec-rails", "~> 2.0"
   gem 'guard'
   gem 'guard-livereload'

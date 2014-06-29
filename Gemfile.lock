@@ -149,7 +149,6 @@ GEM
       activemodel (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
-    dynamic_form (1.1.4)
     em-websocket (0.5.0)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
@@ -309,6 +308,8 @@ GEM
       rack (>= 1.1, < 2.0)
     puma (2.8.2-java)
       rack (>= 1.1, < 2.0)
+    pundit (0.2.3)
+      activesupport (>= 3.0.0)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -380,9 +381,15 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
+    simple_form (3.0.2)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     slop (3.5.0)
     spoon (0.0.4)
       ffi
+    spring (1.1.3)
+    spring-commands-rspec (1.0.2)
+      spring (>= 0.9.1)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -470,7 +477,6 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   draper
-  dynamic_form
   factory_girl_rails
   forgery
   guard
@@ -494,6 +500,7 @@ DEPENDENCIES
   paperclip
   protected_attributes
   puma
+  pundit
   quiet_assets
   rack-cache
   rack-livereload
@@ -504,12 +511,14 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   remotipart
-  rolify (~> 3.1)
+  rolify
   rspec-rails (~> 2.0)
   ruby_gntp
   rufus-scheduler
   sass-rails (~> 4.0.0)
   sdoc
+  simple_form
+  spring-commands-rspec
   squeel
   super_cache
   themes_for_rails!
