@@ -52,7 +52,7 @@ gem 'alias_fallback', :git => 'https://github.com/ShiningRay/alias_fallback.git'
 gem 'pundit'
 gem 'rolify'
 gem 'simple_form'
-
+gem 'lazy_high_charts'
 
 # group :assets do
   gem 'sass-rails', '~> 4.0.0'
@@ -91,9 +91,10 @@ end
 
 group :test, :development do
   gem 'spring-commands-rspec'
-  gem "rspec-rails", "~> 2.0"
+  gem "rspec-rails"
   gem 'guard'
   gem 'guard-livereload'
+  gem 'guard-rspec', require: false
   gem 'rack-livereload'
   gem 'rb-inotify', :require => false
   gem 'rb-fsevent', :require => false
@@ -105,7 +106,7 @@ end
 
 group :test do
   gem "factory_girl_rails"
-  gem 'guard-rspec'
+
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'

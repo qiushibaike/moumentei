@@ -4,7 +4,7 @@ describe AnonymousRating do
   let(:article){ create :article }
   let(:user){ create :user }
 
-  it 'should be able to rate and not rate again' do
+  it 'does not rate again' do
     lambda{
       AnonymousRating.vote('127.0.0.1', article, 1)
     }.should change(AnonymousRating, :count).by(1)

@@ -1,13 +1,13 @@
 # -*- encoding : utf-8 -*-
 class AnonymousRating < ActiveRecord::Base
   belongs_to :article
-  scope :pos, :conditions => 'anonymous_ratings.score > 0'
-  scope :neg, :conditions => 'anonymous_ratings.score < 0'
-  scope :by_period, lambda {|s, e| {:conditions => ['anonymous_ratings.created_at >= ? and anonymous_ratings.created_at < ?', s, e]}}
-  scope :by_group, lambda {|group_id| {:conditions => [ "articles.group_id = ?", group_id], :joins => [:article]}}
+  scope :pos, -> { where{score > 0} }
+  scope :neg, -> { where{score < 0} }
+  scope :by_period, -> (s, e) { where{created_at >= s and created_at < e} }
+  scope :by_group, -> (group_id) { where(group_id: group_id) }
   attr_accessible :ip, :score, :article_id
   def self.vote(ip, article, score)
-    ip = ip2long(ip) unless ip.is_a?(Integer)
+    ip = IPService.ip2long(ip) unless ip.is_a?(Integer)
     if article.is_a?(Article)
       article_id = article
     else
@@ -27,10 +27,12 @@ class AnonymousRating < ActiveRecord::Base
     end
     r.save!
     article.calc_alt_score
+  rescue ActiveRecord::RecordNotUnique
+    false
   end
 
   def self.has_rated?(ip, article_id)
-    ip = ip2long(ip) unless ip.is_a?(Integer)
+    ip = IPService.ip2long(ip) unless ip.is_a?(Integer)
     case article_id
     when Article
       article_id = article_id.id if article_id.is_a?(Article)
