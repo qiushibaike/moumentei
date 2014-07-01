@@ -37,4 +37,8 @@ class ArticleDecorator < Draper::Decorator
       h.content_tag :abbr, object.created_at.strftime("%Y-%m-%d"), class: "published", title: object.created_at.iso8601
     end
   end
+
+  def ip
+    IPUtils.long2ip(object.ip)
+  end
 end

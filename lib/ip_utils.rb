@@ -1,4 +1,4 @@
-module IPService
+module IPUtils
   module_function
   def ip2long(ip)
     a = 0

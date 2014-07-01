@@ -7,7 +7,7 @@ class AnonymousRating < ActiveRecord::Base
   scope :by_group, -> (group_id) { where(group_id: group_id) }
   attr_accessible :ip, :score, :article_id
   def self.vote(ip, article, score)
-    ip = IPService.ip2long(ip) unless ip.is_a?(Integer)
+    ip = IPUtils.ip2long(ip) unless ip.is_a?(Integer)
     if article.is_a?(Article)
       article_id = article
     else
@@ -32,7 +32,7 @@ class AnonymousRating < ActiveRecord::Base
   end
 
   def self.has_rated?(ip, article_id)
-    ip = IPService.ip2long(ip) unless ip.is_a?(Integer)
+    ip = IPUtils.ip2long(ip) unless ip.is_a?(Integer)
     case article_id
     when Article
       article_id = article_id.id if article_id.is_a?(Article)

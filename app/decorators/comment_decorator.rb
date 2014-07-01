@@ -33,4 +33,8 @@ class CommentDecorator < Draper::Decorator
   def created_date(class_names="comment-date", **attributes)
     h.content_tag :abbr, comment.created_at.strftime("%Y-%m-%d %H:%M:%S"), title: '', class: class_names
   end
+
+  def ip
+    IPUtils.long2ip(object.ip)
+  end
 end

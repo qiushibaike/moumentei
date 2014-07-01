@@ -126,14 +126,9 @@ class Article < ActiveRecord::Base
 
   end
 
-  def ip
-    @string_ip ||= long2ip(self['ip'])
-    return @string_ip
-  end
-
   def ip= ip
     if ip.is_a?(String)
-      self['ip'] = ip2long(ip)
+      self['ip'] = IPUtils.ip2long(ip)
       @string_ip = ip
     else
       self['ip'] = ip.to_i

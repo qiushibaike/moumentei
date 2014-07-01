@@ -105,13 +105,9 @@ class Comment < ActiveRecord::Base
     CommentRating.find :first, conditions: {user_id: uid, comment_id: id}, select: 'id'
   end
 
-  def ip
-    @string_ip ||= long2ip(self['ip'])
-  end
-
   def ip= ip
     if ip.is_a?(String)
-      self['ip'] = ip2long(ip)
+      self['ip'] = IPUtils.ip2long(ip)
       @string_ip = ip
     else
       self['ip'] = ip.to_i

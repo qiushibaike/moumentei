@@ -1,17 +1,17 @@
 <% id = article.id %>
 <% url = article_url(article) %>
-<%= div_for(article, :class => "hentry #{cycle('even', 'odd')} #{article.picture.file? && 'picture'} box") do %>
+<%= div_for(article, class: "hentry #{cycle('even', 'odd')} #{article.picture.file? && 'picture'} box") do %>
     <% if article.picture.file? %>
         <% if article.picture.content_type =~ /gif/i %>
-            <%= image_tag(article.picture(:original), :alt => (article.title || article.content.mb_chars[0, 10])) %>
+            <%= image_tag(article.picture(:original), alt: (article.title || article.content.mb_chars[0, 10])) %>
         <% else %>
-            <%= link_to image_tag(article.picture(:medium), :alt => (article.title || article.content.mb_chars[0, 10])), article.picture(:original),
-                        :class => 'picture', :id => "picture-#{id}", :title => (article.title || article.content.mb_chars[0, 10]) %>
+            <%= link_to image_tag(article.picture(:medium), alt: (article.title || article.content.mb_chars[0, 10])), article.picture(:original),
+                        class: 'picture', id: "picture-#{id}", title: (article.title || article.content.mb_chars[0, 10]) %>
         <% end %>
     <% end %>
     <% if article.title.present? %>
     <h3 class="entry-title">
-          <%= link_to article.title, article, :title => article.title, :rel => 'bookmark' %>
+          <%= link_to article.title, article, title: article.title, rel: 'bookmark' %>
     </h3>
     <% end %>
 
@@ -39,8 +39,8 @@
             匿名人士
         <% else %>
             <% user=article.user %>
-            <span class="author vcard"><%= image_tag user.avatar.url("thumb"), :alt => article.author_name, :size => '16x16', :class => 'avatar' %>
-              <%= link_to article.author_name, user, :class => "url fn n" %>
+            <span class="author vcard"><%= image_tag user.avatar.url("thumb"), alt: article.author_name, size: '16x16', class: 'avatar' %>
+              <%= link_to article.author_name, user, class: "url fn n" %>
         </span>
             <!--
             | <span class="edit"><a class="post-edit-link" href="http://localhost/wordpress/wp-admin/post.php?post=761&amp;action=edit" title="Edit 文章">Edit</a></span>
@@ -49,7 +49,7 @@
         <%= article.published_date %>
       </div>
       <div class="comments_link">
-        <a href="<%= article_path(article, :anchor => "comments") %>" class="comments btn " id="c-<%= article.id %>">
+        <a href="<%= article_path(article, anchor: "comments") %>" class="comments btn " id="c-<%= article.id %>">
           <i class="icon-comment"></i>
           <%= article.comment_count_status %>
         </a>
