@@ -5,7 +5,7 @@ class CommentsController < InheritedResources::Base
   before_filter :find_post, except: [:up, :dn], if: -> (c) { c.params.include?(:post_id)}
   #before_filter :oauthenticate, only: [:create]
   before_filter :login_required, except: [:index, :show, :count, :create, :up, :dn,:report]
-  super_caches_page :index
+  # super_caches_page :index
   decorates_assigned :article, :comments
   # GET /comments
   # GET /comments.xml

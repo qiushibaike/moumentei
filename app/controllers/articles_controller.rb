@@ -7,7 +7,6 @@ class ArticlesController < ApplicationController
   #super_caches_page :show
   cache_sweeper :article_sweeper, only: [ :create ]
 
-  include Reportable
   decorates_assigned :article, :comments
   KEYS = %w(day week month year all)
 

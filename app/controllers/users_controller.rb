@@ -9,9 +9,7 @@ class UsersController < ApplicationController
   #layout 'users', :except => [:new, :fetchpass, :activate]
   #layout 'application', :only => [:new, :fetchpass, :activate]
   layout 'users'
-  #super_caches_page :show
 
-  include Reportable
 
   def index
     redirect_to :controller => :my

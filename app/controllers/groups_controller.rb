@@ -4,7 +4,14 @@ class GroupsController < ApplicationController
   before_filter :find_group, :except => [:index]
   after_filter :store_location, :only => [:index, :show, :latest, :hottest]
   theme :select_theme
-  DAY = {'8hr' => '8小时', "day"=>"24小时", "week" => "7天", "month" => "30天" , "year"=>"365天", "all" => "有史以来"}
+
+  DAY = { # TODO: move to i18n
+    '8hr' => '8小时',
+    "day" => "24小时",
+    "week" => "7天",
+    "month" => "30天" ,
+    "year"=>"365天",
+    "all" => "有史以来" }
   KEYS = ['8hr', "day", "week", "month", "year", "all"]
 
   DateRanges = {
@@ -14,9 +21,10 @@ class GroupsController < ApplicationController
     'month' => 1.month,
     'year' => 1.year
   }
+
   decorates_assigned :articles
   #super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
-  before_filter :date_range_detect, :only => [:hottest,:hottestpage, :most_replied]
+  before_filter :date_range_detect, only: [:hottest, :hottestpage, :most_replied]
 
   def index
     if Setting.default_group
@@ -263,7 +271,7 @@ class GroupsController < ApplicationController
 
           }
         end
-        format.json do 
+        format.json do
           articles = ArticleDecorator.decorate_collection @articles
           render json: articles, each_serializer: ArticleSerializer, root: 'articles', meta: {total_pages: articles.total_pages}
         end

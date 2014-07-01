@@ -1,10 +1,12 @@
 # -*- encoding : utf-8 -*-
 module Reportable
-  def self.included(base)
-    @@model = Kernel.const_get(base.controller_name.singularize.capitalize)
-    base.cattr_reader :model
+  extend ActiveSupport::Concern
+
+  included do
+    class_attributes :model
+    self.model = controller_name.singularize.classify.constantize
   end
-  
+
   def report
     @object = self.model.find params[:id]
     @report = Report.find_by_target(@object)

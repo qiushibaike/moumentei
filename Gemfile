@@ -29,18 +29,18 @@ gem 'rails_autolink'
 gem 'will_paginate'
 gem "aasm"
 gem 'paperclip'
-gem 'compass'
 gem 'dalli'
 gem "oauth"
 gem "oauth-plugin"
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 #gem "delayed_job_web"
-gem 'super_cache'
 gem 'rufus-scheduler'
 gem 'acts_as_list'
 gem 'awesome_nested_set'
 gem 'themes_for_rails', github: 'ShiningRay/themes_for_rails'
+gem 'alias_fallback', github: 'ShiningRay/alias_fallback'
+
 gem 'inherited_resources'
 gem 'squeel'
 gem 'mobile-fu'
@@ -48,7 +48,6 @@ gem "calendar_helper"
 #gem "rinku", require: 'rails_rinku', :platforms
 gem 'acts_as_favorite', git: 'https://github.com/ShiningRay/acts_as_favorite.git'
 gem 'acts_as_taggable_on_steroids', git: 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git', require: 'acts_as_taggable'
-gem 'alias_fallback', git: 'https://github.com/ShiningRay/alias_fallback.git'
 gem 'pundit'
 gem 'rolify'
 gem 'simple_form'
