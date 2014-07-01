@@ -33,7 +33,7 @@ class ArticlesController < ApplicationController
     end
 
     respond_to do |format|
-      format.any(:html, :mobile) 
+      format.any(:html, :mobile)
       format.xml {render xml: @articles}
       format.json do
         render json: @articles
@@ -350,9 +350,10 @@ class ArticlesController < ApplicationController
           end
         end
       end
-      format.any :js, :json do
+      format.json do
         render json: score
       end
+      format.js
     end
   end
 
