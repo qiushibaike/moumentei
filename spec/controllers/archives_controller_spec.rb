@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'article'
+
 describe ArchivesController do
   let(:today){Date.today}
   let(:group) { create :group }

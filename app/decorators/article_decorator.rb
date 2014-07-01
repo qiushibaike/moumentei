@@ -10,6 +10,7 @@ class ArticleDecorator < Draper::Decorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
+
   def author_name
     if object.user.present?
       if object.anonymous

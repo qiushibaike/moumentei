@@ -9,7 +9,7 @@ describe SessionsController do
       expect(post: '/session').to route_to({controller: 'sessions', action: 'create'})
     end
     it "should generate params from DELETE /session correctly" do
-      expect(delete: '/logout').to route_to({controller: 'sessions', action: 'destroy'})
+      expect(get: '/logout').to route_to({controller: 'sessions', action: 'destroy'})
     end
   end
 

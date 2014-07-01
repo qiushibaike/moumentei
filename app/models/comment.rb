@@ -13,6 +13,7 @@ class Comment < ActiveRecord::Base
   scope :anonymous, -> {where( anonymous: true)}
   scope :signed, -> { where( anonymous: false)}
   scope :by_status, ->(status) { where(status: status )}
+  scope :latest, -> { order('id desc') }
   attr_protected :user_id, :status
   after_save :create_notification
   #validates_length_of :content, minimum: 1
