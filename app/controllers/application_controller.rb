@@ -3,7 +3,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  #protect_from_forgery # :secret => 'd7f14b6ea460ab510ef00c7049c8bb56'
+  #protect_from_forgery # secret: 'd7f14b6ea460ab510ef00c7049c8bb56'
   helper :all
   include AuthenticatedSystem
   include ViewControlMethods
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   protected
   def render_feed options = {}
     @options = options
-    render :template => "common/rss.xml.builder", :layout => false, :content_type => 'text/xml'
+    render template: "common/rss.xml.builder", layout: false, content_type: 'text/xml'
   end
 
   # Handle public-facing errors by rendering the "error" liquid template
@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   def show_error(message = 'An error occurred.', status = :internal_server_error)
     @message = message
-    render :template => 'common/error', :status => status
+    render template: 'common/error', status: status
   end
 
   def select_domain group
@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
   end
 
   #  def default_url_options(options={})
-  #    options.reverse_merge!({:format => request.format.to_sym})
+  #    options.reverse_merge!({format: request.format.to_sym})
   #  end
 
   # figure out which group to operate on

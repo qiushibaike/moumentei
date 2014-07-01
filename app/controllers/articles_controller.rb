@@ -33,8 +33,7 @@ class ArticlesController < ApplicationController
     end
 
     respond_to do |format|
-      format.any(:html, :mobile) do
-      end
+      format.any(:html, :mobile) 
       format.xml {render xml: @articles}
       format.json do
         render json: @articles

@@ -6,7 +6,7 @@ class CommentsController < InheritedResources::Base
   #before_filter :oauthenticate, only: [:create]
   before_filter :login_required, except: [:index, :show, :count, :create, :up, :dn,:report]
   # super_caches_page :index
-  decorates_assigned :article, :comments
+  decorates_assigned :article, :comments, :comment
   # GET /comments
   # GET /comments.xml
   def index
@@ -68,8 +68,11 @@ class CommentsController < InheritedResources::Base
           end
         }
 
-        format.any(:js, :json){
+        format.json {
           render json: {error: text}, status: :unprocessable_entity
+        }
+        format.js {
+          render text: "alert(#{j text})"
         }
       end
       return
@@ -137,6 +140,7 @@ class CommentsController < InheritedResources::Base
         format.json {
           render json: comment, status: :created
         }
+        format.js
       end
 
       if params[:vote]
