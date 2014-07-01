@@ -1,3 +1,4 @@
+require "application_responder"
 # -*- encoding : utf-8 -*-
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
@@ -14,6 +15,7 @@ class ApplicationController < ActionController::Base
   attr_accessor :show_login
 
   respond_to :html, :json, :js, :mobile, :wml
+  self.responder = ApplicationResponder
 
   protected
   def render_feed options = {}

@@ -125,9 +125,6 @@ class Comment < ActiveRecord::Base
     p.call 'private', 'deleted'
   end
 
-  def self.load_ratings(*args)
-  end
-
   def rated? user, comment_ids
     user_id = user.is_a?(User) ? user.id : user
     result ={}
@@ -137,13 +134,9 @@ class Comment < ActiveRecord::Base
       result[r.comment_id] = true
     end
   end
+
   def anonymous?
     anonymous || user.blank? || user_id == 0 || user.deleted?
-  end
-  def as_json(opt={})
-    except = [:ip]
-    except << :user_id if anonymous?
-    super(except:except)
   end
 
   protected

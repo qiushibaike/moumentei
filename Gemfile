@@ -71,6 +71,7 @@ gem 'lazy_high_charts'
   gem 'turbolinks-redirect'
 # end
 gem 'remotipart'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -123,3 +124,4 @@ end
 gem 'newrelic_rpm'
 gem 'draper'
 gem "active_model_serializers"
+gem 'responders'

@@ -130,34 +130,6 @@ class ArticlesController < ApplicationController
     #Article.push_consult @article.id if params[:counseling] == '1'
   end
 
-  def score
-    s = Score.find_by_article_id params[:id]
-    respond_to do |format|
-      format.js { render json: s }
-    end
-  end
-
-  # Please Refer to ScoreMetal
-  def scores
-    ids = params[:ids].split(/ /).collect{|i|i.to_i}
-    s = Article.find_all_by_id(ids)
-    if logged_in?
-      rated= current_user.has_rated?(ids)
-      watched = current_user.has_favorite?(ids)
-    end
-    m = {}
-    s.each do |r|
-      id = r.article_id
-      json = r.as_json(only:[:group_id, :pos, :neg, :score])
-      if logged_in?
-        json['rated'] = rated[id]
-        json['watched'] = !!watched[id]
-      end
-      m[id] = json
-    end
-    render json: m
-  end
-
   def show
     if @article.status == 'publish'
       t = @article.updated_at

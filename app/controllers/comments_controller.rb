@@ -7,39 +7,21 @@ class CommentsController < InheritedResources::Base
   before_filter :login_required, except: [:index, :show, :count, :create, :up, :dn,:report]
   # super_caches_page :index
   decorates_assigned :article, :comments, :comment
+
   # GET /comments
   # GET /comments.xml
   def index
-    #expires_in 1.minute, 'max-stale' => 1.day, public: true
-    opt = {}
-    opt[:public] = true unless is_mobile_device?
-    opt[:last_modified] = @article.updated_at.utc
-    opt[:etag] = [@article, @article.public_comments_count, request.format]
+    cond = @article.comments.includes(:user)
+    cond = cond.where{ floor > params[:after]} if params[:after]
+    @comments = cond.paginate page: params[:page]
 
-    if stale?(opt)
-      cond = @article.comments.includes(:user)
-      cond = cond.where{ floor > params[:after]} if params[:after]
-      @comments = cond.paginate page: params[:page]
-
-      respond_to do |format|
-        format.html {render layout: false }
-        format.mobile {render layout: false if request.xhr? }
-        format.any(:json, :js) do
-          render json: json, callback: params[:callback]
-        end
-      end
-    end
+    respond_with @comments
   end
 
   def show
     @comment = @article.comments.public.find_by_floor(params[:id])
     return show_404 unless @comment
-    @cache_subject = @comment
-    respond_to do |format|
-      format.html{
-        render @comment
-      }
-    end
+    respond_with @comment
   end
 
   def count

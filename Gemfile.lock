@@ -501,6 +501,7 @@ DEPENDENCIES
   rb-fsevent
   rb-inotify
   remotipart
+  responders
   rolify
   rspec-rails
   ruby_gntp
