@@ -1,11 +1,14 @@
 require 'spec_helper'
+require 'article'
 describe ArchivesController do
   let(:today){Date.today}
-  let(:articles) { create_list :article, 10 }
+  let(:group) { create :group }
+  let(:articles) { create_list :article, 10, group_id: group.id }
 
   describe '#show' do
     it "shows articles" do
-      get 'show', id: today.strftime("%Y-%m-%d")
+      articles
+      get 'show', group_id: 1, id: today.strftime("%Y-%m-%d")
     end
   end
 end
