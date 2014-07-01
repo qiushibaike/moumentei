@@ -7,7 +7,7 @@ class CommentsController < InheritedResources::Base
   before_filter :login_required, except: [:index, :show, :count, :create, :up, :dn,:report]
   # super_caches_page :index
   decorates_assigned :article, :comments, :comment
-
+  respond_to :html, :json, :js
   # GET /comments
   # GET /comments.xml
   def index
