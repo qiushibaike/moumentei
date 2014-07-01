@@ -1,5 +1,7 @@
 # -*- encoding : utf-8 -*-
 Tearoom::Application.routes.draw do
+  resources :ratings
+
    themes_for_rails
 
    root :to => "groups#index"
