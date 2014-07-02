@@ -17,12 +17,12 @@ class ApplicationController < ActionController::Base
   respond_to :html, :json, :js, :mobile, :wml
   self.responder = ApplicationResponder
 
-
+  rescue_from ActiveRecord::RecordNotFound, with: :show_404
   protected
-  def render_feed options = {}
-    @options = options
-    render template: "common/rss.xml.builder", layout: false, content_type: 'text/xml'
-  end
+  # def render_feed options = {}
+  #   @options = options
+  #   render template: "common/rss.xml.builder", layout: false, content_type: 'text/xml'
+  # end
 
   # Handle public-facing errors by rendering the "error" liquid template
   def show_404 target=''

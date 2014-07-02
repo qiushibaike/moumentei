@@ -2,17 +2,18 @@
 # -*- coding: utf-8 -*-
 class UsersController < ApplicationController
   # Protect these actions behind an admin login
-  # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
-  skip_before_filter :login_required, :except => [:update, :favorites]
+  # before_filter :admin_required, only: [:suspend, :unsuspend, :destroy, :purge]
+  skip_before_filter :login_required, except: [:update, :favorites]
 
-  before_filter :find_user, :only => [:suspend,:comments, :unsuspend, :destroy, :purge, :show, :edit, :update, :followings, :followers, :follow, :unfollow]
-  #layout 'users', :except => [:new, :fetchpass, :activate]
-  #layout 'application', :only => [:new, :fetchpass, :activate]
+  before_filter :find_user, only: [:suspend,:comments, :unsuspend, :destroy, :purge, :show, :edit, :update, :followings, :followers, :follow, :unfollow]
+  #layout 'users', except: [:new, :fetchpass, :activate]
+  #layout 'application', only: [:new, :fetchpass, :activate]
   layout 'users'
+  decorates_assigned :users, :user, :article, :articles, :comments
 
 
   def index
-    redirect_to :controller => :my
+    redirect_to controller: :my
   end
 
   def show
@@ -24,16 +25,8 @@ class UsersController < ApplicationController
         redirect_to user_articles_path(@user)
       end
       format.js do
-        json = @user.as_json(:only => [:id, :login, :name])
-        json['user']['followers'] = @user.followers.count
-        json['user']['friends']   = @user.friends.count
-        json['user']['avatar']    = @user.avatar.url(:thumb)
-        json['user']['public_articles_count'] = @user.articles.public.signed.count
-        json['user']['charm'] = @user.charm
-        if logged_in?
-          json['following'] = current_user.following?(@user)
-        end
-        render :json => json
+
+        render json: json
       end
     end
   end
@@ -46,13 +39,13 @@ class UsersController < ApplicationController
     if params[:search].size < 1
       flash[:error] = '请输入要查找的用户名的一部分'
     else
-      @users = User.paginate :page => params[:page],
-        :conditions => ["login LIKE ?", "%#{params[:search]}%"]
+      @users = User.paginate page: params[:page],
+        conditions: ["login LIKE ?", "%#{params[:search]}%"]
     end
     respond_to do |format|
       format.html # show.html.erb
       format.mobile
-      format.xml  { render :xml => @users }
+      format.xml  { render xml: @users }
     end
   end
 
@@ -62,15 +55,15 @@ class UsersController < ApplicationController
     @is_current = (logged_in? and current_user == @user)
     @title_name = @user.login
     if @is_current
-      @comments = @user.comments.public.paginate  :order => 'id desc', :page => params[:page]
+      @comments = @user.comments.public.paginate  order: 'id desc', page: params[:page]
     else
-      @comments = @user.comments.paginate :conditions => ["anonymous <> 1 and status='publish'"], :order => 'id desc', :page => params[:page]
+      @comments = @user.comments.paginate conditions: ["anonymous <> 1 and status='publish'"], order: 'id desc', page: params[:page]
     end
     current_user.clear_notification 'new_follower', @user.id if logged_in?
   end
 
   def my
-    render :json => current_user
+    render json: current_user
   end
 
   def edit
@@ -100,14 +93,14 @@ class UsersController < ApplicationController
     if @user.save
       flash[:notice] = '更新成功，如果您更改了邮箱请重新激活'
     end
-    render :action => :edit
+    render action: :edit
   end
 
   # render new.rhtml
   def new
     #session[:return_to] = request.referer
     @user = User.new
-    render :layout => 'register'
+    render layout: 'register'
   end
 
   def create
@@ -120,18 +113,18 @@ class UsersController < ApplicationController
 
 #    unless code
 #      flash[:error] = '无效的邀请码'
-#      return render :action => :new, :layout => 'application'
+#      return render action: :new, layout: 'application'
 #    end
 
 #    if code.consumer_id
 #      flash[:error] = '邀请码已被使用'
-#      return render :action => :new, :layout => 'application'
+#      return render action: :new, layout: 'application'
 #    end
     @user.remember_token = ''
     @user.register! if @user && @user.valid?
     success = @user && @user.valid?
     if success && @user.errors.empty?
-      code.update_attributes :consumer_id => @user.id, :consumed_at => Time.now rescue nil
+      code.update_attributes consumer_id: @user.id, consumed_at: Time.now rescue nil
       @articles = Article.where(email: @user.email).load
       if @articles
         for article in @articles
@@ -142,10 +135,10 @@ class UsersController < ApplicationController
       #redirect_back_or_default(login_path)
       @content_for_title = "注册成功"
       flash[:notice] = "感谢您的注册！<br />请查收我们发给您的邮件激活您的帐号。"
-      render :template => 'users/notice', :layout => 'register'
+      render template: 'users/notice', layout: 'register'
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
-      render :action => 'new', :layout => 'register'
+      render action: 'new', layout: 'register'
     end
   end
 
@@ -193,33 +186,33 @@ class UsersController < ApplicationController
 
   def followers
     @title_name = "关注#{@user.login}的朋友"
-    @followers = @user.followers.paginate :page => params[:page], :per_page=>60
+    @followers = @user.followers.paginate page: params[:page], per_page:60
 
   end
   def check_login
     user=User.find_by_login(params[:user_login])
-    render :text => user ? '1' : "0"
+    render text: user ? '1' : "0"
   end
   def check_email
     user=User.find_by_email(params[:user_email])
-    render :text => user ? '1' : "0"
+    render text: user ? '1' : "0"
   end
   def check_invitation_code
     code=params[:invitation_code].upcase.gsub(/\W/, '')
-    code=InvitationCode.find :first,:conditions => ["code='#{code}'"]
+    code=InvitationCode.find :first,conditions: ["code='#{code}'"]
     if code && !code.consumer_id
-      return render  :text=> "激活码可以使用"
+      return render  text: "激活码可以使用"
     else
-      return render  :text=> "无效的激活码"
+      return render  text: "无效的激活码"
     end
   end
 
   def follow
     if current_user != @user
       current_user.follow @user
-      a=Notification.find(:first,:conditions=>{:user_id => current_user.id, :key => "new_follower.#{@user.id}", :content => @user.id})
+      a=Notification.find(:first,conditions:{user_id: current_user.id, key: "new_follower.#{@user.id}", content: @user.id})
       a.read! unless a.nil?
-      Notification.create :user_id => @user.id, :key => "new_follower.#{current_user.id}", :content => current_user.id rescue nil
+      Notification.create user_id: @user.id, key: "new_follower.#{current_user.id}", content: current_user.id rescue nil
     end
     respond_to do |format|
       format.any(:html, :mobile)do
@@ -227,13 +220,13 @@ class UsersController < ApplicationController
         redirect_to :back
       end
       format.js do
-        render :json => {:following => true}
+        render json: {following: true}
       end
     end
   end
 
   def unfollow
-    a=Notification.find(:first,:conditions=>{:user_id => current_user.id, :key => "new_follower.#{@user.id}", :content => @user.id})
+    a=Notification.find(:first,conditions:{user_id: current_user.id, key: "new_follower.#{@user.id}", content: @user.id})
     a.read! unless a.nil?
     current_user.unfollow @user
 
@@ -243,7 +236,7 @@ class UsersController < ApplicationController
         redirect_to :back
       end
       format.js do
-        render :json => {:following => false}
+        render json: {following: false}
       end
     end
   end
@@ -263,11 +256,11 @@ class UsersController < ApplicationController
         @msg = "对不起，没有找到您提供的登录名/Email组合，请确认"
       end
     end
-    render :layout => 'application'
+    render layout: 'application'
   end
 
   def favorites
-    @articles = current_user.favorite_articles.paginate :page => params[:page]
+    @articles = current_user.favorite_articles.paginate page: params[:page]
   end
 
   def lists

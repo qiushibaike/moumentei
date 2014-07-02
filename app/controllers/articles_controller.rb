@@ -7,7 +7,7 @@ class ArticlesController < ApplicationController
   #super_caches_page :show
   cache_sweeper :article_sweeper, only: [ :create ]
 
-  decorates_assigned :article, :comments
+  decorates_assigned :article, :articles, :comments
   KEYS = %w(day week month year all)
 
   DateRanges = {
@@ -32,25 +32,7 @@ class ArticlesController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      format.any(:html, :mobile)
-      format.xml {render xml: @articles}
-      format.json do
-        render json: @articles
-      end
-      format.rss do
-        @articles.collect! do |item|
-          {
-            title: "#{item.group.name.mb_chars[0,2]}\##{item.id} - #{item.content.mb_chars[0,30].gsub(/\r?\n/," ")}...",
-            link: article_url(item.id),
-            description: render_to_string(partial: 'common/rss_item', object: item),
-            pubDate: item.created_at,
-            guid: article_url(item.id)
-          }
-        end
-        render_feed items: @articles, title: "#{@user.login}发表的文章"
-      end
-    end
+    respond_with @articles
   end
 
   def new
@@ -83,18 +65,21 @@ class ArticlesController < ApplicationController
     if @group.only_member_can_post? and not logged_in?
       error_return.call('Only registered members can post in this group')
     end
-    article.content.strip! # trim the white space in the end or beginning
-    if article.content.mb_chars.size > 500 and not logged_in?
+    article.content.strip! # trim the whitespace in the end or beginning
+    if not logged_in?
       error_return.call('内容太长了，请不要超过500个字')
     end
 
     #article.picture.clear unless logged_in?
     unless article.content.blank?
     hsh = Digest::MD5.hexdigest "#{article.title}#{article.content}"
+    
     if hsh == session[:last_content]
       error_return.call("请不要发表重复内容")
     end
+
     session[:last_content] = hsh
+
     end
     if logged_in?
       @article.user_id = current_user.id
@@ -107,9 +92,9 @@ class ArticlesController < ApplicationController
       error_return.call("文章内容太短")
     end
 
-    @article.tag_list = @article.tag_line
     @article.status= @group.articles_need_approval? ? 'pending' : 'publish'
     @article.status= 'pending' if @article.user_id == 0
+
     if @article.save
       if logged_in?
         current_user.has_favorite @article rescue nil
@@ -131,52 +116,8 @@ class ArticlesController < ApplicationController
   end
 
   def show
-    if @article.status == 'publish'
-      t = @article.updated_at
-      t = Time.parse(t) if t.is_a?(String)
-      opt = {
-        last_modified: t.utc,
-        etag: [@article, request.format]}
-      if is_mobile_device?
-        opt[:public] = false
-        if logged_in?
-          opt[:etag] << current_user.id
-          expires_now
-        end
-      else
-        #opt[:public] = true
-        if logged_in?
-          opt[:etag] << current_user.id
-        end
-      end
-
-      if stale?(opt)
-        @cache_subject = @article
-        respond_to do |format|
-          format.html {
-            @comments = @article.comments.public
-            render :show
-          }
-
-          format.mobile{
-            render :show
-          }
-
-          format.js {
-            o = {except: [:ip, :email]}
-            o[:except] << :user_id if @article.anonymous?
-            render json: @article.as_json(o)
-          }
-
-          format.json {
-            render json: article
-          }
-        end
-      end
-    else
-      render template: 'articles/not_found', status: 404
-    end
-    #current_user.clear_notification(:new_comment, @article.id) if logged_in?
+    @comments = @article.comments.public
+    respond_with article
   end
 
   def tickets_stats
@@ -215,29 +156,6 @@ class ArticlesController < ApplicationController
     redirect_to '/'
   end
 
-  def anonymous
-    return if current_user != @article.user
-    @article.anonymous = !@article.anonymous
-    @article.save!
-    redirect_to :back
-  end
-
-#  def votes
-#    return redirect_to(login_path) unless logged_in?
-#
-#    params[:ids].split(' ').each do |i|
-#      i = i.to_i
-#      if i < 0
-#        d, s = :down, -1
-#      else
-#        d, s = :up, 1
-#      end
-#      i = i.abs
-#      ScoreWorker.async_vote(action: d, id: i)
-#      current_user.rate(i, s)
-#    end
-#    render nothing: true
-#  end
 
   def ref
     if @article.references.empty?

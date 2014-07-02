@@ -7,20 +7,15 @@ class BalancesController < ApplicationController
   def show
     @balance = @user.balance.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @balance }
-    end
+    respond_with @balance
   end
 
   def salary
-    
+
   end
 
   protected
   def find_user
     @user = User.find params[:user_id]
-  rescue ActiveRecord::RecordNotFound
-    show_404
   end
 end

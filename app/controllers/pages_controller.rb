@@ -6,10 +6,7 @@ class PagesController < ApplicationController
   def index
     @pages = Page.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @pages }
-    end
+    respond_with @pages
   end
 
   # GET /pages/1
@@ -19,9 +16,6 @@ class PagesController < ApplicationController
 
     return show_404 unless @page
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @page }
-    end
+    respond_with @page
   end
 end
