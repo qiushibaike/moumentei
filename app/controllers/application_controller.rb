@@ -63,7 +63,8 @@ class ApplicationController < ActionController::Base
 
   # figure out which group to operate on
   # according to the requested host name or params[:domain]
-  def find_group(group_id=params[:group_id]||params[:id])
+  def find_group
+    group_id = params[:group_id] || (controller_name == 'groups' && params[:id])
     @group = if group_id
       Group.find(group_id)
     else
@@ -71,6 +72,6 @@ class ApplicationController < ActionController::Base
     end
     return show_404 unless @group
     select_domain @group if request.host != 'localhost' and Rails.env.production?
-    return @group
+    @group
   end
 end

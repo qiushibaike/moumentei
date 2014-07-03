@@ -2,12 +2,16 @@
 # -*- coding: utf-8 -*-
 class ArticlesController < ApplicationController
   #before_filter :oauthenticate, only: [:create]
+  before_filter :find_group, except: :index
   before_filter :find_article, except: [:index, :new, :create, :scores]
   after_filter :store_location, except: [:up, :dn, :score, :scores]
   #super_caches_page :show
   cache_sweeper :article_sweeper, only: [ :create ]
+  has_scope :hottest_by
+  has_scope :latest
+  has_scope :recent_hot
 
-  decorates_assigned :article, :articles, :comments
+  decorates_assigned :article, :articles, :comments, :group
   KEYS = %w(day week month year all)
 
   DateRanges = {
@@ -21,28 +25,26 @@ class ArticlesController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find params[:user_id]
-      @articles = @user.articles.public.where{created_at<Time.now}.paginate page: params[:page], conditions: {anonymous: false}, order: 'id desc'
+      @articles = apply_scopes(@user.articles.public).paginate page: params[:page], conditions: {anonymous: false}, order: 'id desc'
     else
       find_group
       g =  @group.self_and_children_ids
-      @articles = Article.by_group(g).public.latest.paginate(page: params[:page])
-      if @articles.size == 0 && @articles.total_pages < @articles.current_page
-        params[:page] = @articles.total_pages
-        return redirect_to(params)
-      end
+      @articles = apply_scopes(Article.by_group(g).public).paginate(page: params[:page])
+      # if @articles.size == 0 && @articles.total_pages < @articles.current_page
+      #   params[:page] = @articles.total_pages
+      #   return redirect_to(params)
+      # end
     end
 
     respond_with @articles
   end
 
   def new
-    find_group(params[:group_id])
     return redirect_to login_path if @group.options[:only_member_can_post] and not logged_in?
-    @article = Article.new group_id: @group.id
+    @article = @group.articles.new
   end
 
   def create
-    find_group(params[:group_id])
     error_return = Proc.new do |msg|
       respond_to do |format|
         format.any(:html, :mobile) {
@@ -73,7 +75,7 @@ class ArticlesController < ApplicationController
     #article.picture.clear unless logged_in?
     unless article.content.blank?
     hsh = Digest::MD5.hexdigest "#{article.title}#{article.content}"
-    
+
     if hsh == session[:last_content]
       error_return.call("请不要发表重复内容")
     end
@@ -120,16 +122,16 @@ class ArticlesController < ApplicationController
     respond_with article
   end
 
-  def tickets_stats
-    @tickets = {}
-    @article.tickets.each do |t|
-      i = t.ticket_type_id.to_i
-      @tickets[i] ||= 0
-      @tickets[i] += 1
-    end
-    @ticket_types = TicketType.all
-    render layout: false
-  end
+  # def tickets_stats
+  #   @tickets = {}
+  #   @article.tickets.each do |t|
+  #     i = t.ticket_type_id.to_i
+  #     @tickets[i] ||= 0
+  #     @tickets[i] += 1
+  #   end
+  #   @ticket_types = TicketType.all
+  #   render layout: false
+  # end
 
   def dn
     vote(-1)
@@ -169,51 +171,37 @@ class ArticlesController < ApplicationController
     end
   end
 
-  def add_favorite
-    return redirect_to(login_path) if not logged_in? or current_user.id == 0
-
-    current_user.has_favorite @article
-
-    if request.xhr?
-      render layout: false
-    else
-      redirect_to article_path(@article)
-    end
-  end
-
-  def remove_favorite
-    return redirect_to(login_path) if not logged_in? or current_user.id == 0
-    @favorite = Favorite.find :first, conditions: {user_id:current_user.id, favorable_id: @article.id}
-    @favorite.destroy if @favorite
-
-    if request.xhr?
-      render layout: false
-    else
-      redirect_to article_path(@article)
-    end
-  end
+  # def add_favorite
+  #   return redirect_to(login_path) if not logged_in? or current_user.id == 0
+  #
+  #   current_user.has_favorite @article
+  #
+  #   if request.xhr?
+  #     render layout: false
+  #   else
+  #     redirect_to article_path(@article)
+  #   end
+  # end
+  #
+  # def remove_favorite
+  #   return redirect_to(login_path) if not logged_in? or current_user.id == 0
+  #   @favorite = Favorite.find :first, conditions: {user_id:current_user.id, favorable_id: @article.id}
+  #   @favorite.destroy if @favorite
+  #
+  #   if request.xhr?
+  #     render layout: false
+  #   else
+  #     redirect_to article_path(@article)
+  #   end
+  # end
 
   protected
   # find correct article according to "id" get params
   def find_article
-    @article = Article.find(params[:id])
-    @group = @article.group
-    if !@group.domain.blank? && request.host != 'localhost' && Rails.env.production?
-      select_domain @group
-    end
-    if @article && logged_in?
-      current_user.has_rated? @article
-      current_user.has_favorite? @article
-      current_user.roles
-    end
-    @article.score if @article
-  rescue ActiveRecord::RecordNotFound
-    if @group
-      render template: 'articles/not_found', status: 404
-    else
-      show_404
-    end
-    return false
+    @article = @group.articles.find(params[:id])
+    # if !@group.domain.blank? && request.host != 'localhost' && Rails.env.production?
+    #   select_domain @group
+    # end
   end
 
   def vote score

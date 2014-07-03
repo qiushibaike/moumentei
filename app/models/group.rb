@@ -2,6 +2,22 @@
 # -*- coding: utf-8 -*-
 
 class Group < ActiveRecord::Base
+  DAY = { # TODO: move to i18n
+    '8hr' => '8小时',
+    "day" => "24小时",
+    "week" => "7天",
+    "month" => "30天" ,
+    "year"=>"365天",
+    "all" => "有史以来" }
+  KEYS = ['8hr', "day", "week", "month", "year", "all"]
+
+  DateRanges = {
+    '8hr' => 8.hour,
+    'day' => 1.day,
+    'week' => 1.week,
+    'month' => 1.month,
+    'year' => 1.year
+  }
   acts_as_nested_set
   has_many :articles
   has_many :public_articles, -> { where(status: 'publish') }, :class_name => 'Article'
@@ -84,33 +100,33 @@ SQL
 SQL
   end
 
-  def count_by_date(date)
-    count_by_day(date.year, date.month, date.day)
-  end
-
-  def self.update_summary_table
-#    date = Date.new
-    now = Time.now
-    end_time = Time.local(now.year, now.month, now.day, now.hour)
-    start_time = end_time - 3600
-
-    self.all.each do |g|
-      updated=connection.select_value(<<sql).to_i
-      select count(*) from articles where group_id=#{g.id} and status='publish'
-        and created_at >= '#{start_time.strftime('%Y-%m-%d %H:%M:%S')}'
-        and created_at < '#{end_time.strftime('%Y-%m-%d %H:%M:%S')}'
-sql
-      [
-"update `year_#{g.id}` set `count`=`count`+#{updated} where `year`=#{start_time.year}",
-"update `month_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
-  and `month` = #{start_time.month}",
-"update `day_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
-and `month` =  #{start_time.month} and `day` =  #{start_time.day}"
-      ].each { |sql| connection.execute sql}
-
-sql
-    end
-  end
+#   def count_by_date(date)
+#     count_by_day(date.year, date.month, date.day)
+#   end
+#
+#   def self.update_summary_table
+# #    date = Date.new
+#     now = Time.now
+#     end_time = Time.local(now.year, now.month, now.day, now.hour)
+#     start_time = end_time - 3600
+#
+#     self.all.each do |g|
+#       updated=connection.select_value(<<sql).to_i
+#       select count(*) from articles where group_id=#{g.id} and status='publish'
+#         and created_at >= '#{start_time.strftime('%Y-%m-%d %H:%M:%S')}'
+#         and created_at < '#{end_time.strftime('%Y-%m-%d %H:%M:%S')}'
+# sql
+#       [
+# "update `year_#{g.id}` set `count`=`count`+#{updated} where `year`=#{start_time.year}",
+# "update `month_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
+#   and `month` = #{start_time.month}",
+# "update `day_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
+# and `month` =  #{start_time.month} and `day` =  #{start_time.day}"
+#       ].each { |sql| connection.execute sql}
+#
+# sql
+#     end
+#   end
 
   def inherited attr
     attr = attr.to_sym

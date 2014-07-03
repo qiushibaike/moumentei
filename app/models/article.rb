@@ -45,6 +45,7 @@ class Article < ActiveRecord::Base
   scope :signed, -> { where(anonymous: false) }
   scope :pending, -> { where(status: 'pending') }
   scope :hottest, -> { order('score desc') }
+  scope :hottest_by, -> (period) { Group::DateRanges.include?(period) ? hottest.where{ created_at <= Group::DateRanges[period].ago } : hottest }
   scope :latest, -> { order('published_at desc') }
   scope :published_after, ->(time) { where{published_at >= time} }
   attr_protected :user_id, :status

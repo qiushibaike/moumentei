@@ -474,6 +474,7 @@ DEPENDENCIES
   guard-jruby-rspec
   guard-livereload
   guard-rspec
+  has_scope
   inherited_resources
   jquery-rails
   jquery-turbolinks

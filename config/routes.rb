@@ -120,9 +120,19 @@ Tearoom::Application.routes.draw do
   resources :groups do
     resources :archives
     get 'archives/:id(/page/:page)(.:format)'=> "archives#show"
-    resources :articles
+    resources :articles do
+      member do
+        post :up
+        post :dn
+      end
+      collection do
+        get 'hottest(/:hottest_by)/(page/:page)' => :index, as: :hottest
+        get 'latest(/:hottest_by)/(page/:page)' => :index, as: :latest
+        get 'recent_hot(/:hottest_by)/(page/:page)' => :index, as: :recent_hot
+      end
+    end
     resources :tags, only: [:index, :show] do
-      resources :articles, only: :index
+      resources :articles
       get 'articles/:order(/page/:page)(.:format)' => 'tags/articles#index'
     end
     get 'latest(/page/:page)(.:format)'                => 'groups#latest',       as: :latest
@@ -139,8 +149,8 @@ Tearoom::Application.routes.draw do
   end
 
   get 'favicon.ico'=> "groups#favicon"
-  get 'hottest(/:limit(/page/:page))(.:format)'=> "groups#hottest", as: :hottest
-  get 'latest(/page/:page)(.:format)'=> "groups#latest", as: :latest
+  # get 'hottest(/:limit(/page/:page))(.:format)'=> "groups#hottest", as: :hottest
+  # get 'latest(/page/:page)(.:format)'=> "groups#latest", as: :latest
   get 'tags'=> "groups#tags"
   get 'tag/:tag(/page/:page)'=> "groups#tag"
   get 'rss.xml'=> "groups#rss"

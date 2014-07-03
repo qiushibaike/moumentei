@@ -1,9 +1,9 @@
-<% 
-  day = GroupsController::DAY
-  keys = GroupsController::KEYS
+<%
+  day = Group::DAY
+  keys = Group::KEYS
   now = Time.now
   if params[:limit]
-    n = keys[keys.index(params[:limit]) + 1] 
+    n = keys[keys.index(params[:limit]) + 1]
     time = day[params[:limit]]
     content_for :title, "#{day[params[:limit]]}内最热的帖子"
   else

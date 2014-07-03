@@ -125,3 +125,4 @@ gem 'newrelic_rpm'
 gem 'draper'
 gem "active_model_serializers"
 gem 'responders'
+gem 'has_scope'

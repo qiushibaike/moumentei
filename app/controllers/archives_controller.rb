@@ -1,7 +1,9 @@
 # -*- encoding : utf-8 -*-
 
 class ArchivesController < ApplicationController
+  before_filter :find_group
   after_filter :store_location, except: [:index, :show]
+  before_filter :find_border
   # super_caches_page :index, :show
   decorates_assigned :articles
 
@@ -62,7 +64,7 @@ class ArchivesController < ApplicationController
     return show_error "无效的日期 #{params[:year]}-#{params[:month]}-#{params[:day]}"
   end
 
-  before_filter :find_group
+
   protected
   def find_border
     @first = @group.public_articles.find(:first, conditions: 'created_at is not null', order: 'id asc', select: 'articles.created_at')
@@ -79,5 +81,5 @@ class ArchivesController < ApplicationController
     pp = 20 if pp.blank?
     pp
   end
-  before_filter :find_border
+
 end

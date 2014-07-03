@@ -11,6 +11,10 @@ class ArticleDecorator < Draper::Decorator
   #     end
   #   end
 
+  def title_link
+    h.link_to object.title, [article.group, article], title: object.title, rel: 'bookmark'
+  end
+
   def author_name
     if object.user.present?
       if object.anonymous
@@ -40,5 +44,25 @@ class ArticleDecorator < Draper::Decorator
 
   def ip
     IPUtils.long2ip(object.ip)
+  end
+
+  def url
+    h.url_for([object.group, object])
+  end
+
+  def content
+    h.auto_link h.format_content(object, object.group)
+  end
+
+  def thumb_picture
+    if object.picture.file?
+      if object.picture.content_type =~ /gif/i
+          h.image_tag(object.picture(:original), alt: (object.title || object.content[0, 10]))
+      else
+          h.link_to h.image_tag(object.picture(:medium), alt: (object.title || object.content[0, 10])),
+                    object.picture(:original),
+                    class: 'picture', id: "picture-#{id}", title: (object.title || object.content[0, 10])
+      end
+    end
   end
 end

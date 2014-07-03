@@ -5,26 +5,9 @@ class GroupsController < ApplicationController
   after_filter :store_location, only: [:index, :show, :latest, :hottest]
   theme :select_theme
 
-  DAY = { # TODO: move to i18n
-    '8hr' => '8小时',
-    "day" => "24小时",
-    "week" => "7天",
-    "month" => "30天" ,
-    "year"=>"365天",
-    "all" => "有史以来" }
-  KEYS = ['8hr', "day", "week", "month", "year", "all"]
-
-  DateRanges = {
-    '8hr' => 8.hour,
-    'day' => 1.day,
-    'week' => 1.week,
-    'month' => 1.month,
-    'year' => 1.year
-  }
-
   decorates_assigned :articles
   #super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
-  before_filter :date_range_detect, only: [:hottest, :hottestpage, :most_replied]
+  # before_filter :date_range_detect, only: [:hottest, :hottestpage, :most_replied]
 
   def index
     if Setting.default_group
@@ -42,9 +25,7 @@ class GroupsController < ApplicationController
       params[:action] = 'latest'
       latest
     elsif frontpage == 'recent_hot'
-      params[:action] = 'recent_hot'
-      params[:group_id] = params[:id]
-      recent_hot
+      redirect_to [:recent_hot, @group, :articles]
     else
       params[:action] = 'hottest'
       params[:limit] = frontpage
@@ -52,111 +33,122 @@ class GroupsController < ApplicationController
       hottest
     end
   end
+  #
+  # def search
+  #   term = params[:term] || ""
+  #   term.strip!
+  #   if term.size > 1
+  #     if term =~ /^#?(\d+)$/
+  #       searchid=$1
+  #       @article=Article.find_by_id(searchid.to_i)
+  #       respond_to  do |format|
+  #         format.html{
+  #           return redirect_to article_path(@article) if @article
+  #         }
+  #         format.any :js, :json  do
+  #           return render json: {
+  #             articles: @article,
+  #             total_pages: (1 if @article) }
+  #         end
+  #       end
+  #     end
+  #     @articles = Article.search(term,conditions: {group_status: "#{@group.id}publish"},
+  #       page: params[:page])
+  #   else
+  #     term="qwertyuiop"
+  #     flash[:notice]="请输入点什么东西吧"
+  #     @articles = Article.search(term,conditions: {group_status: "#{@group.id}publish"},
+  #       page: params[:page])
+  #   end
+  #   generic_response(:archives)
+  # end
 
-  def search
-    term = params[:term] || ""
-    term.strip!
-    if term.size > 1
-      if term =~ /^#?(\d+)$/
-        searchid=$1
-        @article=Article.find_by_id(searchid.to_i)
-        respond_to  do |format|
-          format.html{
-            return redirect_to article_path(@article) if @article
-          }
-          format.any :js, :json  do
-            return render json: {
-              articles: @article,
-              total_pages: (1 if @article) }
-          end
-        end
-      end
-      @articles = Article.search(term,conditions: {group_status: "#{@group.id}publish"},
-        page: params[:page])
-    else
-      term="qwertyuiop"
-      flash[:notice]="请输入点什么东西吧"
-      @articles = Article.search(term,conditions: {group_status: "#{@group.id}publish"},
-        page: params[:page])
-    end
-    generic_response(:archives)
+  # def recent_hot
+  #   @articles = @group.public_articles.recent_hot(params[:page])
+  #   generic_response(:archives)
+  # end
+  #
+  # # test
+  # def hottest
+  #   per_page = @group.inherited_option(:per_page)
+  #   per_page = 20 if per_page.blank?
+  #   g = @group.options[:show_articles_in_children] ? @group.self_and_descendants.collect{|i|i.id} : [@group.id]
+  #   @articles = Article.hottest.public.published_after(@date).by_group(g).paginate page: params[:page], per_page: per_page, include: :user
+  #
+  #   if not @articles || @articles.size == 0 && params[:limit] != 'all'
+  #     return redirect_to(group_hottest_path(@group, limit: keys[keys.index(params[:limit])+1]))
+  #   end
+  #
+  #   if  @articles &&
+  #       @articles.size == 0 &&
+  #       @articles.total_pages > 0 &&
+  #       @articles.total_pages < @articles.current_page
+  #     params[:page] = @articles.total_pages
+  #     return redirect_to( params)
+  #   end
+  #   generic_response(:hottest)
+  # end
+  #
+  # # latest
+  def latest
+    redirect_to [:latest, @group, :articles]
+    # g =  @group.options[:show_articles_in_children] ?
+    #   @group.self_and_descendants.collect(&:id) :[@group.id]
+    # per_page = @group.inherited_option(:per_page)
+    # per_page = 20 if per_page.blank?
+    #
+    # @articles = Article.by_group(g).public.paginate page: params[:page], per_page: per_page, order: %(published_at #{params[:order] == 'asc' ? 'ASC' : 'DESC'}), include: :user
+    #
+    # if @articles.size == 0 &&
+    #     @articles.total_pages > 0 &&
+    #     @articles.total_pages < @articles.current_page
+    #   params[:page] = @articles.total_pages
+    #   redirect_to(params)
+    # else
+    #   @articles = ArticleDecorator.decorate_collection(@articles)
+    #   generic_response(:archives)
+    # end
   end
 
   def recent_hot
-    @articles = @group.public_articles.recent_hot(params[:page])
-    generic_response(:archives)
+    redirect_to [:recent_hot, @group, :articles]
   end
 
-  # test
   def hottest
-    per_page = @group.inherited_option(:per_page)
-    per_page = 20 if per_page.blank?
-    g = @group.options[:show_articles_in_children] ? @group.self_and_descendants.collect{|i|i.id} : [@group.id]
-    @articles = Article.hottest.public.published_after(@date).by_group(g).paginate page: params[:page], per_page: per_page, include: :user
-
-    if not @articles || @articles.size == 0 && params[:limit] != 'all'
-      return redirect_to(group_hottest_path(@group, limit: keys[keys.index(params[:limit])+1]))
-    end
-
-    if  @articles &&
-        @articles.size == 0 &&
-        @articles.total_pages > 0 &&
-        @articles.total_pages < @articles.current_page
-      params[:page] = @articles.total_pages
-      return redirect_to( params)
-    end
-    generic_response(:hottest)
-  end
-  # latest
-  def latest
-    g =  @group.options[:show_articles_in_children] ?
-      @group.self_and_descendants.collect(&:id) :[@group.id]
-    per_page = @group.inherited_option(:per_page)
-    per_page = 20 if per_page.blank?
-
-    @articles = Article.by_group(g).public.paginate page: params[:page], per_page: per_page, order: %(published_at #{params[:order] == 'asc' ? 'ASC' : 'DESC'}), include: :user
-
-    if @articles.size == 0 &&
-        @articles.total_pages > 0 &&
-        @articles.total_pages < @articles.current_page
-      params[:page] = @articles.total_pages
-      redirect_to(params)
-    else
-      @articles = ArticleDecorator.decorate_collection(@articles)
-      generic_response(:archives)
-    end
-  end
-  def pending
-    @expires_in = 1.minutes
-    g = @group.id
-    @articles = @group.articles.pending.paginate page: params[:page], order: 'articles.created_at desc', include: :user
-    generic_response(:archives)
-  end
-  def latest_replied
-    @articles = @group.public_articles.paginate page: params[:page], order: 'updated_at desc'
-    generic_response(:archives)
+    redirect_to controller: :articles, action: :index, group_id: @group, hottest: params[:hottest]
   end
 
-  def most_replied
-    g = @group.options[:show_articles_in_children] ? @group.self_and_descendants.collect{|i|i.id} : [@group.id]
-    @articles = Article.paginate_by_most_replied(params[:page], g, @date)
-
-    if not @articles || @articles.size == 0 && params[:limit] != 'all'
-      return redirect_to(
-        controller: :groups,
-        action: :most_replied,
-        id: @group.id,
-        limit: keys[keys.index(params[:limit])+1])
-    end
-    if  @articles &&
-        @articles.size == 0 &&
-        @articles.total_pages > 0 &&
-        @articles.total_pages < @articles.current_page
-      params[:page] = @articles.total_pages
-      return redirect_to( params)
-    end
-    generic_response
-  end
+  # def pending
+  #   @expires_in = 1.minutes
+  #   g = @group.id
+  #   @articles = @group.articles.pending.paginate page: params[:page], order: 'articles.created_at desc', include: :user
+  #   generic_response(:archives)
+  # end
+  # def latest_replied
+  #   @articles = @group.public_articles.paginate page: params[:page], order: 'updated_at desc'
+  #   generic_response(:archives)
+  # end
+  #
+  # def most_replied
+  #   g = @group.options[:show_articles_in_children] ? @group.self_and_descendants.collect{|i|i.id} : [@group.id]
+  #   @articles = Article.paginate_by_most_replied(params[:page], g, @date)
+  #
+  #   if not @articles || @articles.size == 0 && params[:limit] != 'all'
+  #     return redirect_to(
+  #       controller: :groups,
+  #       action: :most_replied,
+  #       id: @group.id,
+  #       limit: keys[keys.index(params[:limit])+1])
+  #   end
+  #   if  @articles &&
+  #       @articles.size == 0 &&
+  #       @articles.total_pages > 0 &&
+  #       @articles.total_pages < @articles.current_page
+  #     params[:page] = @articles.total_pages
+  #     return redirect_to( params)
+  #   end
+  #   generic_response
+  # end
 
   # def digest_rss
   #   today = Date.today
@@ -222,71 +214,20 @@ class GroupsController < ApplicationController
   #     end
   #   end
   # end
-
-  def favicon
-    if @group and
-      (theme = @group.inherited_option(:theme)) and
-      File.directory?(theme_path = Theme.path_to_theme(theme))
-      path = "#{theme_path}/images/favicon.ico"
-      return render text: 'Not Found', status: 404 unless File.exists?(path)
-      expires_in 1.day, public: true
-      if stale?(last_modified: File.mtime(path), public: true)
-        send_file path,
-          type: 'image/vnd.microsoft.icon', disposition: 'inline', stream: false
-      end
-    else
-      render text: "Not Found", status: 404
-    end
-  end
-
-  protected
-  def generic_response(action=nil)
-
-    s = true
-    #expires_in [60 * (params[:page].to_i / 10 + 1), 3600].min if params[:page]
-    #@expires_in = [60 * (params[:page].to_i * 5 + 1), 3600].min if params[:page]
-    # if is_mobile_device? or @articles.blank?
-    #   expires_now
-    #   response.headers['Cache-Control']='private, no-cache, no-store'
-    #   s = true
-    # else
-    #   s = stale?(last_modified: @articles.first.created_at.utc, etag: [current_theme, @articles, logged_in? ? current_user.id : ''])
-    # end
-    if s
-      # @cache_subject = @articles
-
-      respond_to do |format|
-        format.html {render action: action if action && !performed?}
-        format.mobile {render action: action if action && !performed?}
-        format.js do
-
-          render json: {
-            articles: @articles,
-            total_pages: @articles.total_pages
-
-          }
-        end
-        format.json do
-          articles = ArticleDecorator.decorate_collection @articles
-          render json: articles, each_serializer: ArticleSerializer, root: 'articles', meta: {total_pages: articles.total_pages}
-        end
-
-      end
-    end
-  end
-
-  def date_range_detect
-    @date = nil
-    if not params.include?(:limit) or (params[:limit] != 'all' and not DateRanges.include?(params[:limit]))
-      return redirect_to(controller: :groups, action: params[:action], id: @group.id, limit: 'day')
-    elsif DateRanges.include?(params[:limit])
-      u = DateRanges[params[:limit]]
-      if params[:limit] == 'day'
-        expires_in 5.minutes  unless is_mobile_device?
-      else
-        expires_in u / 86400 / 2  unless is_mobile_device?
-      end
-      @date = Time.now -  u
-    end
-  end
+  #
+  # def favicon
+  #   if @group and
+  #     (theme = @group.inherited_option(:theme)) and
+  #     File.directory?(theme_path = Theme.path_to_theme(theme))
+  #     path = "#{theme_path}/images/favicon.ico"
+  #     return render text: 'Not Found', status: 404 unless File.exists?(path)
+  #     expires_in 1.day, public: true
+  #     if stale?(last_modified: File.mtime(path), public: true)
+  #       send_file path,
+  #         type: 'image/vnd.microsoft.icon', disposition: 'inline', stream: false
+  #     end
+  #   else
+  #     render text: "Not Found", status: 404
+  #   end
+  # end
 end
