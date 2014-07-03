@@ -7,9 +7,9 @@ class ArticlesController < ApplicationController
   after_filter :store_location, except: [:up, :dn, :score, :scores]
   #super_caches_page :show
   cache_sweeper :article_sweeper, only: [ :create ]
-  has_scope :hottest_by
-  has_scope :latest
-  has_scope :recent_hot
+  has_scope :hottest_by, default: 'all', allow_blank: true, only: :index
+  has_scope :latest, type: :boolean, only: :index
+  has_scope :recent_hot, type: :boolean, only: :index
 
   decorates_assigned :article, :articles, :comments, :group
   KEYS = %w(day week month year all)

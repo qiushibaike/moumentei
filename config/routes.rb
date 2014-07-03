@@ -127,19 +127,19 @@ Tearoom::Application.routes.draw do
       end
       collection do
         get 'hottest(/:hottest_by)/(page/:page)' => :index, as: :hottest
-        get 'latest(/:hottest_by)/(page/:page)' => :index, as: :latest
-        get 'recent_hot(/:hottest_by)/(page/:page)' => :index, as: :recent_hot
+        get 'latest/(page/:page)' => :index, as: :latest, latest: true
+        get 'recent_hot/(page/:page)' => :index, as: :recent_hot, recent_hot: true
       end
     end
     resources :tags, only: [:index, :show] do
       resources :articles
       get 'articles/:order(/page/:page)(.:format)' => 'tags/articles#index'
     end
-    get 'latest(/page/:page)(.:format)'                => 'groups#latest',       as: :latest
-    get 'recent_hot(/page/:page)(.:format)'            => "groups#recent_hot",   as: :recent_hot
-    get 'hottest(/:limit(/page/:page))(.:format)'      => "groups#hottest",      as: :hottest
-    get 'pictures(/:limit(/page/:page))(.:format)'     => "groups#pictures",     as: :picture
-    get 'most_replied(/:limit(/page/:page))(.:format)' => "groups#most_replied", as: :most_replied
+    get 'latest(/page/:page)(.:format)'                => 'articles#index',        as: :latest, latest: true
+    get 'recent_hot(/page/:page)(.:format)'            => "articles#index",   as: :recent_hot
+    get 'hottest(/:hottest_by)(/page/:page)(.:format)'      => "articles#index",      as: :hottest, recent_hot: true
+    # get 'pictures(/:limit(/page/:page))(.:format)'     => "articles#index",     as: :picture
+    get 'most_replied(/:limit(/page/:page))(.:format)' => "articles#index", as: :most_replied
     resources :tickets, only: [:index, :show, :create] do
       collection do
         get :submit
