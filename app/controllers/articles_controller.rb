@@ -25,7 +25,7 @@ class ArticlesController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find params[:user_id]
-      @articles = apply_scopes(@user.articles.public).paginate page: params[:page], conditions: {anonymous: false}, order: 'id desc'
+      @articles = apply_scopes(@user.articles.public.signed).paginate page: params[:page]
     else
       find_group
       g =  @group.self_and_children_ids
@@ -36,7 +36,7 @@ class ArticlesController < ApplicationController
       # end
     end
 
-    respond_with @articles
+    respond_with articles
   end
 
   def new
