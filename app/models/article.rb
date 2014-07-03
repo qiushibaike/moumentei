@@ -45,9 +45,10 @@ class Article < ActiveRecord::Base
   scope :signed, -> { where(anonymous: false) }
   scope :pending, -> { where(status: 'pending') }
   scope :hottest, -> { order('score desc') }
-  scope :hottest_by, -> (period=nil) { Group::DateRanges.include?(period) ? hottest.where{ created_at <= Group::DateRanges[period].ago } : hottest }
+  scope :hottest_by, -> (period=nil) { Group::DateRanges.include?(period) ? hottest.where{ created_at >= Group::DateRanges[period].ago } : hottest }
   scope :latest, -> { order('published_at desc') }
   scope :published_after, ->(time) { where{published_at >= time} }
+  scope :recent_hot, -> { where{alt_score > 0}.order('alt_score desc') }
   attr_protected :user_id, :status
 
   cattr_accessor :per_page
@@ -59,17 +60,6 @@ class Article < ActiveRecord::Base
 
   def public?
     status == 'publish'
-  end
-
-  class << self
-    def recent_hot(page)
-      where{alt_score > 0}.paginate page: page, order: 'alt_score desc',include: [:user]
-    end
-
-    protected
-      # find corresponding article records according to the scores records
-      # from the database, and then combine the two dataset together into a
-      # new articles dataset
   end
 
   def ip= ip
