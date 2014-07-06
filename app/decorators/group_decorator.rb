@@ -9,22 +9,27 @@ class GroupDecorator < Draper::Decorator
   #       object.created_at.strftime("%a %m/%d/%y")
   #     end
   #   end
-  def day_link
-    h.link_to_unless_current('24小时内热评', {action: :most_replied, id: object.id, limit: 'day'})
+  def day_link(page=nil, options={})
+    h.link_to_unless_current('24小时内热评', {action: :index, controller: :articles, group_id: object.id, hottest_by: 'day', page: page}, options)
   end
-  def week_link
-    h.link_to_unless_current '1周内', action: :most_replied, id: object.id, limit: 'week'
-  end
-
-  def month_link
-    h.link_to_unless_current '1月内', action: :most_replied, id: object.id, limit: 'month'
+  def week_link(page=nil)
+    h.link_to_unless_current '1周内', {action: :index, controller: :articles, group_id: object.id, hottest_by: 'week', page: page}
   end
 
-  def year_link
-    h.link_to_unless_current '1年内', action: :most_replied, id: object.id, limit: 'year'
+  def month_link(page=nil)
+    h.link_to_unless_current '1月内', {action: :index, controller: :articles, group_id: object.id, hottest_by: 'month', page: page}
   end
 
-  def all_link
-    h.link_to_unless_current '有史以来', action: :most_replied, id: object.id, limit: 'all'
+  def year_link(page=nil)
+    h.link_to_unless_current '1年内', {action: :index, controller: :articles, group_id: object.id, hottest_by: 'year', page: page}
+  end
+
+  def all_link(page=nil)
+    h.link_to_unless_current '有史以来', {action: :index, controller: :articles, group_id: object.id, hottest_by: 'all', page: page}
+  end
+
+  def recent_hot_link(content="最近热点", page=nil, options={})
+    # h.link_to content, {action: :index, group_id: object.id, controller: :articles, recent_hot: true, page: page}, options
+    h.link_to content, h.recent_hot_group_articles_path(object, page), options
   end
 end

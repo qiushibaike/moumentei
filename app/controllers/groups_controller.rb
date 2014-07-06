@@ -5,32 +5,38 @@ class GroupsController < ApplicationController
   after_filter :store_location, only: [:index, :show, :latest, :hottest]
   theme :select_theme
 
-  decorates_assigned :articles
+  decorates_assigned :groups, :articles
   #super_caches_page :show, :latest, :hottest, :latest_replied, :most_replied, :pictures, :pending
   # before_filter :date_range_detect, only: [:hottest, :hottestpage, :most_replied]
 
   def index
-    if Setting.default_group
-      find_group
-      show
-    else
-      @groups = Group.roots
+    @groups = Group.roots
+    if request.format.html?
+      if Setting.default_group
+        find_group
+        return show
+      end
     end
+    respond_with groups
   end
 
   # test
   def show
-    frontpage = @group.inherited_option(:frontpage)
-    if frontpage.blank? or frontpage == 'latest'
-      params[:action] = 'latest'
-      latest
-    elsif frontpage == 'recent_hot'
-      redirect_to [:recent_hot, @group, :articles]
+    if request.format.html?
+      frontpage = @group.inherited_option(:frontpage)
+      if frontpage.blank? or frontpage == 'latest'
+        params[:action] = 'latest'
+        latest
+      elsif frontpage == 'recent_hot'
+        redirect_to [:recent_hot, @group, :articles]
+      else
+        params[:action] = 'hottest'
+        params[:limit] = frontpage
+        date_range_detect
+        hottest
+      end
     else
-      params[:action] = 'hottest'
-      params[:limit] = frontpage
-      date_range_detect
-      hottest
+      respond_with group
     end
   end
   #

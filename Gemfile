@@ -90,6 +90,7 @@ group :development do
 end
 
 group :test, :development do
+
   gem 'spring-commands-rspec'
   gem "rspec-rails"
   gem 'guard'
@@ -99,9 +100,12 @@ group :test, :development do
   gem 'rb-inotify', require: false
   gem 'rb-fsevent', require: false
   gem 'rb-fchange', require: false
+  gem 'terminal-notifier-guard'
   gem 'guard-cucumber'
   gem 'guard-bundler'
   gem 'guard-jruby-rspec', platforms: :jruby
+  gem 'raddocs'
+  gem 'rspec_api_documentation'
 end
 
 group :test do
@@ -110,7 +114,7 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'ruby_gntp'
+  # gem 'ruby_gntp'
   gem 'quiet_assets'
   gem 'forgery'
   gem 'cucumber-rails', require: false
@@ -126,3 +130,4 @@ gem 'draper'
 gem "active_model_serializers"
 gem 'responders'
 gem 'has_scope'
+gem 'rest-client'

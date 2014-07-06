@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
 
   rescue_from ActiveRecord::RecordNotFound, with: :show_404
+  decorates_assigned :group
   protected
   # def render_feed options = {}
   #   @options = options

@@ -2,6 +2,23 @@
 # -*- coding: utf-8 -*-
 # The article model
 class Article < ActiveRecord::Base
+  DAY = { # TODO: move to i18n
+    '8hr' => '8小时',
+    "day" => "24小时",
+    "week" => "7天",
+    "month" => "30天" ,
+    "year"=>"365天",
+    "all" => "有史以来" }
+
+  KEYS = ['8hr', "day", "week", "month", "year", "all"]
+
+  DateRanges = {
+    '8hr' => 8.hour,
+    'day' => 1.day,
+    'week' => 1.week,
+    'month' => 1.month,
+    'year' => 1.year
+  }
   include AntiSpam
   harmonize :title, :content, :tag_line
   include ReferenceAspect
@@ -45,7 +62,7 @@ class Article < ActiveRecord::Base
   scope :signed, -> { where(anonymous: false) }
   scope :pending, -> { where(status: 'pending') }
   scope :hottest, -> { order('score desc') }
-  scope :hottest_by, -> (period=nil) { Group::DateRanges.include?(period) ? hottest.where{ created_at >= Group::DateRanges[period].ago } : hottest }
+  scope :hottest_by, -> (period=nil) { DateRanges.include?(period) ? hottest.where{ created_at >= DateRanges[period].ago } : hottest }
   scope :latest, -> { order('published_at desc') }
   scope :published_after, ->(time) { where{published_at >= time} }
   scope :recent_hot, -> { where{alt_score > 0}.order('alt_score desc') }

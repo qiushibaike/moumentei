@@ -2,22 +2,6 @@
 # -*- coding: utf-8 -*-
 
 class Group < ActiveRecord::Base
-  DAY = { # TODO: move to i18n
-    '8hr' => '8小时',
-    "day" => "24小时",
-    "week" => "7天",
-    "month" => "30天" ,
-    "year"=>"365天",
-    "all" => "有史以来" }
-  KEYS = ['8hr', "day", "week", "month", "year", "all"]
-
-  DateRanges = {
-    '8hr' => 8.hour,
-    'day' => 1.day,
-    'week' => 1.week,
-    'month' => 1.month,
-    'year' => 1.year
-  }
   acts_as_nested_set
   has_many :articles
   has_many :public_articles, -> { where(status: 'publish') }, :class_name => 'Article'

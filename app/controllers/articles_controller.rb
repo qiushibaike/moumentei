@@ -12,15 +12,6 @@ class ArticlesController < ApplicationController
   has_scope :recent_hot, type: :boolean, only: :index
 
   decorates_assigned :article, :articles, :comments, :group
-  KEYS = %w(day week month year all)
-
-  DateRanges = {
-    '8hr' => 8.hour,
-    'day' => 1.day,
-    'week' => 1.week,
-    'month' => 1.month,
-    'year' => 1.year
-  }
 
   def index
     if params[:user_id]

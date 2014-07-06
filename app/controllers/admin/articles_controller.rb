@@ -3,7 +3,7 @@ class Admin::ArticlesController < Admin::BaseController
   #before_filter :admin_required, :except =>[:secret_question, :answer_secret, :remove_secret_cmt ]
   #before_filter :doctor_required, :only  => [:secret_question, :answer_secret, :remove_secret_cmt ]
   cache_sweeper :article_sweeper, :only => [:set_status, :batch_set_status, :move]
-
+  # decorates_assigned :articles
   def index
     params[:status] = 'pending' if not params[:status]
     @status = params[:status]
@@ -35,12 +35,14 @@ class Admin::ArticlesController < Admin::BaseController
     if params[:id] and @articles.size > 0
       @group = @articles[0].group
     end
+    @articles = ArticleDecorator.decorate_collection(@articles)
   end
 
   def new
     @article = Article.new  :group_id => params[:group_id]
     @article.status = 'publish'
     @article.user_id = current_user.id
+    @article = ArticleDecorator.decorate(@article)
   end
 
   def create
