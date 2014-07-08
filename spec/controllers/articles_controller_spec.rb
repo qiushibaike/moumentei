@@ -66,7 +66,7 @@ describe ArticlesController do
   end
   it 'GET /groups/:group_id/articles/latest.json with picture' do 
     # group = create :group
-    article = create :article, status: 'publish', picture: File.new("#{Rails.root}/public/avatars/original/missing.png")
+    article = create :article, status: 'publish', picture: File.new("#{Rails.root}/public/img/for_article_test.jpg")
     get :index, group_id: article.group, latest: true, format: :json
     expect(response.body).to eq({articles: [{id: article.id, title: article.title, content: article.content, picture: {original: article.picture(:original)}, created_at: article.created_at, published_at: article.published_at, user: {id: article.user.id, login: article.user.login, avatar: {}}}]}.to_json)
   end
