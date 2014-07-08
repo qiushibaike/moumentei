@@ -1,3 +1,4 @@
+require 'rails_helper'
 describe GroupsController do
 
   #Delete this example and add some real ones
@@ -19,4 +20,5 @@ describe GroupsController do
     get :show, id: group.id, format: :json
     expect(response.body).to eq({group: {id: group.id, name: group.name}}.to_json)
   end
+
 end

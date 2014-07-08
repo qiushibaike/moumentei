@@ -1,4 +1,4 @@
-
+require 'rails_helper'
 describe ArticlesController do
 
   #Delete this example and add some real ones
@@ -58,4 +58,22 @@ describe ArticlesController do
       end
     end
   end
+  it 'GET /groups/:group_id/articles/latest.json with no picture' do 
+    # group = create :group
+    article = create :article, status: 'publish'
+    get :index, group_id: article.group, latest: true, format: :json
+    expect(response.body).to eq({articles: [{id: article.id, title: article.title, content: article.content, picture: {}, created_at: article.created_at, published_at: article.published_at, user: {id: article.user.id, login: article.user.login, avatar: {}}}]}.to_json)
+  end
+  it 'GET /groups/:group_id/articles/latest.json with picture' do 
+    # group = create :group
+    article = create :article, status: 'publish', picture: File.new("#{Rails.root}/public/avatars/original/missing.png")
+    get :index, group_id: article.group, latest: true, format: :json
+    expect(response.body).to eq({articles: [{id: article.id, title: article.title, content: article.content, picture: {original: article.picture(:original)}, created_at: article.created_at, published_at: article.published_at, user: {id: article.user.id, login: article.user.login, avatar: {}}}]}.to_json)
+  end
+  it 'GET /groups/:group_id/articles/hottest.json' do
+    article = create :article, status: 'publish', latest: false, format: :json
+    
+  end
+
+
 end

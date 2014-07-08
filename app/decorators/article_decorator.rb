@@ -51,10 +51,11 @@ class ArticleDecorator < Draper::Decorator
   end
 
   def content
-    h.auto_link h.format_content(object, object.group)
+    h.auto_link object.content
   end
 
   def thumb_picture
+
     if object.picture.file?
       if object.picture.content_type =~ /gif/i
           h.image_tag(object.picture(:original), alt: (object.title || object.content[0, 10]))
