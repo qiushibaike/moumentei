@@ -1,13 +1,14 @@
 # A sample Guardfile
 # More info at https://github.com/guard/guard#readme
 is_jruby = RUBY_PLATFORM =~ /java/
+opt = {}
 if is_jruby
   interactor :simple
-  cli = ["-c", "-t~slow"]
+  opt[:cli] = ["-c", "-t~slow"]
 else
-  cli ="--format nested --fail-fast --color"
+  opt[:cli] = "--format nested --fail-fast --color"
 end
-guard is_jruby ? 'jruby-rspec' : 'rspec', :cli => cli do
+guard 'rspec', :cmd => "spring rspec" do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }
@@ -43,8 +44,8 @@ guard 'bundler' do
   # watch(/^.+\.gemspec/)
 end
 
-guard 'cucumber' do
-  watch(%r{^features/.+\.feature$})
-  watch(%r{^features/support/.+$})          { 'features' }
-  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
-end
+#guard 'cucumber' do
+#  watch(%r{^features/.+\.feature$})
+#  watch(%r{^features/support/.+$})          { 'features' }
+#  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
+#end

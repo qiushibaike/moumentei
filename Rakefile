@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Moumentei::Application.load_tasks
+Tearoom::Application.load_tasks

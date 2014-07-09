@@ -1,21 +1,20 @@
-require 'spec_helper'
 
 describe AnonymousRating do
   let(:article){ create :article }
   let(:user){ create :user }
 
-  it 'should be able to rate and not rate again' do
-    lambda{
+  it 'does not rate again' do
+    expect{
       AnonymousRating.vote('127.0.0.1', article, 1)
-    }.should change(AnonymousRating, :count).by(1)
+    }.to change(AnonymousRating, :count).by(1)
     article.reload
-    article.score.should == 1
-    article.pos.should == 1
-    lambda{
+    expect(article.score).to eql(1)
+    expect(article.pos).to eql(1)
+    expect{
       AnonymousRating.vote('127.0.0.1', article, 1)
-    }.should_not change(AnonymousRating, :count)
+    }.not_to change(AnonymousRating, :count)
     article.reload
-    article.score.should == 1
-    article.pos.should == 1
+    expect(article.score).to eql(1)
+    expect(article.pos).to eql(1)
   end
 end

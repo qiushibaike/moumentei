@@ -1,0 +1,12 @@
+<% group = @group || article.group %>
+
+<div class="comments-template" id="article_comments_<%=article.id%>">
+  <div class="comments-wrap">
+    <div class="comments">
+      <ol class="comment-list">
+        <%= render comments %>
+      </ol>
+    </div>
+    <%= render 'comments/form' %>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="entry" id="entity">
   <div class="entry_bar">
     <div class="entry_bar_left">
-      #<%=link_to comment.article_id, comment.article%> <%= comment.floor %> <%= link_to comment.user.login, [:admin,  comment.user], :class => comment.anonymous ? 'anonymous' : '' %>
+      #<%=link_to comment.article_id, comment.article%> <%= comment.floor %> <%= link_to comment.author_name, [:admin,  comment.user], :class => comment.anonymous ? 'anonymous' : '' %>
       [<span class="report-edit">
         <label><%= radio_button_tag "report[#{report.id}][result]", 'skip', true %>跳过</label>
         <label><%= radio_button_tag "report[#{report.id}][result]", 'remove' %><%= link_to '删除', remove_admin_report_path(report), :method => :post %></label>

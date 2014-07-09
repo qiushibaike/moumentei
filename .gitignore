@@ -1,3 +1,7 @@
+*.sqlite
+*.sqilte3
+*.war
+*.class
 .rbx
 .idea
 .hg
@@ -8,6 +12,8 @@ nbproject/project.properties
 nbproject/project.xml
 db/sphinx
 db/*.tch
+db/*.db
+db/*.sqlite
 config/database.yml
 log/*
 tmp/cache/*
@@ -20,10 +26,6 @@ public/javascripts/closure
 public/cache
 public/groups
 public/archives
-public/qiushi/log
-public/qiushi/log/*
-public/www.qiushibaike.com
-public/secret.moumentei.com/
 public/system
 public/stylesheets/compiled
 themes

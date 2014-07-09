@@ -14,18 +14,17 @@ module Article::ReferenceAspect
   def self.included(base)
     base.class_eval do 
       has_and_belongs_to_many :references, 
+        -> { uniq },
         :class_name => 'Article', 
         :join_table => 'article_references', 
         :foreign_key => 'source', 
-        :association_foreign_key => 'referer', 
-        :uniq => true
+        :association_foreign_key => 'referer'
       has_and_belongs_to_many :public_references, 
+        -> { where(:status => 'publish').uniq },
         :class_name => 'Article', 
         :join_table => 'article_references', 
         :foreign_key => 'source', 
-        :association_foreign_key => 'referer', 
-        :uniq => true,
-        :conditions => {:status => 'publish'}   
+        :association_foreign_key => 'referer'
       after_create :detect_reference
       include InstanceMethods
     end

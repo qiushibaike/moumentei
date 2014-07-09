@@ -1,9 +1,10 @@
+# require "application_responder"
 # -*- encoding : utf-8 -*-
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  #protect_from_forgery # :secret => 'd7f14b6ea460ab510ef00c7049c8bb56'
+  #protect_from_forgery # secret: 'd7f14b6ea460ab510ef00c7049c8bb56'
   helper :all
   include AuthenticatedSystem
   include ViewControlMethods
@@ -13,11 +14,16 @@ class ApplicationController < ActionController::Base
   has_mobile_fu
   attr_accessor :show_login
 
+  respond_to :html, :json, :js, :mobile, :wml
+  self.responder = ApplicationResponder
+
+  rescue_from ActiveRecord::RecordNotFound, with: :show_404
+  decorates_assigned :group
   protected
-  def render_feed options = {}
-    @options = options
-    render :template => "common/rss.xml.builder", :layout => false, :content_type => 'text/xml'
-  end
+  # def render_feed options = {}
+  #   @options = options
+  #   render template: "common/rss.xml.builder", layout: false, content_type: 'text/xml'
+  # end
 
   # Handle public-facing errors by rendering the "error" liquid template
   def show_404 target=''
@@ -26,7 +32,7 @@ class ApplicationController < ActionController::Base
 
   def show_error(message = 'An error occurred.', status = :internal_server_error)
     @message = message
-    render :template => 'common/error', :status => status
+    render template: 'common/error', status: status
   end
 
   def select_domain group
@@ -48,17 +54,18 @@ class ApplicationController < ActionController::Base
     ua = request.user_agent
     force_mobile_format if ua.blank?
     response.headers['Cache-Control'] = 'no-cache' if is_mobile_device?
-    @group ||= Group.find(Setting.default_group) if Setting.default_group
-    theme = @group.options[:theme] if not @group.blank? and not @group.options.blank? and @group.options.include?(:theme)
+    @group ||= Group.find(Setting.default_group) if Setting.default_group.present?
+    theme = @group.options[:theme] if @group.present? and @group.options.present? and @group.options.include?(:theme)
   end
 
   #  def default_url_options(options={})
-  #    options.reverse_merge!({:format => request.format.to_sym})
+  #    options.reverse_merge!({format: request.format.to_sym})
   #  end
 
   # figure out which group to operate on
   # according to the requested host name or params[:domain]
-  def find_group(group_id=params[:group_id]||params[:id])
+  def find_group
+    group_id = params[:group_id] || (controller_name == 'groups' && params[:id])
     @group = if group_id
       Group.find(group_id)
     else
@@ -66,6 +73,6 @@ class ApplicationController < ActionController::Base
     end
     return show_404 unless @group
     select_domain @group if request.host != 'localhost' and Rails.env.production?
-    return @group
+    @group
   end
 end

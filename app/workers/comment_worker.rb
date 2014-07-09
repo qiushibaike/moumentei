@@ -23,7 +23,7 @@ class CommentWorker < BaseWorker
       end
     end
   end
-  
+
   def update_score(comment_id)
     comment = Comment.find comment_id
     article = comment.article
@@ -42,40 +42,40 @@ class CommentWorker < BaseWorker
     comment = Comment.find comment_id
 
     if comment.parent_id
-      parent = Comment.find(comment.parent_id, :include=>[:user,:article])
-      puts parent  
+      parent = Comment.find(comment.parent_id, include:[:user,:article])
+      puts parent
       if parent and comment.user_id != parent.user_id
         commented_user= parent.user
         commented_article = parent.article
 
         if commented_user && commented_article
-          
+
           key="new_comment.#{commented_article.id}.#{comment.user_id}"
           notification = Notification.find_by_key(key)
           puts key
-          
+
           if !notification
-            Notification.create :user_id => commented_user.id,
-              :key => key,
-              :content => "#{commented_article.id}.#{comment.id}"
+            Notification.create user_id: commented_user.id,
+              key: key,
+              content: "#{commented_article.id}.#{comment.id}"
           else
             Notification.update(notification.id,
-              :user_id => commented_user.id,
-              :key => key,
-              :content => "#{commented_article.id}.#{comment.id}",:read=>false)
+              user_id: commented_user.id,
+              key: key,
+              content: "#{commented_article.id}.#{comment.id}",read:false)
           end
         end
       end
     end
   end
-  
+
   # when new comments was left on an article, update those who're watching the
   # article in order that they can saw the comments on their favoriates page
   def notify_watchers(comment_id)
     comment = Comment.find comment_id
-    
+
     article_id = comment.article_id
-    favs = Favorite.find_all_by_favorable_id(article_id)
+    favs = Favorite.where(favorable_id: article_id)
     uid = comment.user_id
     ids = []
     favs.each do |f|
@@ -84,27 +84,6 @@ class CommentWorker < BaseWorker
       ids << i
       f.updated_at = Time.now()
       f.save!
-    end
-    puts "notify #{ids.join(',')}"
-  end
-
-  def number_floor(article_id)
-    comments = Comment.find :all,
-                :conditions => {
-                    :article_id => article_id,
-                    :floor => nil,
-                    :status => 'publish'}, :order => 'id asc', :lock => true
-    comments.each do |c|
-      next if c.floor or c.status != 'publish'
-      loop do
-        begin
-          puts "n #{c.id}"
-          c.update_attribute :floor,Comment.next_id(article_id)
-          break
-        rescue ActiveRecord::StatementInvalid => e
-          break unless e.message =~ /Duplicate/
-        end
-      end
     end
   end
 
@@ -129,8 +108,8 @@ class CommentWorker < BaseWorker
       else
         next
       end
-      p = article.comments.find :first, :conditions => {:floor => floor} rescue next
-      vote(:comment_id => p.id, :score => s, :user_id => comment.user_id)
+      p = article.comments.find :first, conditions: {floor: floor} rescue next
+      vote(comment_id: p.id, score: s, user_id: comment.user_id)
     end
   end
 end

@@ -1,88 +1,37 @@
 # -*- encoding : utf-8 -*-
 class CommentsController < InheritedResources::Base
-  cache_sweeper :comment_sweeper, :only => [ :create ]
-  before_filter :find_article, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:article_id)}
-  before_filter :find_post, :except => [:up, :dn], :if => Proc.new {|c| c.params.include?(:post_id)}
-  #before_filter :oauthenticate, :only => [:create]
-  before_filter :login_required, :except => [:index, :show, :count, :create, :up, :dn,:report]
-  super_caches_page :index
-
+  cache_sweeper :comment_sweeper, only: [ :create ]
+  before_filter :find_article, except: [:up, :dn], if: -> (c) { c.params.include?(:article_id)}
+  before_filter :find_post, except: [:up, :dn], if: -> (c) { c.params.include?(:post_id)}
+  #before_filter :oauthenticate, only: [:create]
+  before_filter :login_required, except: [:index, :show, :count, :create, :up, :dn,:report]
+  # super_caches_page :index
+  decorates_assigned :article, :comments, :comment
+  respond_to :html, :json, :js
   # GET /comments
   # GET /comments.xml
   def index
-    #expires_in 1.minute, 'max-stale' => 1.day, :public => true
-    opt = {}
-    opt[:public] = true unless is_mobile_device?
-    opt[:last_modified] = @article.updated_at.utc
-    opt[:etag] = [@article, @article.public_comments_count, request.format]
-    
-    if stale?(opt)
-      cond = ''
-      cond = ['comments.floor > ?', params[:after]] if params[:after]
-      if request.xhr?
-        @comments = @article.comments.find :all, :conditions => cond,  :order => "id asc", :include => :user
-      elsif @article
-        @comments = @article.comments.paginate :conditions => cond, :page => params[:page],:order => 'id asc', :include => :user
-      end
-      respond_to do |format|
-        format.html {
-          render :layout => false
-        }
-        format.mobile {
-          render :layout => false if request.xhr?
-        }
-        format.any(:json, :js) do
-          json = []
-          @comments.each do |c|
-            j = c.as_json(
-              :except => ( c.anonymous ?
-                  ['user_id', 'anonymous', 'ip', 'status'] :
-                  ['ip', 'anonymous', 'status']
-              ))
-            j['user'] = {:login => c.user.login} unless c.anonymous
-            json << j
-          end
-          render :json => json
-        end
-        format.rss do
-          expires_in 1.hour
-          @comments.collect! do |item|
-            {
-              :title       => "#{item.anonymous ? '匿名用户' : item.user.login}发表于#{@group.name.mb_chars[0,2]}\##{@article.id}上的评论",
-              :link        => "#{article_url(@article)}\#comment-#{item.id}",
-              :pubDate     => item.created_at,
-              :guid        => "#{article_url(@article)}\#comment-#{item.id}",
-              :description => item.content
-            }
-          end
-          @comments.reverse!
-          render_feed :items => @comments,
-            :title => "#{@group.name.mb_chars[0,2]}\##{@article.id}中的评论",
-            :pubDate => @article.updated_at
-        end
-      end
-    end
+    cond = @article.comments.includes(:user)
+    cond = cond.where{ floor > params[:after]} if params[:after]
+    @comments = cond.paginate page: params[:page]
+
+    respond_with @comments
   end
 
   def show
     @comment = @article.comments.public.find_by_floor(params[:id])
     return show_404 unless @comment
-    @cache_subject = @comment
-    respond_to do |format|
-      format.html{
-        render :partial => @comment
-      }
-    end
+    respond_with @comment
   end
 
   def count
-    fresh_when :etag => @article, :last_modified => @article.updated_at.utc, :public => true
+    fresh_when etag: @article, last_modified: @article.updated_at.utc, public: true
     respond_to do |format|
       format.html {
-        render :text => @article.comments.count
+        render text: @article.comments.count
       }
       format.json{
-        render :json => {:count => @article.comments.count}
+        render json: {count: @article.comments.count}
       }
     end
   end
@@ -94,15 +43,18 @@ class CommentsController < InheritedResources::Base
       respond_to do |format|
         format.any(:html, :mobile) {
           if request.xhr?
-            render :text => text
+            render text: text
           else
             flash[:error] = text
-            render :action => 'new'
+            render action: 'new'
           end
         }
 
-        format.any(:js, :json){
-          render :json => {:error => text}, :status => :unprocessable_entity
+        format.json {
+          render json: {error: text}, status: :unprocessable_entity
+        }
+        format.js {
+          render text: "alert(#{j text})"
         }
       end
       return
@@ -111,12 +63,12 @@ class CommentsController < InheritedResources::Base
     if @article #when creating article's comments
       #    @article = Article.find params[:comment] unless @article
       group = @article.group
-      @comment = comment = Comment.new(params[:comment])
+      @comment = comment = Comment.new(comment_params)
       if not logged_in? and params[:user]
         logout_keeping_session!
         user = User.authenticate(params[:user][:login], params[:user][:password])
         if user
-          cookies['login'] = {:value => current_user.to_json(:only => [:id, :login, :state]), :expires => 10.minutes.from_now}
+          cookies['login'] = {value: current_user.to_json(only: [:id, :login, :state]), expires: 10.minutes.from_now}
           self.current_user= user
         else
           return_with_text["登录失败"]
@@ -159,17 +111,18 @@ class CommentsController < InheritedResources::Base
         format.any(:html, :mobile) {
           if request.xhr? || params[:asset]
             if comment.status == 'publish'
-              render :partial => 'comments/comment', :object => comment#, :locals => {:comment_counter => @article.public_comments_count}
+              render comment#, locals: {comment_counter: @article.public_comments_count}
             else
-              render :text => comment.public? ? '评论成功' : "您的评论已提交，请等待审核"
+              render text: comment.public? ? '评论成功' : "您的评论已提交，请等待审核"
             end
           else
             redirect_to article_path(comment.article_id)
           end
         }
         format.json {
-          render :json => comment, :status => :created
+          render json: comment, status: :created
         }
+        format.js
       end
 
       if params[:vote]
@@ -194,10 +147,10 @@ class CommentsController < InheritedResources::Base
 
   protected
   def vote score
-    opt = {:comment_id => params[:id], :score => score }
+    opt = {comment_id: params[:id], score: score }
     opt[:user_id] = current_user.id if logged_in?
     CommentWorker.async_vote opt
-    render :nothing => true
+    render nothing: true
   end
 
   def find_post
@@ -214,7 +167,7 @@ class CommentsController < InheritedResources::Base
       if request.host != 'localhost' and Rails.env.production?
         select_domain @group
         #if not @group.is_or_is_ancestor_of?(@article.group)
-        #  render :template => 'articles/not_found', :status => 404
+        #  render template: 'articles/not_found', status: 404
         #  return false
         #end
       end
@@ -229,9 +182,13 @@ class CommentsController < InheritedResources::Base
 
   rescue ActiveRecord::RecordNotFound
     if @group
-      render :template => 'articles/not_found', :status => 404
+      render template: 'articles/not_found', status: 404
     else
       show_404
     end
+  end
+  private
+  def comment_params
+    params.require(:comment).permit(:content, :anonymous)
   end
 end

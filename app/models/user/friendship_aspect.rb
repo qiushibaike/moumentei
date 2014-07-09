@@ -3,19 +3,17 @@ class User
 module FriendshipAspect
   def self.included(base)
     base.has_and_belongs_to_many :friends,
+      -> { select('users.*').uniq },
       :join_table => 'friendships',
       :foreign_key => 'user_id',
       :association_foreign_key => 'friend_id',
-      :uniq => true,
-      :class_name => 'User',
-      :select => 'users.*'
+      :class_name => 'User'
     base.has_and_belongs_to_many :followers,
+      -> { select('users.*').uniq },
       :join_table => 'friendships',
       :foreign_key => 'friend_id',
       :association_foreign_key => 'user_id',
-      :uniq => true,
-      :class_name => 'User',
-      :select => 'users.*'
+      :class_name => 'User'
 #  has_many :friendships
 #  has_many :friends, :through => :friendships, :source => :user, :foreign_key => 'user_id'
 #  has_many :followers, :through => :friendships, :source => :user, :foreign_key => 'friend_id'

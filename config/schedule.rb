@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 require 'rufus/scheduler'
-scheduler = Rufus::Scheduler.start_new
+scheduler = Rufus::Scheduler.new
 
 scheduler.every("5m") do
   Article.recalc_alt_scores

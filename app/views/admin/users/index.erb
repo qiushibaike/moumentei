@@ -37,7 +37,7 @@
       <td><%= link_to 'edit', edit_admin_user_path(user) %></td>
       <td><%=link_to "tickets",tickets_admin_user_path(user)%></td>
       <%if user.state=='pending'%>
-        <td> <%= link_to'active ',active_admin_user_path(user),:method=>:post%></td>
+        <td> <%= link_to'active ',activate_admin_user_path(user),:method=>:post%></td>
         <td> <%=link_to'suspend', suspend_admin_user_path(user),:method=>:post%></td>
         <td> <%= link_to 'Delete',admin_user_path(user),:method => :delete%></td>
       <%end%>
@@ -59,7 +59,6 @@
 </table>
 
 <%= will_paginate(@users, :class => 'pagination', :inner_window => 2, :outer_window => 0,
-                :renderer => BootstrapLinkRenderer,
                 :previous_label => '&laquo;'.html_safe,
                 :next_label => '&raquo;'.html_safe) %>
 </div>

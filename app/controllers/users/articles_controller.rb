@@ -4,8 +4,8 @@ class Users::ArticlesController < ArticlesController
   #layout 'users'
   theme nil
   #skip_before_filter :super_caches_page
-  
-  def index   
+
+  def index
     if params[:user_id]
       @user = User.find params[:user_id]
       return show_404 if @user.suspended? or @user.deleted?
@@ -30,7 +30,7 @@ class Users::ArticlesController < ArticlesController
       @limit = params[:limit]
       @next_limit = KEYS[i+1]
       scope = scope.ascend_by_score
-      scope = scope.created_at_gte(DateRanges[@limit].ago) if @limit != 'all'
+      scope = scope.created_at_gte(Article::DateRanges[@limit].ago) if @limit != 'all'
     else
       params[:order] = 'latest'
       scope = scope.descend_by_created_at
@@ -39,7 +39,7 @@ class Users::ArticlesController < ArticlesController
     response.headers['Cache-Control'] = 'private, no-cache, no-store'
     respond_to do |format|
       format.any(:html, :mobile){
-        
+
       }
       format.json do
         render :json => {

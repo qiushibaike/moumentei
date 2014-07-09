@@ -3,7 +3,7 @@
       必须<%= link_to '登录', login_path %>后才能留言
   <% else %>
       <% if @article.comment_status != 'closed' and @article.status == 'publish' %>
-          <%= form_for [@article, @article.comments.new] do |f| %>
+          <%= form_for [@article, @article.comments.new], remote: true do |f| %>
               <fieldset>
                 <div class="control-group">
                   <%= f.label :content, '回复正文', :class => 'control-label' %>

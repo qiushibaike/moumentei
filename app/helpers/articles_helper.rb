@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 module ArticlesHelper
   def navigator
-    
+
   end
 
   def show_tags(article, current_tag = nil)
@@ -20,7 +20,7 @@ module ArticlesHelper
     reg = Regexp.new(r.join('|'))
     tag.gsub reg do |t|
       m[t]
-    end
+    end.html_safe
   end
 
   # TODO: optimize out the regexp match
@@ -30,11 +30,11 @@ module ArticlesHelper
 
   def format_content(article, group, watermark=false)
     prefix = group.name.mb_chars[0,2]
-    
+
     # i don't know if ruby 1.9 support unicode regexp
     #r = Regexp.new "(#{prefix}＃|#{prefix}\#|\#|＃)(\\d+)"
     r = Regexp.new "(#{prefix}\#|\#)(\\d+)"
-    
+
     content = h(article.content).
       gsub(/$/,"<br/>").
       gsub(/ /, '&nbsp;').
@@ -52,7 +52,7 @@ module ArticlesHelper
     a = Tags[rand(Tags.length)]
     size = rand(array.length)
     array[size] = "#{array[size]}<#{a} class='watermark'>#{WaterMark[rand(WaterMark.size)]}</#{a}>"
-    
+
     return array.join("<br/>")
   end
 end

@@ -3,7 +3,7 @@ class Admin::ArticlesController < Admin::BaseController
   #before_filter :admin_required, :except =>[:secret_question, :answer_secret, :remove_secret_cmt ]
   #before_filter :doctor_required, :only  => [:secret_question, :answer_secret, :remove_secret_cmt ]
   cache_sweeper :article_sweeper, :only => [:set_status, :batch_set_status, :move]
-
+  # decorates_assigned :articles
   def index
     params[:status] = 'pending' if not params[:status]
     @status = params[:status]
@@ -35,12 +35,14 @@ class Admin::ArticlesController < Admin::BaseController
     if params[:id] and @articles.size > 0
       @group = @articles[0].group
     end
+    @articles = ArticleDecorator.decorate_collection(@articles)
   end
 
   def new
     @article = Article.new  :group_id => params[:group_id]
     @article.status = 'publish'
     @article.user_id = current_user.id
+    @article = ArticleDecorator.decorate(@article)
   end
 
   def create
@@ -51,14 +53,14 @@ class Admin::ArticlesController < Admin::BaseController
       else
         params[:article].delete(:user_id)
       end
-    end    
-    
+    end
+
     @article = Article.new params[:article]
-    
+
     %w(status user_id pos_score neg_score).each do |field|
       @article.send "#{field}=", params[:article][field] unless params[:article][field].blank?
     end
-    
+
     if @article.save
       flash[:success] = 'article created'
       redirect_to [:edit, :admin, @article]
@@ -84,10 +86,10 @@ class Admin::ArticlesController < Admin::BaseController
     @article.attributes= params[:article]
     logger.debug params[:article].inspect
     %w(status user_id pos_score neg_score).each do |field|
-      logger.debug params[:article][field] 
+      logger.debug params[:article][field]
       @article.send "#{field}=", params[:article][field] unless params[:article][field].blank?
     end
-    
+
     if @article.save
       flash[:notice] = "#{@article.id} updated"
     end
@@ -132,10 +134,8 @@ class Admin::ArticlesController < Admin::BaseController
     @article.save!
     AuditLogger.log current_user, 'set article', @article.id, 'status from', orig_status, 'to', params[:status]
     TicketWorker.async_judge(:article_id => @article.id, :approval => (@article.status == 'publish'), :reason => '')
-    if request.xhr?
-      render :nothing => true
-    else
-      redirect_to :back
+    respond_to do |format|
+      format.js
     end
   end
 

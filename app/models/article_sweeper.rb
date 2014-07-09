@@ -4,11 +4,13 @@ class ArticleSweeper < ActionController::Caching::Sweeper
   observe Article
 
   def after_save(article)
+    return unless controller
     expire_fragment [article.group, 'counts']
     expire_fragment 'groups_count'
   end
 
   def before_destroy(article)
+    return unless controller
     on_delete(article)
   end
 

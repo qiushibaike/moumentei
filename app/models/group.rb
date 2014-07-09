@@ -4,7 +4,7 @@
 class Group < ActiveRecord::Base
   acts_as_nested_set
   has_many :articles
-  has_many :public_articles, :class_name => 'Article', :conditions => {:status => 'publish'}
+  has_many :public_articles, -> { where(status: 'publish') }, :class_name => 'Article'
   has_many :pages
   serialize :options, Hash
 #  has_and_belongs_to_many :moderators, :class_name => 'User', :dependant => :nullify
@@ -46,12 +46,12 @@ class Group < ActiveRecord::Base
   def encryption?
     options[:encryption]
   end
-  
+
   def self_and_children_ids
     options[:show_articles_in_children] ?
         full_set.collect{|i|i.id} : [id]
   end
-  
+
   def names
     self_and_ancestors.collect{|c|c.name}
   end
@@ -84,34 +84,34 @@ SQL
 SQL
   end
 
-  def count_by_date(date)
-    count_by_day(date.year, date.month, date.day)
-  end
+#   def count_by_date(date)
+#     count_by_day(date.year, date.month, date.day)
+#   end
+#
+#   def self.update_summary_table
+# #    date = Date.new
+#     now = Time.now
+#     end_time = Time.local(now.year, now.month, now.day, now.hour)
+#     start_time = end_time - 3600
+#
+#     self.all.each do |g|
+#       updated=connection.select_value(<<sql).to_i
+#       select count(*) from articles where group_id=#{g.id} and status='publish'
+#         and created_at >= '#{start_time.strftime('%Y-%m-%d %H:%M:%S')}'
+#         and created_at < '#{end_time.strftime('%Y-%m-%d %H:%M:%S')}'
+# sql
+#       [
+# "update `year_#{g.id}` set `count`=`count`+#{updated} where `year`=#{start_time.year}",
+# "update `month_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
+#   and `month` = #{start_time.month}",
+# "update `day_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
+# and `month` =  #{start_time.month} and `day` =  #{start_time.day}"
+#       ].each { |sql| connection.execute sql}
+#
+# sql
+#     end
+#   end
 
-  def self.update_summary_table
-#    date = Date.new
-    now = Time.now
-    end_time = Time.local(now.year, now.month, now.day, now.hour)
-    start_time = end_time - 3600
-    
-    self.all.each do |g|
-      updated=connection.select_value(<<sql).to_i
-      select count(*) from articles where group_id=#{g.id} and status='publish'
-        and created_at >= '#{start_time.strftime('%Y-%m-%d %H:%M:%S')}' 
-        and created_at < '#{end_time.strftime('%Y-%m-%d %H:%M:%S')}'
-sql
-      [
-"update `year_#{g.id}` set `count`=`count`+#{updated} where `year`=#{start_time.year}",
-"update `month_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
-  and `month` = #{start_time.month}",
-"update `day_#{g.id}` set `count`=`count`+#{updated} where `year` = #{start_time.year}
-and `month` =  #{start_time.month} and `day` =  #{start_time.day}"
-      ].each { |sql| connection.execute sql}
-
-sql
-    end
-  end
-  
   def inherited attr
     attr = attr.to_sym
     Rails.cache.fetch("Group#{self.id}.I.#{attr}") do
@@ -122,13 +122,13 @@ sql
       v
     end
   end
-  
+
   after_save do |group|
     group.changed.each do |attr|
       Rails.cache.delete("Group#{group.id}.I.#{attr}")
     end
   end
-  
+
   def inherited_option attr
     attr = attr.to_sym
     Rails.cache.fetch("Group#{self.id}.O.#{attr}") do
@@ -139,12 +139,12 @@ sql
       o
     end
   end
-  
+
   before_save do |group|
     group.options_was.each_key do |attr|
       Rails.cache.delete("Group#{group.id}.O.#{attr}")
     end if group.options_was.is_a?(Hash)
-  end  
+  end
 
 #  def after_save
 #    self_and_children.each do |g|
@@ -154,7 +154,7 @@ sql
 
   def self.create_summary_table(id)
     connection.execute <<SQL
-    
+
 CREATE TABLE IF NOT EXISTS `day_#{id}` (
   `year` smallint(6) NOT NULL,
   `month` tinyint(4) NOT NULL,
