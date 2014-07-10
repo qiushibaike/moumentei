@@ -73,6 +73,8 @@ GEM
       activerecord (>= 3.0)
     addressable (2.3.6)
     arel (4.0.2)
+    autoprefixer-rails (2.1.0.20140628)
+      execjs
     awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
     better_errors (1.1.0)
@@ -80,6 +82,8 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.2.0.0)
+      sass (~> 3.2)
     builder (3.1.4)
     calendar_helper (0.2.6)
       open4
@@ -469,9 +473,11 @@ DEPENDENCIES
   acts_as_list
   acts_as_taggable_on_steroids!
   alias_fallback!
+  autoprefixer-rails
   awesome_nested_set
   better_errors
   binding_of_caller
+  bootstrap-sass (~> 3.2.0)
   calendar_helper
   capistrano
   capistrano-bundler

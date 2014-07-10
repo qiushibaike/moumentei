@@ -69,6 +69,8 @@ gem 'lazy_high_charts'
   gem 'turbolinks'
   gem 'jquery-turbolinks'
   gem 'turbolinks-redirect'
+  gem 'bootstrap-sass', '~> 3.2.0'
+  gem 'autoprefixer-rails'
 # end
 gem 'remotipart'
 
