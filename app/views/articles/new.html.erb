@@ -10,30 +10,47 @@
 <% if @article and not @article.new_record? and @article.errors.empty? %>
   <p>非常感谢您的分享！您刚刚提交的帖子#<%= @article.id %>将在管理员审核通过之后发表，您将生活的更加幸福快乐。</p>
 <% else %>
-  <%= form_for([@article.group, @article], :html => {:multipart => true, :class => 'well'}) do |f| %>
-  <%=f.hidden_field :group_id%>
-  <div class="control-group">
-    <label>标题</label>
-    <div class="controls">
-      <%= f.text_field :title, :class => 'input-xlarge'%>
-      <p class="help-block">
-        可选
-      </p>
+  <%= form_for([@article.group, @article], html: {multipart: true, class: 'form-horizontal', role: 'form'}) do |f| %>
+    <div class="form-group">
+      <%= f.label :title, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+      <%= f.text_field :title, class: 'form-control'%>
+      <p class="help-block"> 可选 </p></div>
     </div>
-  </div>
-  <%= f.text_area :content, :rows => 10, :class => 'span5' %>
-  <% unless logged_in? %><div id="length"></div><%end%><br />
-      <div class="tagbox"><label>图片：<%= f.file_field :picture %></label></div>
-      <div class="tagbox">标签：<input type="text" size="30" name="article[tag_line]" maxlength="30" id="qiushi_rtags"></input>（每个帖子最多3个标签，用空格分隔）</div>
-      <% unless logged_in? %>
-      <div class="tagbox">邮箱：<%= f.text_field(:email) %>（本帖子进入首页后，您将收到邀请码）</div>
-      <% end %>
-    <div class="control-group">
-      <div class="controls">
-      <%= f.submit( "发  表" , :class =>"btn btn-primary" , :disable_with => "正在发表…", :title => "Ctrl + Enter可以快捷发表" )  %>&nbsp;&nbsp;
-      <label class="checkbox inline"><%= f.check_box :comment_status, {}, 'closed' %> 禁止评论 </label>
-      <% if logged_in? %>
-      <label class="checkbox inline"><%= f.check_box :anonymous, {}, 1, 0 %> 匿名发贴 </label>
-      <% end %></div></div>
+    <div class="form-group">
+      <%= f.label :content, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+      <%= f.text_area :content, rows: 10, class: 'form-control' %></div>
+    </div>
+    <% unless logged_in? %><div id="length"></div><%end%><br />
+    <div class="form-group">
+      <%= f.label :picture, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+      <%= f.file_field :picture, class: 'form-control' %></div>
+    </div>
+    <div class="form-group">
+      <%= f.label :tag_line, class: 'col-sm-2 control-label' %>
+      <div class="col-sm-10">
+        <%= f.text_field :tag_line, class: 'form-control' %>
+        <p class="help-block">（每个帖子最多3个标签，用空格分隔）</p></div>
+    </div>
+    <% unless logged_in? %>
+      <div class="form-group">邮箱：<%= f.text_field(:email) %>（本帖子进入首页后，您将收到邀请码）</div>
     <% end %>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+        <label><%= f.check_box :comment_status, {}, 'closed' %> 禁止评论 </label>
+        <% if logged_in? %>
+          <label><%= f.check_box :anonymous, {}, 1, 0 %> 匿名发贴 </label>
+        <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <%= f.submit( "发  表" , class:"btn btn-primary" , disable_with: "正在发表…", title: "Ctrl + Enter可以快捷发表" )  %>
+      </div>
+    </div>
+  <% end %>
 <% end %>

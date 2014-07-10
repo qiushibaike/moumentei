@@ -3,22 +3,20 @@
       必须<%= link_to '登录', login_path %>后才能留言
   <% else %>
       <% if @article.comment_status != 'closed' and @article.status == 'publish' %>
-          <%= form_for [@article, @article.comments.new], remote: true do |f| %>
-              <fieldset>
-                <div class="control-group">
-                  <%= f.label :content, '回复正文', :class => 'control-label' %>
-                  <div class="controls">
-                    <%= f.text_area :content, :rows => 5 %>
-                  </div>
-                </div>
-                <div class="control-group pull-right">
-                  <label class="checkbox inline">
-                    <%= f.check_box :anonymous %>
-                    <span>匿名</span></label>
-                  <%= f.submit '发表回复', :class => 'btn btn-primary span2' %>
-                </div>
+          <%= form_for [@article, @article.comments.new], remote: true, role: 'form' do |f| %>
+            <div class="form-group">
+              <%= f.label :content, '回复正文' %>
+              <div class="controls">
+                <%= f.text_area :content, :rows => 5, :class => 'form-control' %>
+              </div>
+            </div>
+            <div class="checkbox">
+              <label class="checkbox inline">
+                <%= f.check_box :anonymous %>
+                <span>匿名</span></label>
 
-              </fieldset>
+            </div>
+            <%= f.submit '发表回复', :class => 'btn btn-default' %>
           <% end %>
       <% end %>
   <% end %>

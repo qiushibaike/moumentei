@@ -28,18 +28,4 @@ body_attributes :id => (yield(:body_id) || "#{controller_name}-#{action_name}"),
   'data-target' => ".subnav",
   'data-offset' => "50"
 -%>
-<%- content_for :javascripts do -%>
-  <%= javascript_include_tag '/fancybox/jquery.fancybox-1.3.1.pack.js'%>
-  <script>
-    $(function(){
-      $('a.picture').each(function(){
-        var e=$(this);
-        setTimeout(function(){
-          e.fancybox();
-        }, 100)
-
-      });
-    });
-  </script>
-<%- end -%>
 <%= render_skeleton -%>
