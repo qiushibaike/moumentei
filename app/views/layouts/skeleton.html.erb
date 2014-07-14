@@ -9,12 +9,12 @@
     <div class="container">
       <%= skeleton :header %>
       <div class="row">
-        <div class="content span9">
+        <div class="content">
           <%= yield(:before_content) %>
           <%= content_for?(:main) ? (yield :main) : yield %>
           <%= yield :after_content %>
         </div>
-        <div class="sidebar span3">
+        <div class="sidebar">
           <%= yield :sidebar %>
         </div>
       </div>

@@ -13,3 +13,8 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.content {
+	@include make-lg-column(8);
+	@include make-lg-column-push(2);
+}
