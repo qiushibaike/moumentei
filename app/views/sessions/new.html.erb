@@ -1,35 +1,34 @@
 <% content_for :title, '登录' %>
 <%= show_flash %>
-<div class="box">
-  <%= form_tag session_path, :class => 'well form-horizontal' do %>
+  <%= form_tag session_path, :class => 'form-horizontal ', :role => 'form' do %>
     <fieldset>
       <legend>登录</legend>
-      <div class="control-group">
-        <label class="control-label"  for="login">用户名或邮箱：</label>
-        <div class="controls">
-          <%= text_field_tag 'login', @login, :tabindex => 1 %>
+      <div class="form-group">
+        <label class="control-label col-sm-2"  for="login">用户名或邮箱：</label>
+        <div class="col-sm-4">
+          <%= text_field_tag 'login', @login, :tabindex => 1, :class => 'form-control' %>
           <span class="help-block"><%= link_to "还没注册？", signup_path %></span>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label"  for="password">密码：</label>
-        <div class="controls">
-          <%= password_field_tag 'password', nil, :tabindex => 2 %>
+      <div class="form-group">
+        <label class="col-sm-2 control-label"  for="password">密码：</label>
+        <div class="col-sm-4">
+          <%= password_field_tag 'password', nil, :tabindex => 2, :class => 'form-control' %>
           <span class="help-block"><%= link_to "忘记密码？", '/fetchpass' %></span>
         </div>
       </div>
-
-      <% if ( @msg || flash[:notice] ) %><span style="color: red"><%= ( @msg || flash[:notice] ) %></span><% end %>
-    
-      <div class="control-group">
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <div class="checkbox">
           <label for="remember_me" class="checkbox"><%= check_box_tag 'remember_me', '1', @remember_me %>记住我</label>
+          </div>
         </div>
       </div>
-      <div class='form-actions'>
+      <div class='form-group'>
+        <div class="col-sm-offset-2 col-sm-4">
         <%= submit_tag "登录", class: 'btn btn-primary', tabindex: '3', data: {disable_with: '正在提交...'} %>
+        </div>
       </div>
     </fieldset>
   <% end %>
-</div>
 

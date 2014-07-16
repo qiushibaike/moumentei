@@ -8,12 +8,13 @@ class CommentsController < InheritedResources::Base
   # super_caches_page :index
   decorates_assigned :article, :comments, :comment
   respond_to :html, :json, :js
+  has_scope :page, only: :index
   # GET /comments
   # GET /comments.xml
   def index
     cond = @article.comments.includes(:user)
     cond = cond.where{ floor > params[:after]} if params[:after]
-    @comments = cond.paginate page: params[:page]
+    @comments = cond.page(params[:page])
 
     respond_with @comments
   end

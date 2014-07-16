@@ -27,11 +27,14 @@ gem 'rails-observers'
 gem 'protected_attributes'
 gem 'rails_autolink'
 gem 'will_paginate'
+gem 'kaminari'
+gem 'kaminari-bootstrap', '~> 3.0.1'
 gem "aasm"
 gem 'paperclip'
 gem 'dalli'
 gem "oauth"
 gem "oauth-plugin"
+gem 'virtus'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 #gem "delayed_job_web"
@@ -50,7 +53,7 @@ gem 'acts_as_favorite', git: 'https://github.com/ShiningRay/acts_as_favorite.git
 gem 'acts_as_taggable_on_steroids', git: 'https://github.com/ShiningRay/acts_as_taggable_on_steroids.git', require: 'acts_as_taggable'
 gem 'pundit'
 gem 'rolify'
-gem 'simple_form'
+gem 'simple_form', '~> 3.1.0.rc1'
 gem 'lazy_high_charts'
 
 # group :assets do

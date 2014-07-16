@@ -77,6 +77,10 @@ GEM
       execjs
     awesome_nested_set (2.1.6)
       activerecord (>= 3.0.0)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -113,6 +117,8 @@ GEM
     cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -141,6 +147,8 @@ GEM
     delayed_job_active_record (4.0.1)
       activerecord (>= 3.0, < 4.2)
       delayed_job (>= 3.0, < 4.1)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
     draper (1.3.1)
       actionpack (>= 3.0)
@@ -150,6 +158,7 @@ GEM
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
+    equalizer (0.0.9)
     erubis (2.7.0)
     eventmachine (1.0.3)
     eventmachine (1.0.3-java)
@@ -205,6 +214,7 @@ GEM
     http_parser.rb (0.6.0)
     http_parser.rb (0.6.0-java)
     i18n (0.6.9)
+    ice_nine (0.11.0)
     inherited_resources (1.5.0)
       has_scope (~> 0.6.0.rc)
       responders (~> 1.0)
@@ -225,6 +235,12 @@ GEM
     json (1.8.1)
     json (1.8.1-java)
     jwt (1.0.0)
+    kaminari (0.16.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+    kaminari-bootstrap (3.0.1)
+      kaminari (>= 0.13.0)
+      rails
     launchy (2.4.2)
       addressable (~> 2.3)
     launchy (2.4.2-java)
@@ -394,7 +410,7 @@ GEM
     sdoc (0.4.0)
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
-    simple_form (3.0.2)
+    simple_form (3.1.0.rc2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
     sinatra (1.4.5)
@@ -449,6 +465,11 @@ GEM
     uglifier (2.5.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    virtus (1.0.2)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0.3)
+      equalizer (~> 0.0.9)
     warbler (1.4.3)
       jruby-jars (>= 1.5.6, < 2.0)
       jruby-rack (>= 1.0.0)
@@ -507,6 +528,8 @@ DEPENDENCIES
   jquery-ui-rails
   jruby-openssl
   jruby-pageant
+  kaminari
+  kaminari-bootstrap (~> 3.0.1)
   launchy
   lazy_high_charts
   mobile-fu
@@ -537,7 +560,7 @@ DEPENDENCIES
   rufus-scheduler
   sass-rails (~> 4.0.0)
   sdoc
-  simple_form
+  simple_form (~> 3.1.0.rc1)
   spring-commands-rspec
   squeel
   terminal-notifier-guard
@@ -547,6 +570,7 @@ DEPENDENCIES
   turbolinks
   turbolinks-redirect
   uglifier (>= 1.0.3)
+  virtus
   warbler
   will_paginate
   win32console (~> 1.3.2)

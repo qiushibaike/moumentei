@@ -1,40 +1,39 @@
 <% content_for :title do%>注册<% end %>
-<div>
-<%= form_for @user, :html => {:class => 'form-horizontal well'} do |f| -%>
+<%= form_for @user, :html => {:class => 'form-horizontal col-sm-8'} do |f| -%>
   <fieldset>
     <legend>注册新用户</legend>
-    <div class="control-group">
+    <div class="form-group">
     <label class="control-label" for="login">您想要注册的用户名：</label>
     <div class="controls">
-    <%= f.text_field :login %>
+    <%= f.text_field :login, class: 'form-control' %>
     <div id="insertlogin"></div>
     <p class="help-block">不可加入@、&amp;、‘、&lt;、或&gt;符号，不可在开头和结尾使用空格或缩格</p>
     <span style="color: red"><%= @user.errors[:login].join(" ") %></span>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="email">您的电子邮箱：</label>
       <div class="controls">
-        <%= f.text_field :email %>
+        <%= f.text_field :email, class: 'form-control' %>
         <div id="insertemail"></div>
         <p class="help-block">仅用来确认您的身份, 绝不公开</p>
         <span style="color: red"><%= @user.errors[:email].join(" ") %></span>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="password">密码：</label>
       <div class="controls">
-        <%= f.password_field :password %>
+        <%= f.password_field :password, class: 'form-control' %>
         <p class="help-block">登录的时候需要用到</p>
       </div>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
       <label class="control-label" for="password_confirmation">重复一次密码：</label>
       <div class="controls">
-        <%= f.password_field :password_confirmation %>
+        <%= f.password_field :password_confirmation, class: 'form-control' %>
         <span style="color: red"><%= @user.errors[:password].join(" ") %></span>
       </div>
     </div>
@@ -54,5 +53,3 @@
     </div>
   </fieldset>
 <% end -%>
-</div>
-

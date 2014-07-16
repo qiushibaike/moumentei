@@ -10,17 +10,18 @@ class ArticlesController < ApplicationController
   has_scope :hottest_by, default: 'all', allow_blank: true, only: :index
   has_scope :latest, type: :boolean, only: :index
   has_scope :recent_hot, type: :boolean, only: :index
+  has_scope :page, default: 1, only: :index
 
   decorates_assigned :article, :articles, :comments, :group
 
   def index
     if params[:user_id]
       @user = User.find params[:user_id]
-      @articles = apply_scopes(@user.articles.public.signed).paginate page: params[:page]
+      @articles = apply_scopes(@user.articles.public.signed)
     else
       find_group
       g =  @group.self_and_children_ids
-      @articles = apply_scopes(Article.by_group(g).public).paginate(page: params[:page])
+      @articles = apply_scopes(Article.by_group(g).public)
       # if @articles.size == 0 && @articles.total_pages < @articles.current_page
       #   params[:page] = @articles.total_pages
       #   return redirect_to(params)
@@ -28,6 +29,8 @@ class ArticlesController < ApplicationController
     end
 
     respond_with articles
+  rescue RangeError
+    show_404
   end
 
   def new
@@ -155,7 +158,7 @@ class ArticlesController < ApplicationController
       flash[:notice] = "#{@article.group.name}\##{params[:id]} 没有相关帖子"
       redirect_to :back
     else
-      @articles = @article.public_references.paginate page: params[:page]
+      @articles = @article.public_references.page(params[:page])
       @articles.unshift(@article)
       @title_name = '相关文章'
       render( template: "groups/archives" )

@@ -44,7 +44,7 @@ class ArchivesController < ApplicationController
   def month
     @start_day = Date.civil(@year, @month, 1)
     @end_day = (@start_day >> 1) - 1
-    @articles = @group.public_articles.by_period(@start_day, @end_day).hottest.paginate page: params[:page], per_page: per_page
+    @articles = @group.public_articles.by_period(@start_day, @end_day).hottest.page(params[:page]).per(per_page)
     @content_for_title = "#{@year}-#{@month}"
     @cache_subject = @articles
     render action: 'month'
@@ -56,7 +56,7 @@ class ArchivesController < ApplicationController
     @start_day = Date.civil(@year, @month, 1)
     @end_day = (@start_day >> 1) - 1
     @date = Date.civil(@year, @month, @day)
-    @articles = @group.public_articles.by_period(@date, @date+1).hottest.paginate page: params[:page], per_page: per_page
+    @articles = @group.public_articles.by_period(@date, @date+1).hottest.page(params[:page]).per(per_page)
     @content_for_title = @date.strftime("%Y-%m-%d")
     @cache_subject = @articles
     render action: 'day' if stale? last_modified: @date.to_time.utc, public: true, etag: [@article, request.format]
@@ -67,8 +67,8 @@ class ArchivesController < ApplicationController
 
   protected
   def find_border
-    @first = @group.public_articles.find(:first, conditions: 'created_at is not null', order: 'id asc', select: 'articles.created_at')
-    @last = @group.public_articles.find(:first, conditions: 'created_at is not null', order: 'id desc', select: 'articles.created_at')
+    @first = @group.public_articles.where('created_at is not null').order('id asc').select('articles.created_at').first
+    @last = @group.public_articles.where('created_at is not null').order('id desc').select('articles.created_at').first
     if @first.blank? or @last.blank?
       return show_404('存档')
     end
