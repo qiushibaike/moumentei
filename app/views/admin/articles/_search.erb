@@ -21,10 +21,9 @@
   </div>
 </div>
 <% content_for :javascripts do %>
-<%= javascript_include_tag '/js/bootstrap-datepicker.js', '/js/bootstrap-datepicker.zh-CN.js', '/js/jquery.timePicker.js' %>
 <script type="text/javascript">
 $(function(){
-  $(".collapse").collapse();
+
   $(".datetimepicker .datepicker,.datetimepicker .timepicker").change(function(){
     var self = this,ts = $(self).parent(".datetimepicker");
     var date = $(".datepicker",ts).val();
@@ -33,7 +32,4 @@ $(function(){
   });
 });
 </script>
-<% end %>
-<% content_for :stylesheets do %>
-<%= stylesheet_link_tag '/css/bootstrap-datepicker', "/css/jquery.timePicker.css" %>
 <% end %>

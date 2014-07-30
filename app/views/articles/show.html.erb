@@ -15,10 +15,10 @@
   <% end %>
   <div class="loop-nav">
     <% unless article.prev_in_group.nil? %>
-    <div class="previous">&laquo; <%= link_to("上一帖子", article_path(article.prev_in_group), :rel => 'prev') %></div>
+    <div class="previous">&laquo; <%= link_to("上一帖子", [article.group, article.prev_in_group], :rel => 'prev') %></div>
     <% end %>
     <% unless article.next_in_group.nil? %>
-    <div class="next"><%= link_to("下一帖子", article_path(article.next_in_group), :rel => 'next') %> &raquo;</div>
+    <div class="next"><%= link_to("下一帖子", [article.group, article.next_in_group], :rel => 'next') %> &raquo;</div>
     <% end %>
   </div><!-- .loop-nav -->
 <% end %>
